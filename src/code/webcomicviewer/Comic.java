@@ -211,7 +211,7 @@ public class Comic {
 				// the url from the src of the element
 				Element temp = iterator.next();
 				String extracted = temp.attr("src");
-				// System.out.println(extracted);
+				//System.out.println(extracted);
 				if (extracted.startsWith("/") || !extracted.startsWith("http")) {
 					// This was necessary for DrMcNinja, as the full url
 					// was not posted, I suspect it's true for other sites

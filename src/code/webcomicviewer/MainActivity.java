@@ -82,7 +82,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         	Comics.add(new Comic("DMN", "http://www.drmcninja.com", "http://drmcninja.com/comics/2013-02-23-25p80.jpg"));
         	Comics.add(new Comic("SMBC", "http://www.smbc-comics.com", "http://www.smbc-comics.com/comics/20130225.gif"));
         	Comics.add(new Comic("MA3", "http://www.menagea3.net", "http://zii.ma3comic.com/comics/mat20130223.png"));
-        	Comics.add(new Comic("QC", "http://www.quesitonablecontent.net", "http://www.questionablecontent.net/comics/2392.png"));
+        	Comics.add(new Comic("QC", "http://www.questionablecontent.net", "http://www.questionablecontent.net/comics/2392.png"));
         }
     }
 
@@ -103,6 +103,16 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         	ComicUpdater comicUpdater = new ComicUpdater(i, this);
         	comicUpdater.execute();
             return true;
+            //bla
+            
+        case R.id.UpdateAll:
+        	ComicUpdater updateAll;
+        	for(int j = 0; j < Comics.size(); j++)
+        	{
+        		updateAll = new ComicUpdater(j, this);
+        		updateAll.execute();
+        	}
+        	return true;
         case R.id.Add:
         	//Starts our Add_Comic Activity
         	Log.d("Add", "Add Comic Pushed");
@@ -202,7 +212,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     
             //This is what will download the image when needed
             //if(Current.isnewFileNeeded()){
-	            imageDownloader downloader = new imageDownloader(imageView, Current);
+	            imageDownloader downloader = new imageDownloader(imageView, Current, getActivity());
 	            downloader.execute();
 	            Log.d("onCreateView", "downloader exectuted");
             //}
@@ -218,12 +228,24 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         	private final WeakReference<ImageView> imageViewReference;
         	//Our comic
             private Comic Current;
+            private Context ourContext;
         	
-        	public imageDownloader(ImageView imageView, Comic current)
+        	public imageDownloader(ImageView imageView, Comic current, Context context)
         	{
         		//Basic constructor that sets our variables
         		imageViewReference = new WeakReference<ImageView>(imageView);
         		Current = current;
+        		ourContext = context;
+        	}
+        	
+        	@Override
+        	protected void onPreExecute()
+        	{
+        		if(Current.isnewFileNeeded())
+        		{
+        			Bitmap mybitmap = BitmapFactory.decodeResource(ourContext.getResources(), R.drawable.loading);
+        			Current.setComicBitmap(mybitmap);
+        		}
         	}
 
 			@Override
@@ -274,7 +296,6 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     	@Override
     	protected void onPreExecute()
     	{
-    		//frag.getIV().setImageResource(R.drawable.ic_action_search);
     		Bitmap mybitmap = BitmapFactory.decodeResource(ourContext.getResources(), R.drawable.loading);
     		Comics.get(position).setComicBitmap(mybitmap);
     		frag.getIV().setImageBitmap(Comics.get(position).getComicBitmap());

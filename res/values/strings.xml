@@ -21,5 +21,6 @@
     <string name="URL">URL</string>
     <string name="Name">Name</string>
     <string name="Placeholder">TextView</string>
+    <string name="UpdateAll">Update All</string>
 
 </resources>
