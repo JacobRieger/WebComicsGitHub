@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/addComic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="18dp"
+        android:text="@string/AddComicButton" />
+
+    <EditText
+        android:id="@+id/Comic_Url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ComicName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="58dp"
+        android:ems="10"
+        android:hint="@string/UrlHint"
+        android:inputType="textUri" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/checkComic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/addComic"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/VerifyComicButton" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:contentDescription="@string/ImageDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/checkComic"
+        android:layout_below="@+id/Comic_Url"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_action_search" />
+
+    <EditText
+        android:id="@+id/ComicName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/NameLabel"
+        android:ems="10"
+        android:hint="@string/ComicNameHint" />
+
+    <TextView
+        android:id="@+id/urlLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/Comic_Url"
+        android:layout_alignBottom="@+id/Comic_Url"
+        android:layout_alignParentLeft="true"
+        android:text="@string/URL" />
+
+    <TextView
+        android:id="@+id/NameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ComicName"
+        android:layout_alignBottom="@+id/ComicName"
+        android:layout_alignParentLeft="true"
+        android:text="@string/Name" />
+
+</RelativeLayout>
