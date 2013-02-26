@@ -107,6 +107,13 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	
+    	for(int i = 0; i < Comics.size(); i++)
+    	{
+    		if(item.getTitle() == Comics.get(i).getName())
+    		{
+    			mViewPager.setCurrentItem(i);
+    		}
+    	}
         switch (item.getItemId()) {
         case R.id.Update:
         	//This returns the comic that were currently viewing's position
@@ -127,11 +134,6 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         	Log.d("Add", "Add Comic Pushed");
         	Intent intent = new Intent(this, Add_Comic.class);
         	startActivity(intent);
-        	return true;
-        	
-        case R.id.GoTo:
-        	
-        	
         	return true;
 
         default:
