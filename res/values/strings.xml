@@ -22,5 +22,6 @@
     <string name="Name">Name</string>
     <string name="Placeholder">TextView</string>
     <string name="UpdateAll">Update All</string>
+    <string name="GoTo">GoTo</string>
 
 </resources>

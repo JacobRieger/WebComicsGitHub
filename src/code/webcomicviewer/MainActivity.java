@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
@@ -89,7 +90,18 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
-        return true;
+   
+        SubMenu GoTo = menu.addSubMenu("GoTo");
+        
+        for(int i = 0; i < Comics.size(); i++)
+        {
+        	GoTo.add(Comics.get(i).getName());
+        }
+        
+        
+
+        return super.onCreateOptionsMenu(menu);
+        
     }
     
     @Override
@@ -107,17 +119,19 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             
         case R.id.UpdateAll:
         	ComicUpdater updateAll;
-        	for(int j = 0; j < Comics.size(); j++)
-        	{
-        		updateAll = new ComicUpdater(j, this);
-        		updateAll.execute();
-        	}
+        	updateAll = new ComicUpdater(this, true);
+        	updateAll.execute();
         	return true;
         case R.id.Add:
         	//Starts our Add_Comic Activity
         	Log.d("Add", "Add Comic Pushed");
         	Intent intent = new Intent(this, Add_Comic.class);
         	startActivity(intent);
+        	return true;
+        	
+        case R.id.GoTo:
+        	
+        	
         	return true;
 
         default:
@@ -285,6 +299,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     	int position;
     	ComicFragment frag;
     	Context ourContext;
+    	boolean updateAll;
     	
     	public ComicUpdater(int i, Context context)
     	{
@@ -293,18 +308,46 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     		ourContext = context;
     	}
     	
+    	public ComicUpdater(Context context, boolean UpdateAll)
+    	{
+    		updateAll = UpdateAll;
+    		frag = (ComicFragment) mSectionsPagerAdapter.getFragment(position);
+    		ourContext = context;
+    	}
+    	
     	@Override
     	protected void onPreExecute()
     	{
-    		Bitmap mybitmap = BitmapFactory.decodeResource(ourContext.getResources(), R.drawable.loading);
-    		Comics.get(position).setComicBitmap(mybitmap);
-    		frag.getIV().setImageBitmap(Comics.get(position).getComicBitmap());
+    		if(updateAll)
+    		{
+    			for(int i = 0; i < Comics.size(); i++)
+    			{
+    				Bitmap mybitmap = BitmapFactory.decodeResource(ourContext.getResources(), R.drawable.loading);
+        			Comics.get(i).setComicBitmap(mybitmap);
+        			frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
+    			}
+    		}
+    		else
+    		{
+    			Bitmap mybitmap = BitmapFactory.decodeResource(ourContext.getResources(), R.drawable.loading);
+    			Comics.get(position).setComicBitmap(mybitmap);
+    			frag.getIV().setImageBitmap(Comics.get(position).getComicBitmap());
+    		}
     	}
     	
 		@Override
 		protected Void doInBackground(Void... params) {
-	
-			Comics.get(position).Update();
+			if(updateAll)
+			{
+				for(int i = 0; i < Comics.size(); i++)
+				{
+					Comics.get(i).Update();
+				}
+			}
+			else
+			{
+				Comics.get(position).Update();
+			}
 			return null;
 		}
 		

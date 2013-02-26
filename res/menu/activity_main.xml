@@ -12,4 +12,6 @@
         android:showAsAction="never" />
     <item android:id="@+id/Add" android:title="Add Comic"></item>
     <item android:id="@+id/UpdateAll" android:title="@string/UpdateAll"></item>
+    <item android:id="@+id/GoTo" android:title="@string/GoTo">
+    </item>
 </menu>
