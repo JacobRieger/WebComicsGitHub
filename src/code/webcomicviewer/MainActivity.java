@@ -47,6 +47,9 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Our database on the  phone
+        DataBaseHandler db = new DataBaseHandler(this);
+        
         // Create the adapter that will return a fragment
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.
@@ -72,19 +75,25 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         	//Fix for bug when screen rotates, or it's created again, it will try to 
         	//add the comic again. This insures it only adds once
         	Comic newComic = new Comic(Name, Url, ImageUrl);
-        	if(!Comics.contains(newComic))
+        	newComic.setUpdated(true);
+        	if(!db.doesComicExist(newComic))
         	{
+        		System.out.println("Comic Added");
+        		db.addComic(newComic);
         		Comics.add(newComic);
         	}
         }
         
         if(Comics.size() == 0)
         {
-        	Comics.add(new Comic("DMN", "http://www.drmcninja.com", "http://drmcninja.com/comics/2013-02-23-25p80.jpg"));
-        	Comics.add(new Comic("SMBC", "http://www.smbc-comics.com", "http://www.smbc-comics.com/comics/20130225.gif"));
-        	Comics.add(new Comic("MA3", "http://www.menagea3.net", "http://zii.ma3comic.com/comics/mat20130223.png"));
-        	Comics.add(new Comic("QC", "http://www.questionablecontent.net", "http://www.questionablecontent.net/comics/2392.png"));
+        	Comics = db.getAllComics();
+        	for(int i = 0; i < Comics.size(); i++)
+            {
+            	Comics.get(i).setUpdated(true);
+            }
         }
+        
+        
     }
 
     @Override
@@ -164,7 +173,11 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         
         public Fragment getFragment(int position)
         {
-        	return CFs.get(position);
+        	if(CFs.size() != 0)
+        	{
+        		return CFs.get(position);
+        	}
+        	return null;
         }
 
         @Override
@@ -257,7 +270,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         	@Override
         	protected void onPreExecute()
         	{
-        		if(Current.isnewFileNeeded())
+        		if(Current.isUpdated())
         		{
         			Bitmap mybitmap = BitmapFactory.decodeResource(ourContext.getResources(), R.drawable.loading);
         			Current.setComicBitmap(mybitmap);
@@ -268,13 +281,13 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 			protected Bitmap doInBackground(Integer... params) {
 			
 				//This checks if we need to load a new image (networking)
-				if(Current.isnewFileNeeded())
+				if(Current.isUpdated())
 				{
 					//If it is needed, we retrieve that image
 					//This function then sets the new bitmap to the comic variable
 					Current.retrieveImageBitmap();
 					//We just loaded so this is now false
-					Current.setFileNeeded(false);
+					Current.setUpdated(false);
 				}
 				//Return our newly found / or old and kept bitmap
 				return Current.getComicBitmap();
@@ -300,6 +313,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     {
     	int position;
     	ComicFragment frag;
+    	List<ComicFragment> ComicFrags = new ArrayList<ComicFragment>();
     	Context ourContext;
     	boolean updateAll;
     	
@@ -313,28 +327,41 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     	public ComicUpdater(Context context, boolean UpdateAll)
     	{
     		updateAll = UpdateAll;
-    		frag = (ComicFragment) mSectionsPagerAdapter.getFragment(position);
+    		for(int i = 0; i < Comics.size(); i++)
+    		{
+    			frag = (ComicFragment) mSectionsPagerAdapter.getFragment(i);
+    			ComicFrags.add(frag);
+    		}
     		ourContext = context;
     	}
     	
     	@Override
     	protected void onPreExecute()
     	{
-    		if(updateAll)
-    		{
-    			for(int i = 0; i < Comics.size(); i++)
-    			{
-    				Bitmap mybitmap = BitmapFactory.decodeResource(ourContext.getResources(), R.drawable.loading);
-        			Comics.get(i).setComicBitmap(mybitmap);
-        			frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
-    			}
-    		}
-    		else
-    		{
-    			Bitmap mybitmap = BitmapFactory.decodeResource(ourContext.getResources(), R.drawable.loading);
-    			Comics.get(position).setComicBitmap(mybitmap);
-    			frag.getIV().setImageBitmap(Comics.get(position).getComicBitmap());
-    		}
+    		if (frag != null) {
+				if (updateAll) {
+					
+					for (int i = 0; i < Comics.size(); i++) {
+						//We get our loading bitmap to display while fetching image
+						Bitmap mybitmap = BitmapFactory.decodeResource(
+								ourContext.getResources(), R.drawable.loading);
+						//Set our comic to the new bitmap
+						Comics.get(i).setComicBitmap(mybitmap);
+						
+						//Set the imageview for that comic to the loading bitmap
+						frag = ComicFrags.get(i);
+						frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
+					}
+				} else {
+					Bitmap mybitmap = BitmapFactory.decodeResource(
+							ourContext.getResources(), R.drawable.loading);
+					
+					Comics.get(position).setComicBitmap(mybitmap);
+					
+					frag.getIV().setImageBitmap(
+							Comics.get(position).getComicBitmap());
+				}
+			}
     	}
     	
 		@Override
@@ -356,8 +383,18 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 		@Override
 	    protected void onPostExecute(Void result) {
 			
-			//System.out.println(mSectionsPagerAdapter.getFragment(position).getIV());
-			frag.getIV().setImageBitmap(Comics.get(position).getComicBitmap());
+			if(updateAll)
+			{
+				for(int i = 0; i < Comics.size(); i++)
+				{
+					frag = ComicFrags.get(i);
+					frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
+				}
+			}
+			else
+			{
+				frag.getIV().setImageBitmap(Comics.get(position).getComicBitmap());
+			}
 	    }
     }
 

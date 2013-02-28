@@ -28,16 +28,17 @@ import android.util.Log;
 
 public class Comic {
 	
+	private int id;
 	private String Name;
 	private String imageUrl;
 	private Bitmap comicBitmap;
 	private String url;
-	private boolean newFileNeeded;
+	private boolean isUpdated;
 
 	public Comic(String name) {
 		Name = name;
 		imageUrl = "www.testurl.com";
-		newFileNeeded = true;
+		isUpdated = true;
 	}
 
 	public Comic(String name, String URL, String ImageUrl) {
@@ -45,9 +46,47 @@ public class Comic {
 		imageUrl = ImageUrl;
 		url = URL;
 		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
-		newFileNeeded = true;
+		isUpdated = true;
+	}
+	
+	public Comic(int ID, String name, String URL, String ImageUrl) {
+		id = ID;
+		Name = name;
+		imageUrl = ImageUrl;
+		url = URL;
+		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
+		isUpdated = true;
+	}
+	
+	public Comic(int ID, String name, String URL, String updated, String ImageUrl) {
+		if(updated == "true")
+		{
+			isUpdated = true;
+		}
+		else
+		{
+			isUpdated = false;
+		}
+		id = ID;
+		Name = name;
+		imageUrl = ImageUrl;
+		url = URL;
+		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
+	}
+	
+	public Comic()
+	{
+		
 	}
 
+	public int getId()
+	{
+		return id;
+	}
+	public void setId(int newId)
+	{
+		id = newId;
+	}
 	public String getName() {
 		return Name;
 	}
@@ -72,16 +111,25 @@ public class Comic {
 		this.comicBitmap = comicBitmap;
 	}
 
-	public boolean isnewFileNeeded() {
-		return newFileNeeded;
+	public boolean isUpdated() {
+		return isUpdated;
 	}
 	public String getUrl()
 	{
 		return url;
 	}
+	public void setUrl(String URL)
+	{
+		url = URL;
+	}
 
-	public void setFileNeeded(boolean set) {
-		newFileNeeded = set;
+	public void setUpdated(boolean set) {
+		isUpdated = set;
+	}
+	public void setUpdated(String set)
+	{
+		if(set == "true") isUpdated = true;
+		else isUpdated = false;
 	}
 	
 	public byte[] getBitmapBytes() {
@@ -176,13 +224,13 @@ public class Comic {
 				// As long as the loop found a new string this is called
 				// Otherwise we'd set the string to "Unset" if it hadn't changed
 				imageUrl = newImageurl;
-				this.setFileNeeded(true);
+				this.setUpdated(true);
 			}
 		} else {
 			// This is set when the imageurl that is saved is still currently on
 			// the page, so, it hasn't been updated since
 			// System.out.println("Setting updated to false");
-			this.setFileNeeded(false);
+			this.setUpdated(false);
 		}
 
 	}
@@ -295,6 +343,7 @@ public class Comic {
 				URL oururl = new URL(current);
 		        HttpURLConnection connection = (HttpURLConnection) oururl.openConnection();
 		        connection.setDoInput(true);
+		        connection.setFollowRedirects(true);
 		        connection.connect();
 		        InputStream input = connection.getInputStream();
 		        Bitmap myBitmap = BitmapFactory.decodeStream(input);
@@ -331,7 +380,6 @@ public class Comic {
 						maxRating = rating;
 						imageUrl = max;
 					}
-					
 					
 				}
 				
