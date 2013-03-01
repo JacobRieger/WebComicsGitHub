@@ -83,6 +83,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     	}
     }
     
+    public void deleteComic(Comic comic) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_WEBCOMICS, KEY_ID + " = ?",
+                new String[] { String.valueOf(comic.getId()) });
+        db.close();
+    }
+    
     public boolean doesComicExist(Comic comic)
     {
     	Log.d("doesComicExist", "Checking " + comic.getName());

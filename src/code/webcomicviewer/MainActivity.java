@@ -101,10 +101,12 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         getMenuInflater().inflate(R.menu.activity_main, menu);
    
         SubMenu GoTo = menu.addSubMenu("GoTo");
+        SubMenu Remove = menu.addSubMenu("Remove Comic");
         
         for(int i = 0; i < Comics.size(); i++)
         {
-        	GoTo.add(Comics.get(i).getName());
+        	GoTo.add("Skip to ".concat(Comics.get(i).getName()));
+        	Remove.add(Comics.get(i).getName());
         }
         
         
@@ -116,13 +118,24 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	
+    	String Title = item.getTitle().toString();
     	for(int i = 0; i < Comics.size(); i++)
     	{
-    		if(item.getTitle() == Comics.get(i).getName())
+    		
+    		if(Title.equals(Comics.get(i).getName()))
     		{
+    			DataBaseHandler db = new DataBaseHandler(this);
+    			db.deleteComic(Comics.get(i));
+    			Comics.remove(i);
+    			mViewPager.setCurrentItem(0);
+    		}
+    		if(Title.equals("Skip to ".concat(Comics.get(i).getName())))
+    		{
+    			
     			mViewPager.setCurrentItem(i);
     		}
     	}
+    	
         switch (item.getItemId()) {
         case R.id.Update:
         	//This returns the comic that were currently viewing's position

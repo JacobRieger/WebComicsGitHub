@@ -52,6 +52,8 @@ public class Add_Comic extends Activity implements OnClickListener {
 			
 		case R.id.addComic:
 			Intent intent = new Intent(this, MainActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 			intent.putExtra("Name", Name);
 			intent.putExtra("Url", Url);
 			intent.putExtra("ImageUrl", ImageUrl);
