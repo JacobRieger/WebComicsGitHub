@@ -49,7 +49,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         setContentView(R.layout.activity_main);
         //Our database on the  phone
         DataBaseHandler db = new DataBaseHandler(this);
-        
+    
         // Create the adapter that will return a fragment
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.
@@ -384,6 +384,9 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 				for(int i = 0; i < Comics.size(); i++)
 				{
 					Comics.get(i).Update();
+					frag = ComicFrags.get(i);
+					//frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
+				
 				}
 			}
 			else

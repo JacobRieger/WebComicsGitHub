@@ -4,6 +4,7 @@ package code.webcomicviewer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -136,8 +137,7 @@ public class Comic {
 		// This is for inputing bitmaps into a bundle to pass between functions
 		// Bitmap bitmap = BitmapFactory.decodeFile("/path/images/image.jpg");
 		ByteArrayOutputStream blob = new ByteArrayOutputStream();
-		comicBitmap
-				.compress(CompressFormat.PNG, 0 /* ignored for PNG */, blob);
+		comicBitmap.compress(CompressFormat.PNG, 0 /* ignored for PNG */, blob);
 		byte[] bitmapdata = blob.toByteArray();
 		return bitmapdata;
 	}
@@ -147,14 +147,34 @@ public class Comic {
 			// Log.e("src",src);
 			// Opens a URL connection
 			URL url = new URL(imageUrl);
-			HttpURLConnection connection = (HttpURLConnection) url
-					.openConnection();
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			
 			connection.setDoInput(true);
 			connection.connect();
 			// Get the inputstream
 			InputStream input = connection.getInputStream();
 			// We know it's an image url so we decode it into a bitmap
 			Bitmap myBitmap = BitmapFactory.decodeStream(input);
+			//This is for when the bitmap is too big (aka SMBC)
+			if (myBitmap.getHeight() > 4096 || myBitmap.getWidth() > 4096) {
+				System.out.println("Scaling image");
+				int origWidth = myBitmap.getWidth();
+				int origHeight = myBitmap.getHeight();
+				int newHeight = 4096;
+				int newWidth = 4096;
+				float scaleWidth;
+				float scaleHeight;
+				if (origWidth >= origHeight) {
+					scaleWidth = (float) newWidth / origWidth;
+					scaleHeight = scaleWidth;
+				} else {
+					scaleHeight = (float) newHeight / origHeight;
+					scaleWidth = scaleHeight;
+				}
+				myBitmap = Bitmap.createScaledBitmap(myBitmap,
+						(int) (origWidth * scaleWidth), (int) (origHeight * scaleHeight), false);
+			}
+			
 			Log.e("Bitmap", "returned in retrieveImageBitmap");
 			comicBitmap = myBitmap;
 		} catch (IOException e) {
