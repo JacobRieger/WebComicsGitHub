@@ -156,6 +156,8 @@ public class Comic {
 			// We know it's an image url so we decode it into a bitmap
 			Bitmap myBitmap = BitmapFactory.decodeStream(input);
 			//This is for when the bitmap is too big (aka SMBC)
+			//Tailored only for GSIII, 4096 is equal to GL max size, should find way to 
+			//get this
 			if (myBitmap.getHeight() > 4096 || myBitmap.getWidth() > 4096) {
 				System.out.println("Scaling image");
 				int origWidth = myBitmap.getWidth();

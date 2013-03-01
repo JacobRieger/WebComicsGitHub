@@ -63,19 +63,18 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
            
         //Checking to see if we're adding a new comic
         Bundle extras = getIntent().getExtras();
+        //If there are extras, they are from the Add Comic Activity
         if(extras != null)
         {
-        	String Name;
-        	String Url;
-        	String ImageUrl;
-        	Name = extras.getString("Name");
-        	Url = extras.getString("Url");
-        	ImageUrl = extras.getString("ImageUrl");
-        	//These are all gotten from the activity Add_Comic
-        	//Fix for bug when screen rotates, or it's created again, it will try to 
-        	//add the comic again. This insures it only adds once
+        	//Basic Values gotten from Add_Comic
+        	String Name = extras.getString("Name");
+        	String Url = extras.getString("Url");
+        	String ImageUrl = extras.getString("ImageUrl");
+        	//Create the new comic
         	Comic newComic = new Comic(Name, Url, ImageUrl);
+        	//This insures that the comic image is loaded up
         	newComic.setUpdated(true);
+        	//Adds the comic to the database, if it doesn't already exist
         	if(!db.doesComicExist(newComic))
         	{
         		System.out.println("Comic Added");
@@ -86,6 +85,8 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         
         if(Comics.size() == 0)
         {
+        	//This is for when the app is destroyed
+        	//Loads all comics from the database to the current activity
         	Comics = db.getAllComics();
         	for(int i = 0; i < Comics.size(); i++)
             {
@@ -99,18 +100,20 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
-   
+        
+        //Adding two menu items that change at runtime
+        //Allows to switch view
         SubMenu GoTo = menu.addSubMenu("GoTo");
+        //Removes a comic from the list
         SubMenu Remove = menu.addSubMenu("Remove Comic");
         
         for(int i = 0; i < Comics.size(); i++)
         {
+        	//Set the button names in the submenus
+        	//Can't have them both be the same, still need to investigate
         	GoTo.add("Skip to ".concat(Comics.get(i).getName()));
         	Remove.add(Comics.get(i).getName());
         }
-        
-        
-
         return super.onCreateOptionsMenu(menu);
         
     }
@@ -121,17 +124,19 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     	String Title = item.getTitle().toString();
     	for(int i = 0; i < Comics.size(); i++)
     	{
-    		
+    		//Checking to see if item clicked was our remove comic button
     		if(Title.equals(Comics.get(i).getName()))
     		{
+    			//Delete it from the Database and our current comic list
     			DataBaseHandler db = new DataBaseHandler(this);
     			db.deleteComic(Comics.get(i));
     			Comics.remove(i);
+    			//Set our view back to the front
     			mViewPager.setCurrentItem(0);
     		}
     		if(Title.equals("Skip to ".concat(Comics.get(i).getName())))
     		{
-    			
+    			//Sets our view to the selected comic
     			mViewPager.setCurrentItem(i);
     		}
     	}
@@ -148,6 +153,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             
         case R.id.UpdateAll:
         	ComicUpdater updateAll;
+        	//Uses the comicUpdater UpdateAll functionality
         	updateAll = new ComicUpdater(this, true);
         	updateAll.execute();
         	return true;
@@ -175,6 +181,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             }
             if(CFs == null)
             {
+            	//Our list of all comic Fragments
             	CFs = new ArrayList<Fragment>();
             }
         }
@@ -253,13 +260,16 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             Comic Current = Comics.get(args.getInt(ARG_SECTION_NUMBER));
     
             //This is what will download the image when needed
-            //if(Current.isnewFileNeeded()){
-	            imageDownloader downloader = new imageDownloader(imageView, Current, getActivity());
-	            downloader.execute();
-	            Log.d("onCreateView", "downloader exectuted");
-            //}
+            
+            imageDownloader downloader = new imageDownloader(imageView, Current, getActivity());
+            downloader.execute();
+            Log.d("onCreateView", "downloader exectuted");
+           
+            //Sets the imageview to the current bitmap
             imageView.setImageBitmap(Current.getComicBitmap());
+            //Saves our IV for later reference
             IV = imageView;
+            //OnLong click for enabling zoom and pan 
             imageView.setOnLongClickListener((MainActivity) getActivity());
             return imageView;
         }
@@ -283,6 +293,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         	@Override
         	protected void onPreExecute()
         	{
+        		//If the comic changed, we set it to loading
         		if(Current.isUpdated())
         		{
         			Bitmap mybitmap = BitmapFactory.decodeResource(ourContext.getResources(), R.drawable.loading);
@@ -324,11 +335,12 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     
     private class ComicUpdater extends AsyncTask<Void, Void, Void>
     {
-    	int position;
-    	ComicFragment frag;
-    	List<ComicFragment> ComicFrags = new ArrayList<ComicFragment>();
+    	//This is called to update all comics, or just the current one
+    	int position; //This is when the single on is called
+    	ComicFragment frag; //How we access the imageview
+    	List<ComicFragment> ComicFrags = new ArrayList<ComicFragment>(); // our list for UpdateAll
     	Context ourContext;
-    	boolean updateAll;
+    	boolean updateAll; //If we want to update all comics, true, otherwise false
     	
     	public ComicUpdater(int i, Context context)
     	{
@@ -366,11 +378,12 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 						frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
 					}
 				} else {
+					//Set bitmap to loading
 					Bitmap mybitmap = BitmapFactory.decodeResource(
 							ourContext.getResources(), R.drawable.loading);
-					
+					//Set the comicbitmap to loading
 					Comics.get(position).setComicBitmap(mybitmap);
-					
+					//Update our current view
 					frag.getIV().setImageBitmap(
 							Comics.get(position).getComicBitmap());
 				}
@@ -383,6 +396,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 			{
 				for(int i = 0; i < Comics.size(); i++)
 				{
+					//Update all comics
 					Comics.get(i).Update();
 					frag = ComicFrags.get(i);
 					//frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
@@ -391,6 +405,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 			}
 			else
 			{
+				//Update current comic
 				Comics.get(position).Update();
 			}
 			return null;
@@ -398,7 +413,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 		
 		@Override
 	    protected void onPostExecute(Void result) {
-			
+			//Update all imageview to new comic
 			if(updateAll)
 			{
 				for(int i = 0; i < Comics.size(); i++)
@@ -419,8 +434,9 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 		Log.d("OnLongClick", view.toString());
 		
 		if (view.getClass() == ImageView.class) {
-			Log.d("OnLongClick", "About to start new activity");
+			//Our current comic
 			Comic Selected = Comics.get(mViewPager.getCurrentItem());
+			//We pass extras to know which comic to view
 			Intent intent = new Intent(this, View_Comic.class);
 			intent.putExtra("ImageUrl", Selected.getImageUrl());
 			intent.putExtra("Name", Selected.getName());

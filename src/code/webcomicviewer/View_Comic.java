@@ -24,12 +24,13 @@ public class View_Comic extends Activity {
         
         ImageViewTouch imageView = (ImageViewTouch) findViewById(R.id.ImageView01);
         TextView textview = (TextView) findViewById(R.id.TitleName);
+        
         Bundle extras = getIntent().getExtras();
         ImageUrl = extras.getString("ImageUrl");
         Name = extras.getString("Name");
         
         textview.setText(Name);
-        
+        //We redownload the image, doesn't take very long on SGS3
         imageDownloader download = new imageDownloader(imageView, ImageUrl);
         download.execute();
         
@@ -45,6 +46,8 @@ public class View_Comic extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+    	//This reloads the image
+    	
     	ImageViewTouch imageView = (ImageViewTouch) findViewById(R.id.ImageView01);
     	imageView.setImageResource(R.drawable.loading);
     	imageDownloader download = new imageDownloader(imageView, ImageUrl);
