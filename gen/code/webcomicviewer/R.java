@@ -18,11 +18,12 @@ public final class R {
     }
     public static final class id {
         public static final int Add=0x7f07000f;
+        public static final int Add_Bookmark=0x7f070011;
         public static final int ComicName=0x7f070002;
         public static final int Comic_Url=0x7f070001;
         public static final int ImageView01=0x7f07000a;
         public static final int NameLabel=0x7f070005;
-        public static final int Reload=0x7f070011;
+        public static final int Reload=0x7f070012;
         public static final int Title=0x7f070009;
         public static final int TitleName=0x7f07000b;
         public static final int Update=0x7f07000e;

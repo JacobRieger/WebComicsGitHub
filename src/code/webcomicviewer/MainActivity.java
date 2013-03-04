@@ -6,11 +6,13 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Browser;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -42,6 +44,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
      */
     ViewPager mViewPager;
     public static ArrayList<Comic> Comics;
+    public BookmarkList Bookmarks;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,28 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             }
         }
         
+        if (Bookmarks == null) {
+        	
+        	Bookmarks = new BookmarkList();
+        	
+			Cursor cursor = getContentResolver().query(Browser.BOOKMARKS_URI,
+					null, null, null, null);
+			cursor.moveToFirst();
+			int titleIdx = cursor.getColumnIndex(Browser.BookmarkColumns.TITLE);
+			int urlIdx = cursor.getColumnIndex(Browser.BookmarkColumns.URL);
+			int bookmark = cursor
+					.getColumnIndex(Browser.BookmarkColumns.BOOKMARK);
+			while (cursor.isAfterLast() == false) {
+
+				if (cursor.getInt(bookmark) > 0) {
+					//Log.d("Adding Bookmark", cursor.getString(titleIdx));
+					Bookmarks.add(new Bookmark(cursor.getString(titleIdx),
+							cursor.getString(urlIdx)));
+				}
+				cursor.moveToNext();
+			}
+		}
+        
         
     }
 
@@ -106,6 +131,8 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         SubMenu GoTo = menu.addSubMenu("GoTo");
         //Removes a comic from the list
         SubMenu Remove = menu.addSubMenu("Remove Comic");
+        MenuItem BookMark = (MenuItem) menu.findItem(R.id.Add_Bookmark);
+        SubMenu BookMarkSub = BookMark.getSubMenu();
         
         for(int i = 0; i < Comics.size(); i++)
         {
@@ -114,6 +141,12 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         	GoTo.add("Skip to ".concat(Comics.get(i).getName()));
         	Remove.add(Comics.get(i).getName());
         }
+        for(int x = 0; x < Bookmarks.size(); x++)
+        {
+        	BookMarkSub.add(32, 0, 0, Bookmarks.get(x).getName());
+        	Log.d("added", Bookmarks.get(x).getName());
+        }
+        
         return super.onCreateOptionsMenu(menu);
         
     }
@@ -122,6 +155,17 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     public boolean onOptionsItemSelected(MenuItem item) {
     	
     	String Title = item.getTitle().toString();
+    	
+    	if(item.getGroupId() == 32)
+    	{
+    		Intent intent = new Intent(this, Add_Comic.class);
+    		Bookmark current = Bookmarks.find(item.getTitle().toString());
+    		intent.putExtra("Name", item.getTitle());
+    		intent.putExtra("Url", current.getUrl());
+    		startActivity(intent);
+    		return true;
+    	}
+    	
     	for(int i = 0; i < Comics.size(); i++)
     	{
     		//Checking to see if item clicked was our remove comic button
@@ -163,7 +207,11 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         	Intent intent = new Intent(this, Add_Comic.class);
         	startActivity(intent);
         	return true;
-
+        	
+        case R.id.Add_Bookmark:
+        	Log.d("Add", "Bookmarks");
+        	
+            
         default:
             return super.onOptionsItemSelected(item);
         }
