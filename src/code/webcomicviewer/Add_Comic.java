@@ -4,13 +4,17 @@ import java.io.UnsupportedEncodingException;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Browser;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -20,6 +24,7 @@ import android.widget.ImageView;
 public class Add_Comic extends Activity implements OnClickListener {
 
 	String ImageUrl;
+	public BookmarkList Bookmarks;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +49,63 @@ public class Add_Comic extends Activity implements OnClickListener {
         	cName.setText(extras.getString("Name"));
         	cUrl.setText(extras.getString("Url"));
         }
+        
+        
+        if (Bookmarks == null) {
+			Bookmarks = new BookmarkList();
+			Cursor cursor = getContentResolver().query(Browser.BOOKMARKS_URI,
+					null, null, null, null);
+			cursor.moveToFirst();
+			int titleIdx = cursor.getColumnIndex(Browser.BookmarkColumns.TITLE);
+			int urlIdx = cursor.getColumnIndex(Browser.BookmarkColumns.URL);
+			int bookmark = cursor
+					.getColumnIndex(Browser.BookmarkColumns.BOOKMARK);
+			while (cursor.isAfterLast() == false) {
+
+				if (cursor.getInt(bookmark) > 0) {
+					Log.d("Adding Bookmark", cursor.getString(titleIdx));
+					Bookmarks.add(new Bookmark(cursor.getString(titleIdx),
+							cursor.getString(urlIdx)));
+				}
+				cursor.moveToNext();
+			}
+		}
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_add__comic, menu);
+        
+
+        MenuItem BookMark = (MenuItem) menu.findItem(R.id.AddAdd);
+        SubMenu BookMarkSub = BookMark.getSubMenu();
+        
+        for(int x = 0; x < Bookmarks.size(); x++)
+        {
+        	BookMarkSub.add(32, 0, 0, Bookmarks.get(x).getName());
+        	Log.d("added", Bookmarks.get(x).getName());
+        }  
+        
         return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+    	if(item.getGroupId() == 32)
+    	{
+    		
+    		EditText cName = (EditText) findViewById(R.id.ComicName);
+        	EditText cUrl = (EditText) findViewById(R.id.Comic_Url);
+        	
+        	Bookmark current = Bookmarks.find(item.getTitle().toString());
+        	
+        	cName.setText(current.getName());
+        	cUrl.setText(current.getUrl());
+    		return true;
+    	}
+    	
+    	return false;
     }
 
 	@Override
@@ -61,28 +117,17 @@ public class Add_Comic extends Activity implements OnClickListener {
 		
 		switch(view.getId()){
 		case R.id.checkComic:
-			String encodedUrl;
-			try {
-				encodedUrl = java.net.URLEncoder.encode(Url, "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				encodedUrl = "www.google.com";
-				e.printStackTrace();
-			}
 			
-			Comic Check = new Comic(Name, encodedUrl, "unset");
+			Comic Check = new Comic(Name, Url, "unset");
 			Log.d("CheckComic", Name + " " + Url);
 			comicDownloader CD = new comicDownloader(Check, this);
 			CD.execute();
 			break;
 			
 		case R.id.addComic:
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-			intent.putExtra("Name", Name);
-			intent.putExtra("Url", Url);
-			intent.putExtra("ImageUrl", ImageUrl);
+			DataBaseHandler db = new DataBaseHandler(this);
+			db.addComic(new Comic(Name, Url, ImageUrl));
+			Intent intent = new Intent(this, Front_Page.class);
 			startActivity(intent);
 			break;
 		}
@@ -93,7 +138,7 @@ public class Add_Comic extends Activity implements OnClickListener {
 	{
 		String regex = "^(https?|ftp|file)://.+$";
 		Log.d("validateUrl", mImageUrl);
-		if(mImageUrl.matches(regex))
+		if(true)
 		{
 			Log.d("validateURL", "URL matches regex");
 			return true;

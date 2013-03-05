@@ -196,10 +196,15 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             //bla
             
         case R.id.UpdateAll:
-        	ComicUpdater updateAll;
+        	//ComicUpdater updateAll;
         	//Uses the comicUpdater UpdateAll functionality
-        	updateAll = new ComicUpdater(this, true);
-        	updateAll.execute();
+        	//updateAll = new ComicUpdater(this, true);
+        	//updateAll.execute();
+        	for(int x = 0; x < Comics.size(); x++)
+        	{
+        		ComicUpdater comicupdates = new ComicUpdater(x, this);
+        		comicupdates.execute();
+        	}
         	return true;
         case R.id.Add:
         	//Starts our Add_Comic Activity
@@ -219,7 +224,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
  
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
     	
-    	List<Fragment> CFs;
+    	List<ComicFragment> CFs;
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
             
@@ -230,9 +235,11 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             if(CFs == null)
             {
             	//Our list of all comic Fragments
-            	CFs = new ArrayList<Fragment>();
+            	CFs = new ArrayList<ComicFragment>();
             }
         }
+        
+        
                 
         public void removeFragment(Fragment item)
         {
@@ -241,7 +248,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         
         public Fragment getFragment(int position)
         {
-        	if(CFs.size() != 0)
+        	if(CFs.size() != 0 && position < CFs.size())
         	{
         		return CFs.get(position);
         	}
@@ -257,7 +264,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             args.putInt(ComicFragment.ARG_SECTION_NUMBER, i);
             //args.putString("Url", Comics.get(i).getImageUrl());
             fragment.setArguments(args);
-            CFs.add(fragment);
+            CFs.add((ComicFragment) fragment);
             return fragment;
         }
 
@@ -422,9 +429,13 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 						Comics.get(i).setComicBitmap(mybitmap);
 						
 						//Set the imageview for that comic to the loading bitmap
-						frag = ComicFrags.get(i);
-						frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
+						if(frag != null && ComicFrags.size() != 0)
+						{
+							frag = ComicFrags.get(i);
+							frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
+						}
 					}
+					
 				} else {
 					//Set bitmap to loading
 					Bitmap mybitmap = BitmapFactory.decodeResource(
@@ -432,8 +443,10 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 					//Set the comicbitmap to loading
 					Comics.get(position).setComicBitmap(mybitmap);
 					//Update our current view
-					frag.getIV().setImageBitmap(
-							Comics.get(position).getComicBitmap());
+					if(frag != null)
+					{
+						frag.getIV().setImageBitmap(Comics.get(position).getComicBitmap());
+					}
 				}
 			}
     	}
@@ -446,7 +459,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 				{
 					//Update all comics
 					Comics.get(i).Update();
-					frag = ComicFrags.get(i);
+					//frag = ComicFrags.get(i);
 					//frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
 				
 				}
@@ -462,12 +475,19 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 		@Override
 	    protected void onPostExecute(Void result) {
 			//Update all imageview to new comic
+			//Update dataBase
+			DataBaseHandler db = new DataBaseHandler(ourContext);
 			if(updateAll)
 			{
 				for(int i = 0; i < Comics.size(); i++)
 				{
 					frag = ComicFrags.get(i);
-					frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
+					if(frag != null)
+					{
+						frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
+					}
+					db.updateComic(Comics.get(i));
+					
 				}
 			}
 			else

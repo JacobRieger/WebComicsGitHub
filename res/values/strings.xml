@@ -23,5 +23,6 @@
     <string name="Placeholder">TextView</string>
     <string name="UpdateAll">Update All</string>
     <string name="GoTo">GoTo</string>
+    <string name="title_activity_front__page">Front_Page</string>
 
 </resources>

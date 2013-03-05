@@ -4,7 +4,6 @@ package code.webcomicviewer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -59,7 +58,7 @@ public class Comic {
 		isUpdated = true;
 	}
 	
-	public Comic(int ID, String name, String URL, String updated, String ImageUrl) {
+	public Comic(int ID, String name, String ImageUrl, String updated, String URL) {
 		if(updated == "true")
 		{
 			isUpdated = true;
@@ -194,7 +193,6 @@ public class Comic {
 		Log.d("Comic", "Updated called in " + this.getName());
 		setNewImageurl(RetrieveImgStrings());
 		retrieveImageBitmap();
-
 	}
 
 	public double Similarity(String newString) {
@@ -266,8 +264,15 @@ public class Comic {
 			// Not sure about consequences of that
 			Connection c = Jsoup.connect(url).timeout(1000000);
 			c.followRedirects(true);
+		
 			// Get the html
 			Document page = c.get();
+			Elements meta = page.select("html head meta");
+		    if (meta.attr("http-equiv").contains("REFRESH"))
+		    {
+		        page = Jsoup.connect(meta.attr("content").split("=")[1]).get();
+		        System.out.println(page.baseUri());
+		    }
 			// System.out.println(page.html());
 			// Now we have the html we need to select the elements we want
 			Elements imgs = page.select("img[src]");
@@ -302,7 +307,7 @@ public class Comic {
 				URL testurl = new URL(extracted);
 				URLConnection conn = testurl.openConnection();
 				int cLength = conn.getContentLength();
-				// Log.d("Length Checking", New + " " + cLength);
+				Log.d("Length Checking", New + " " + cLength);
 				if (cLength > 10000) {
 					// Log.d("Length Checking", New + " " + cLength);
 					ImgStrings.add(New);
@@ -360,6 +365,7 @@ public class Comic {
 		{
 			height = 0; width = 0; AR = 0; area = 0; rating = 0;
 			current = ImageUrls.get(i);
+			Log.d("ImageUrl", current);
 			try {
 				//Now we get the sizes
 				URL oururl = new URL(current);
