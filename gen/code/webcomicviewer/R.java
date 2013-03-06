@@ -17,44 +17,51 @@ public final class R {
         public static final int loading=0x7f020003;
     }
     public static final class id {
-        public static final int Add=0x7f070015;
-        public static final int AddAdd=0x7f070011;
-        public static final int AddNewComicFront=0x7f07000b;
-        public static final int Add_Bookmark=0x7f070017;
+        public static final int AddAdd=0x7f070017;
+        public static final int AddNewComicFront=0x7f070011;
         public static final int ComicName=0x7f070002;
         public static final int Comic_Url=0x7f070001;
-        public static final int ImageView01=0x7f07000f;
+        public static final int ImageView01=0x7f070015;
         public static final int NameLabel=0x7f070005;
-        public static final int None=0x7f070007;
-        public static final int Reload=0x7f070018;
-        public static final int Title=0x7f07000e;
-        public static final int TitleName=0x7f070010;
-        public static final int Update=0x7f070014;
-        public static final int UpdateAll=0x7f070016;
-        public static final int ViewUpdate=0x7f070019;
+        public static final int None=0x7f07000d;
+        public static final int Reload=0x7f07001b;
+        public static final int Title=0x7f070014;
+        public static final int TitleName=0x7f070016;
+        public static final int Update=0x7f07001a;
+        public static final int ViewBrowser=0x7f07001d;
+        public static final int ViewUpdate=0x7f07001c;
         public static final int addComic=0x7f070000;
+        public static final int button1=0x7f07000c;
         public static final int checkComic=0x7f070003;
+        public static final int editText1=0x7f070008;
+        public static final int editText2=0x7f070007;
         public static final int imageView1=0x7f070004;
-        public static final int listView1=0x7f07000a;
-        public static final int loading=0x7f070013;
-        public static final int menu_settings=0x7f070012;
-        public static final int pager=0x7f07000c;
-        public static final int pager_title_strip=0x7f07000d;
-        public static final int updateAll=0x7f070009;
+        public static final int listView1=0x7f070010;
+        public static final int loading=0x7f070019;
+        public static final int menu_settings=0x7f070018;
+        public static final int pager=0x7f070012;
+        public static final int pager_title_strip=0x7f070013;
+        public static final int textView1=0x7f070009;
+        public static final int textView2=0x7f07000a;
+        public static final int textView3=0x7f07000b;
+        public static final int updateAll=0x7f07000f;
         public static final int urlLabel=0x7f070006;
-        public static final int viewComics=0x7f070008;
+        public static final int viewComics=0x7f07000e;
     }
     public static final class layout {
         public static final int activity_add__comic=0x7f030000;
-        public static final int activity_front__page=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int activity_view__comic=0x7f030003;
+        public static final int activity_edit__comic=0x7f030001;
+        public static final int activity_front__page=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_view__comic=0x7f030004;
     }
     public static final class menu {
         public static final int activity_add__comic=0x7f060000;
-        public static final int activity_front__page=0x7f060001;
-        public static final int activity_main=0x7f060002;
-        public static final int activity_view__comic=0x7f060003;
+        public static final int activity_comic_updater=0x7f060001;
+        public static final int activity_edit__comic=0x7f060002;
+        public static final int activity_front__page=0x7f060003;
+        public static final int activity_main=0x7f060004;
+        public static final int activity_view__comic=0x7f060005;
     }
     public static final class string {
         public static final int AddComicButton=0x7f04000d;
@@ -72,6 +79,8 @@ public final class R {
         public static final int menu_settings=0x7f040005;
         public static final int title_activity_add__comic=0x7f04000b;
         public static final int title_activity_blank_main_page=0x7f04000a;
+        public static final int title_activity_comic_updater=0x7f040019;
+        public static final int title_activity_edit__comic=0x7f040018;
         public static final int title_activity_front__page=0x7f040017;
         public static final int title_activity_front_page=0x7f040009;
         public static final int title_activity_main=0x7f040006;

@@ -128,6 +128,8 @@ public class Add_Comic extends Activity implements OnClickListener {
 			DataBaseHandler db = new DataBaseHandler(this);
 			db.addComic(new Comic(Name, Url, ImageUrl));
 			Intent intent = new Intent(this, Front_Page.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			break;
 		}

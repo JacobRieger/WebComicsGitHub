@@ -22,7 +22,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
             <intent-filter>
-                
             </intent-filter>
         </activity>
         <activity
@@ -39,6 +38,24 @@
         <activity
             android:name=".Front_Page"
             android:label="@string/title_activity_front__page" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Edit_Comic"
+            android:label="@string/title_activity_edit__comic" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ComicUpdater"
+            android:label="@string/title_activity_comic_updater" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

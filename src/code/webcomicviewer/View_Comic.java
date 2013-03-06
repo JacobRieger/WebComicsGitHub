@@ -4,10 +4,12 @@ import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 
 import java.lang.ref.WeakReference;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.Menu;
@@ -66,6 +68,10 @@ public class View_Comic extends Activity {
     	case R.id.ViewUpdate:
     		ComicUpdater update = new ComicUpdater(this);
     		update.execute();
+    		
+    	case R.id.ViewBrowser:
+    		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Url));
+    		startActivity(browserIntent);
     	}
     	return true;
     }
@@ -132,6 +138,8 @@ public class View_Comic extends Activity {
 			Log.d("ComicIUrl", current.getImageUrl());
 			Log.d("ComicUrl", current.getUrl());
 			current.Update();
+			db.updateComic(current);
+			
 			return null;
 		}
 		

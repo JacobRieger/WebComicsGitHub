@@ -217,7 +217,7 @@ public class Comic {
 		// System.out.println("SetNewImageurl called");
 		double greatest = 0.0;
 		// Base string
-		String newImageurl = "Unset";
+		String newImageurl = imageUrl;
 		// Flag allows us to check if string was changed
 		boolean flag = false;
 		// This is checking to see if the image has changed since last time we
@@ -229,8 +229,9 @@ public class Comic {
 				// saved string
 				
 				double temp = Similarity(imageURLs.get(i));
+				
 				Log.d("Comic.SetNewImageurl", temp + " " + imageURLs.get(i));
-				if (temp >= greatest) {
+				if (temp >= greatest && imageURLs.get(i) != "Unset") {
 					// Set our flag to true for below
 					flag = true;
 					// Most common string is set for update
@@ -258,7 +259,9 @@ public class Comic {
 	public List<String> RetrieveImgStrings() {
 		// Connects to the url and retrieves all the img urls from the site
 		// and returns them in strings
+		Log.d("RetrieveImgStrings", "Called");
 		try {
+			List<String> ImgStrings = new ArrayList<String>();
 			// Connecting to the site
 			// Long timeout given, as was terminating too quickly
 			// Not sure about consequences of that
@@ -275,16 +278,25 @@ public class Comic {
 		    }
 			// System.out.println(page.html());
 			// Now we have the html we need to select the elements we want
-			Elements imgs = page.select("img[src]");
+			Elements imgs = page.select("img");
+			
+			for (Element e : page.select("img")) {
+				String attr = e.attr("style");
+				if(attr.indexOf("http://") > 0)
+				{
+					String img = attr.substring( attr.indexOf("http://"), attr.indexOf(")"));
+					ImgStrings.add(img);
+				}
+			}
 			// We are going to iterate through these elements
 			Iterator<Element> iterator = imgs.iterator();
 			// Extracted string url's from the elements go into ImgStrings
-			List<String> ImgStrings = new ArrayList<String>();
 
 			while (iterator.hasNext()) {
 				// Here we iterate through the elements and extract
 				// the url from the src of the element
 				Element temp = iterator.next();
+				//System.out.println(temp.toString());
 				String extracted = temp.attr("src");
 				//System.out.println(extracted);
 				if (extracted.startsWith("/") || !extracted.startsWith("http")) {
@@ -365,7 +377,7 @@ public class Comic {
 		{
 			height = 0; width = 0; AR = 0; area = 0; rating = 0;
 			current = ImageUrls.get(i);
-			Log.d("ImageUrl", current);
+			//Log.d("ImageUrl", current);
 			try {
 				//Now we get the sizes
 				URL oururl = new URL(current);
@@ -384,6 +396,7 @@ public class Comic {
 					//Print the dimmensions for testing purposes
 					//System.out.println(width + " " + height);
 					//System.out.println((float)imgHeight/(float)imgWidth);
+					
 					AR = ((float) height / (float) width);
 					area = height * width;
 					if (AR > 1) {
@@ -392,15 +405,19 @@ public class Comic {
 						rating = area / AR;
 					}
 					rating = rating / 1000000;
-					if (area > 200000) {
+					if (area > 280000) {
 						rating = rating * (float) 1.5;
 					}
 					if (AR < .2 || AR > 3.25) {
-						rating = rating / 3;
+						Log.d("AR deduction" , current);
+						rating = rating - (float)0.25;
 					}
 					if (max == "unset") {
 						max = current;
 					} 
+					Log.d("Area", Integer.toString(area));
+					Log.d("AR", Float.toString(AR));
+					Log.d("Rating", current + " " + rating);
 					
 					if (rating > maxRating) {
 						Log.d("Rating", "Max set to " + current);

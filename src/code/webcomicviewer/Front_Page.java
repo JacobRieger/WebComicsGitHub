@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -93,6 +93,12 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
 				Log.d("Add", "Add Comic Pushed");
 	        	Intent intent = new Intent(this, Add_Comic.class);
 	        	startActivity(intent);
+	        	break;
+			case R.id.updateAll:
+				Log.d("Updateall", "Update all pushed");
+				ComicUpdater updater = new ComicUpdater(this);
+				updater.execute();
+				break;
 		}
 		
 	}
@@ -112,11 +118,35 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		
-		Dialog dialog = new Dialog(this);
-		Button Edit = new Button(this);
-		Edit.setText("Edit Comic Info");
-		dialog.addContentView(Edit, new ViewGroup.LayoutParams(-1,-1));
-		dialog.show();
+		TextView textview = (TextView) view;
+		final String name = textview.getText().toString();
+		final Context context = view.getContext();
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Options");
+		
+		builder.setPositiveButton("Edit Comic", new DialogInterface.OnClickListener() {                     
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	Intent intent = new Intent(context, Edit_Comic.class);
+				intent.putExtra("Comic", name);
+				startActivity(intent);
+            } 
+        });
+		
+		builder.setNegativeButton("Remove", new DialogInterface.OnClickListener() {                     
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	DataBaseHandler db = new DataBaseHandler(context);
+            	db.deleteComic(db.getComic(name));
+            	Intent intent = getIntent();
+            	intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            	startActivity(intent);
+            } 
+        });
+		
+		builder.show();
+		
 		return false;
 	}
 }

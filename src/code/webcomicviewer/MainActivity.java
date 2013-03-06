@@ -86,16 +86,15 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         	}
         }
         
-        if(Comics.size() == 0)
+        
+    	//This is for when the app is destroyed
+    	//Loads all comics from the database to the current activity
+    	Comics = db.getAllComics();
+    	for(int i = 0; i < Comics.size(); i++)
         {
-        	//This is for when the app is destroyed
-        	//Loads all comics from the database to the current activity
-        	Comics = db.getAllComics();
-        	for(int i = 0; i < Comics.size(); i++)
-            {
-            	Comics.get(i).setUpdated(true);
-            }
+        	Comics.get(i).setUpdated(true);
         }
+        
         
         if (Bookmarks == null) {
         	
@@ -128,24 +127,14 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         
         //Adding two menu items that change at runtime
         //Allows to switch view
-        SubMenu GoTo = menu.addSubMenu("GoTo");
-        //Removes a comic from the list
-        SubMenu Remove = menu.addSubMenu("Remove Comic");
-        MenuItem BookMark = (MenuItem) menu.findItem(R.id.Add_Bookmark);
-        SubMenu BookMarkSub = BookMark.getSubMenu();
-        
+        SubMenu GoTo = menu.addSubMenu("GoTo");    
         for(int i = 0; i < Comics.size(); i++)
         {
         	//Set the button names in the submenus
         	//Can't have them both be the same, still need to investigate
         	GoTo.add("Skip to ".concat(Comics.get(i).getName()));
-        	Remove.add(Comics.get(i).getName());
         }
-        for(int x = 0; x < Bookmarks.size(); x++)
-        {
-        	BookMarkSub.add(32, 0, 0, Bookmarks.get(x).getName());
-        	Log.d("added", Bookmarks.get(x).getName());
-        }
+        
         
         return super.onCreateOptionsMenu(menu);
         
@@ -156,28 +145,8 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     	
     	String Title = item.getTitle().toString();
     	
-    	if(item.getGroupId() == 32)
-    	{
-    		Intent intent = new Intent(this, Add_Comic.class);
-    		Bookmark current = Bookmarks.find(item.getTitle().toString());
-    		intent.putExtra("Name", item.getTitle());
-    		intent.putExtra("Url", current.getUrl());
-    		startActivity(intent);
-    		return true;
-    	}
-    	
     	for(int i = 0; i < Comics.size(); i++)
     	{
-    		//Checking to see if item clicked was our remove comic button
-    		if(Title.equals(Comics.get(i).getName()))
-    		{
-    			//Delete it from the Database and our current comic list
-    			DataBaseHandler db = new DataBaseHandler(this);
-    			db.deleteComic(Comics.get(i));
-    			Comics.remove(i);
-    			//Set our view back to the front
-    			mViewPager.setCurrentItem(0);
-    		}
     		if(Title.equals("Skip to ".concat(Comics.get(i).getName())))
     		{
     			//Sets our view to the selected comic
@@ -195,7 +164,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             return true;
             //bla
             
-        case R.id.UpdateAll:
+        /*case R.id.UpdateAll:
         	//ComicUpdater updateAll;
         	//Uses the comicUpdater UpdateAll functionality
         	//updateAll = new ComicUpdater(this, true);
@@ -205,18 +174,8 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         		ComicUpdater comicupdates = new ComicUpdater(x, this);
         		comicupdates.execute();
         	}
-        	return true;
-        case R.id.Add:
-        	//Starts our Add_Comic Activity
-        	Log.d("Add", "Add Comic Pushed");
-        	Intent intent = new Intent(this, Add_Comic.class);
-        	startActivity(intent);
-        	return true;
-        	
-        case R.id.Add_Bookmark:
-        	Log.d("Add", "Bookmarks");
-        	
-            
+        	return true;*/
+          
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -396,12 +355,14 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     	List<ComicFragment> ComicFrags = new ArrayList<ComicFragment>(); // our list for UpdateAll
     	Context ourContext;
     	boolean updateAll; //If we want to update all comics, true, otherwise false
+    	DataBaseHandler db;
     	
     	public ComicUpdater(int i, Context context)
     	{
     		position = i;
     		frag = (ComicFragment) mSectionsPagerAdapter.getFragment(position);
     		ourContext = context;
+    		db = new DataBaseHandler(context);
     	}
     	
     	public ComicUpdater(Context context, boolean UpdateAll)
@@ -459,6 +420,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 				{
 					//Update all comics
 					Comics.get(i).Update();
+					
 					//frag = ComicFrags.get(i);
 					//frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
 				
@@ -467,7 +429,9 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 			else
 			{
 				//Update current comic
-				Comics.get(position).Update();
+				Comic current = Comics.get(position);
+				current.Update();
+				db.updateComic(current);
 			}
 			return null;
 		}
@@ -508,6 +472,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 			Intent intent = new Intent(this, View_Comic.class);
 			intent.putExtra("ImageUrl", Selected.getImageUrl());
 			intent.putExtra("Name", Selected.getName());
+			intent.putExtra("Url", Selected.getUrl());
 			startActivity(intent);
 		}
 		return false;
