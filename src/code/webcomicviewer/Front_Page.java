@@ -23,7 +23,8 @@ import android.widget.TextView;
 public class Front_Page extends Activity implements OnClickListener, OnItemClickListener,
 		OnItemLongClickListener {
 
-	protected ArrayList<Comic> Comics;
+	//protected ArrayList<Comic> Comics;
+	protected ArrayList<String> ComicNames;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +42,11 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
         addComic.setOnClickListener(this);
         
         DataBaseHandler db = new DataBaseHandler(this);
-        Comics = db.getAllComics();
-        String[] comicNames = new String[Comics.size()];
-        for(int i = 0; i < Comics.size(); i++)
+        ComicNames = db.getAllComicNames();
+        String[] comicNames = new String[ComicNames.size()];
+        for(int i = 0; i < ComicNames.size(); i++)
         {
-        	comicNames[i] = Comics.get(i).getName();
+        	comicNames[i] = ComicNames.get(i);
         }
         
         ArrayAdapter<String> comicAdapter = new ArrayAdapter<String>(this,
@@ -53,27 +54,7 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
         
         comicList.setAdapter(comicAdapter);
     }
-    
-    @Override
-    public void onResume()
-    {
-    	super.onResume();
-    	
-    	ListView comicList = (ListView) findViewById(R.id.listView1);
-    	DataBaseHandler db = new DataBaseHandler(this);
-        Comics = db.getAllComics();
-        String[] comicNames = new String[Comics.size()];
-        for(int i = 0; i < Comics.size(); i++)
-        {
-        	comicNames[i] = Comics.get(i).getName();
-        }
-         
-        ArrayAdapter<String> comicAdapter = new ArrayAdapter<String>(this,
-       		android.R.layout.simple_list_item_1, comicNames);
-         
-        comicList.setAdapter(comicAdapter);
-    	
-    }
+   
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,7 +67,7 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
 		
 		switch (arg0.getId()){
 			case R.id.viewComics:
-				Intent view = new Intent(this, MainActivity.class);
+				Intent view = new Intent(this, View_Comics.class);
 				startActivity(view);
 				break;
 			case R.id.AddNewComicFront:
@@ -107,9 +88,9 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		
 		Intent intent = new Intent(this, View_Comic.class);
-		intent.putExtra("Name", Comics.get(position).getName());
-		intent.putExtra("ImageUrl", Comics.get(position).getImageUrl());
-		intent.putExtra("Url", Comics.get(position).getUrl());
+		intent.putExtra("Name", ComicNames.get(position));
+		//intent.putExtra("ImageUrl", Comics.get(position).getImageUrl());
+		//intent.putExtra("Url", Comics.get(position).getUrl());
 		startActivity(intent);
 		
 	}

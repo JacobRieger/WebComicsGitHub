@@ -26,5 +26,6 @@
     <string name="title_activity_front__page">Front_Page</string>
     <string name="title_activity_edit__comic">Edit_Comic</string>
     <string name="title_activity_comic_updater">ComicUpdater</string>
+    <string name="title_activity_comic__gallery">Comic_Gallery</string>
 
 </resources>

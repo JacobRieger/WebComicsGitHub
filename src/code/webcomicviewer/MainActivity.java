@@ -162,19 +162,7 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
         	ComicUpdater comicUpdater = new ComicUpdater(i, this);
         	comicUpdater.execute();
             return true;
-            //bla
             
-        /*case R.id.UpdateAll:
-        	//ComicUpdater updateAll;
-        	//Uses the comicUpdater UpdateAll functionality
-        	//updateAll = new ComicUpdater(this, true);
-        	//updateAll.execute();
-        	for(int x = 0; x < Comics.size(); x++)
-        	{
-        		ComicUpdater comicupdates = new ComicUpdater(x, this);
-        		comicupdates.execute();
-        	}
-        	return true;*/
           
         default:
             return super.onOptionsItemSelected(item);
@@ -271,13 +259,18 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             //Set the onClickListener
             //imageView.setOnClickListener(this);
             //This is the comic that will be shown in the position given
-            Comic Current = Comics.get(args.getInt(ARG_SECTION_NUMBER));
-    
+            //Comic Current = Comics.get(args.getInt(ARG_SECTION_NUMBER));
+            
+            DataBaseHandler db = new DataBaseHandler(getActivity());
+            Log.d("DataBase", Integer.toString(db.getComicsCount()));
+            ArrayList<Comic> comics = db.getAllComics();
+          
+            Comic Current = comics.get(args.getInt(ARG_SECTION_NUMBER));
             //This is what will download the image when needed
             
-            imageDownloader downloader = new imageDownloader(imageView, Current, getActivity());
-            downloader.execute();
-            Log.d("onCreateView", "downloader exectuted");
+            //imageDownloader downloader = new imageDownloader(imageView, Current, getActivity());
+            //downloader.execute();
+            //Log.d("onCreateView", "downloader exectuted");
            
             //Sets the imageview to the current bitmap
             imageView.setImageBitmap(Current.getComicBitmap());
@@ -352,10 +345,9 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     	//This is called to update all comics, or just the current one
     	int position; //This is when the single on is called
     	ComicFragment frag; //How we access the imageview
-    	List<ComicFragment> ComicFrags = new ArrayList<ComicFragment>(); // our list for UpdateAll
     	Context ourContext;
-    	boolean updateAll; //If we want to update all comics, true, otherwise false
     	DataBaseHandler db;
+    	Bitmap ComicBitmap;
     	
     	public ComicUpdater(int i, Context context)
     	{
@@ -365,74 +357,42 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
     		db = new DataBaseHandler(context);
     	}
     	
-    	public ComicUpdater(Context context, boolean UpdateAll)
-    	{
-    		updateAll = UpdateAll;
-    		for(int i = 0; i < Comics.size(); i++)
-    		{
-    			frag = (ComicFragment) mSectionsPagerAdapter.getFragment(i);
-    			ComicFrags.add(frag);
-    		}
-    		ourContext = context;
-    	}
-    	
     	@Override
     	protected void onPreExecute()
     	{
     		if (frag != null) {
-				if (updateAll) {
-					
-					for (int i = 0; i < Comics.size(); i++) {
-						//We get our loading bitmap to display while fetching image
-						Bitmap mybitmap = BitmapFactory.decodeResource(
-								ourContext.getResources(), R.drawable.loading);
-						//Set our comic to the new bitmap
-						Comics.get(i).setComicBitmap(mybitmap);
-						
-						//Set the imageview for that comic to the loading bitmap
-						if(frag != null && ComicFrags.size() != 0)
-						{
-							frag = ComicFrags.get(i);
-							frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
-						}
-					}
-					
-				} else {
-					//Set bitmap to loading
-					Bitmap mybitmap = BitmapFactory.decodeResource(
-							ourContext.getResources(), R.drawable.loading);
-					//Set the comicbitmap to loading
-					Comics.get(position).setComicBitmap(mybitmap);
-					//Update our current view
-					if(frag != null)
-					{
-						frag.getIV().setImageBitmap(Comics.get(position).getComicBitmap());
-					}
+				
+				//Set bitmap to loading
+				Bitmap mybitmap = BitmapFactory.decodeResource(
+						ourContext.getResources(), R.drawable.loading);
+				//Set the comicbitmap to loading
+				Comics.get(position).setComicBitmap(mybitmap);
+				//Update our current view
+				if(frag != null)
+				{
+					frag.getIV().setImageBitmap(Comics.get(position).getComicBitmap());
 				}
+				
 			}
     	}
     	
 		@Override
 		protected Void doInBackground(Void... params) {
-			if(updateAll)
+
+			//Update current comic
+			Comic current = Comics.get(position);
+			//current.retrieveImageBitmap();
+			ComicBitmap = current.getComicBitmap();
+			if(current.modified())
 			{
-				for(int i = 0; i < Comics.size(); i++)
-				{
-					//Update all comics
-					Comics.get(i).Update();
-					
-					//frag = ComicFrags.get(i);
-					//frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
-				
-				}
-			}
-			else
-			{
-				//Update current comic
-				Comic current = Comics.get(position);
 				current.Update();
 				db.updateComic(current);
 			}
+			else
+			{
+				current.setComicBitmap(ComicBitmap);
+			}
+			
 			return null;
 		}
 		
@@ -441,23 +401,9 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
 			//Update all imageview to new comic
 			//Update dataBase
 			DataBaseHandler db = new DataBaseHandler(ourContext);
-			if(updateAll)
-			{
-				for(int i = 0; i < Comics.size(); i++)
-				{
-					frag = ComicFrags.get(i);
-					if(frag != null)
-					{
-						frag.getIV().setImageBitmap(Comics.get(i).getComicBitmap());
-					}
-					db.updateComic(Comics.get(i));
-					
-				}
-			}
-			else
-			{
-				frag.getIV().setImageBitmap(Comics.get(position).getComicBitmap());
-			}
+			db.updateComic(Comics.get(position));
+			frag.getIV().setImageBitmap(Comics.get(position).getComicBitmap());
+			
 	    }
     }
 

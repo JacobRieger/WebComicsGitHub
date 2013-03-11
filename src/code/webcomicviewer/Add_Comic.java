@@ -25,6 +25,7 @@ public class Add_Comic extends Activity implements OnClickListener {
 
 	String ImageUrl;
 	public BookmarkList Bookmarks;
+	private Comic AddedComic;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +127,9 @@ public class Add_Comic extends Activity implements OnClickListener {
 			
 		case R.id.addComic:
 			DataBaseHandler db = new DataBaseHandler(this);
-			db.addComic(new Comic(Name, Url, ImageUrl));
+			//Comic NewComic = new Comic(Name, Url, ImageUrl);
+			AddedComic.setUpdatedSince("0");
+			db.addComic(AddedComic);
 			Intent intent = new Intent(this, Front_Page.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -194,6 +197,7 @@ public class Add_Comic extends Activity implements OnClickListener {
 				ImageView IV = (ImageView) findViewById(R.id.imageView1);
 				IV.setImageBitmap(ourComic.getComicBitmap());
 				ImageUrl = ourComic.getImageUrl();
+				AddedComic = ourComic;
 			}
 			else
 			{

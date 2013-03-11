@@ -13,9 +13,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -34,6 +33,7 @@ public class Comic {
 	private Bitmap comicBitmap;
 	private String url;
 	private boolean isUpdated;
+	private String updatedSince;
 
 	public Comic(String name) {
 		Name = name;
@@ -74,6 +74,36 @@ public class Comic {
 		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
 	}
 	
+	public Comic(int ID, String name, String ImageUrl, String updated, String URL,
+			String UpdatedSince, byte[] bitmapbytes) {
+		if(updated == "true")
+		{
+			isUpdated = true;
+		}
+		else
+		{
+			isUpdated = false;
+		}
+		id = ID;
+		Name = name;
+		imageUrl = ImageUrl;
+		url = URL;
+		//comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
+		Log.d("BitmapFactory", "About to create Bitmap TESTING");
+		
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeByteArray(
+				bitmapbytes, 0, bitmapbytes.length, options);
+		options.inSampleSize = calculateInSampleSize(options, 720, 1230);
+		options.inJustDecodeBounds = false;
+		
+		comicBitmap = BitmapFactory.decodeByteArray(
+				bitmapbytes, 0, bitmapbytes.length, options);
+		
+		updatedSince = String.valueOf(UpdatedSince);
+	}
+	
 	public Comic()
 	{
 		
@@ -110,6 +140,20 @@ public class Comic {
 	public void setComicBitmap(Bitmap comicBitmap) {
 		this.comicBitmap = comicBitmap;
 	}
+	public void setComicBitmap(byte[] bitmapbytes)
+	{
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeByteArray(
+				bitmapbytes, 0, bitmapbytes.length, options);
+		options.inSampleSize = calculateInSampleSize(options, 720, 900);
+		System.out.println(options.inSampleSize);
+		options.inJustDecodeBounds = false;
+		
+		comicBitmap = BitmapFactory.decodeByteArray(
+				bitmapbytes, 0, bitmapbytes.length, options);
+	}
+		
 
 	public boolean isUpdated() {
 		return isUpdated;
@@ -141,6 +185,14 @@ public class Comic {
 		return bitmapdata;
 	}
 
+	public String getUpdatedSince()
+	{
+		return String.valueOf(updatedSince);
+	}
+	public void setUpdatedSince(String since)
+	{
+		updatedSince = since;
+	}
 	public void retrieveImageBitmap() {
 		try {
 			// Log.e("src",src);
@@ -190,9 +242,46 @@ public class Comic {
 	}
 
 	public void Update() {
+		
 		Log.d("Comic", "Updated called in " + this.getName());
 		setNewImageurl(RetrieveImgStrings());
 		retrieveImageBitmap();
+		
+	}
+	
+	public boolean modified()
+	{
+		long oldDate;
+		long newDate;
+		if(updatedSince != null)
+		{
+			oldDate = Long.valueOf(updatedSince);
+		}
+		else
+		{
+			oldDate = 0;
+		}
+		
+		System.out.println(oldDate);
+		try
+		{
+			URLConnection connection = new URL(url).openConnection();
+			newDate = connection.getLastModified();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			newDate = 0;
+		}
+		
+		if(newDate > oldDate || newDate ==0)
+		{
+			oldDate = newDate;
+			updatedSince = String.valueOf(oldDate);
+			return true;
+		}
+		return false;
+	
 	}
 
 	public double Similarity(String newString) {
@@ -215,6 +304,7 @@ public class Comic {
 		// most similar to that former.
 		// This is our similarity variable
 		// System.out.println("SetNewImageurl called");
+		
 		double greatest = 0.0;
 		// Base string
 		String newImageurl = imageUrl;
@@ -265,7 +355,7 @@ public class Comic {
 			// Connecting to the site
 			// Long timeout given, as was terminating too quickly
 			// Not sure about consequences of that
-			Connection c = Jsoup.connect(url).timeout(1000000);
+			HttpConnection c = (HttpConnection) Jsoup.connect(url).timeout(1000000);
 			c.followRedirects(true);
 		
 			// Get the html
@@ -439,5 +529,29 @@ public class Comic {
 			}
 		}
 	}
+	
+	public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    // Raw height and width of image
+    final int height = options.outHeight;
+    final int width = options.outWidth;
+    int inSampleSize = 1;
+
+    if (height > reqHeight || width > reqWidth) {
+
+        // Calculate ratios of height and width to requested height and width
+        final int heightRatio = Math.round((float) height / (float) reqHeight);
+        final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+        // Choose the smallest ratio as inSampleSize value, this will guarantee
+        // a final image with both dimensions larger than or equal to the
+        // requested height and width.
+        inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+    }
+
+    return inSampleSize;
+	}
+	
+	
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
 public class ComicUpdater extends AsyncTask<Void, Void, Void> {
@@ -11,6 +12,7 @@ public class ComicUpdater extends AsyncTask<Void, Void, Void> {
 	Context context;
 	ProgressDialog pdialog;
 	DataBaseHandler db;
+	Bitmap ComicBitmap;
 	
 	public ComicUpdater(Context ourcontext)
 	{
@@ -23,21 +25,29 @@ public class ComicUpdater extends AsyncTask<Void, Void, Void> {
 	{
 		pdialog = new ProgressDialog(context);
 		pdialog.setCancelable(false);
+		//pdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		pdialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		pdialog.setMax(db.getAllComics().size());
+		pdialog.setMax(db.getComicsCount());
 		pdialog.setMessage("Updating Comics");
 		pdialog.show();
 	}
 	
 	@Override
 	protected Void doInBackground(Void... params) {
-		
-		ArrayList<Comic> Comics = db.getAllComics();
-		for(int i = 0; i < Comics.size(); i++)
+		System.out.println("UPDATING " + db.getComicsCount() + " COMICS");
+		ArrayList<String> ComicNames = db.getAllComicNames();
+		for(int i = 0; i < db.getComicsCount(); i++)
 		{
-			Comic current = Comics.get(i);
-			current.Update();
-			db.updateComic(current);
+			Comic current = db.getComic(ComicNames.get(i));
+			if(current.modified())
+			{
+				current.Update();
+				db.updateComic(current);
+			}
+			else
+			{
+				
+			}
 			pdialog.incrementProgressBy(1);
 		}
 		return null;

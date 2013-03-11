@@ -29,18 +29,23 @@ public class View_Comic extends Activity {
         
         ImageViewTouch imageView = (ImageViewTouch) findViewById(R.id.ImageView01);
         TextView textview = (TextView) findViewById(R.id.TitleName);
+        DataBaseHandler db = new DataBaseHandler(this);
         
         Bundle extras = getIntent().getExtras();
-        ImageUrl = extras.getString("ImageUrl");
-        Log.d("ImageUrl", ImageUrl);
         Name = extras.getString("Name");
-        Log.d("Name", Name);
-        Url = extras.getString("Url");
-        Log.d("Url", Url);
+        Comic viewed = db.getComic(Name);
+        
+        ImageUrl = viewed.getImageUrl();
+        Url      = viewed.getUrl();
+        
+        
         textview.setText(Name);
+        
+        imageView.setImageBitmap(viewed.getComicBitmap());
+        
         //We redownload the image, doesn't take very long on SGS3
-        imageDownloader download = new imageDownloader(imageView, ImageUrl);
-        download.execute();
+        //imageDownloader download = new imageDownloader(imageView, ImageUrl);
+        //download.execute();
         
         
     }
@@ -63,15 +68,18 @@ public class View_Comic extends Activity {
 	    	imageView.setImageResource(R.drawable.loading);
 	    	imageDownloader download = new imageDownloader(imageView, ImageUrl);
 	    	download.execute();
+	    	System.out.println(imageView.getWidth() + " " + imageView.getHeight());
 	    	break;
 	    	
     	case R.id.ViewUpdate:
     		ComicUpdater update = new ComicUpdater(this);
     		update.execute();
+    		break;
     		
     	case R.id.ViewBrowser:
     		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Url));
     		startActivity(browserIntent);
+    		break;
     	}
     	return true;
     }
@@ -118,10 +126,12 @@ public class View_Comic extends Activity {
     	private ImageViewTouch ourimage;
     	private DataBaseHandler db;
     	private Comic current;
+    	private Bitmap comicBitmap;
     	
     	public ComicUpdater(Context context)
     	{
     		db = new DataBaseHandler(context);
+    		current = db.getComic(Name);
     	}
     	
     	@Override
@@ -134,12 +144,19 @@ public class View_Comic extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			current = db.getComic(Name);
 			Log.d("ComicIUrl", current.getImageUrl());
 			Log.d("ComicUrl", current.getUrl());
-			current.Update();
-			db.updateComic(current);
-			
+			//current.retrieveImageBitmap();
+			comicBitmap = current.getComicBitmap();
+			if(current.modified())
+			{
+				current.Update();
+				db.updateComic(current);
+			}
+			else
+			{
+				current.setComicBitmap(comicBitmap);
+			}
 			return null;
 		}
 		

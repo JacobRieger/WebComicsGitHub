@@ -27,6 +27,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private static final String KEY_URL = "url";
     private static final String KEY_UPDATED = "isUpdated";
     private static final String KEY_SURL = "surl";
+    private static final String KEY_SINCE = "updatedSince";
+    private static final String KEY_IMAGE = "Image";
 	
 	public DataBaseHandler(Context context)
 	{
@@ -37,7 +39,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_WEBCOMICS_TABLE = "CREATE TABLE " + TABLE_WEBCOMICS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_URL + " TEXT," + KEY_UPDATED + " TEXT, " + KEY_SURL + " TEXT" + ")";
+                + KEY_URL + " TEXT," + KEY_UPDATED + " TEXT, " + KEY_SURL + " TEXT," 
+                + KEY_SINCE + " TEXT," + KEY_IMAGE + " BLOB" + ")";
 		System.out.println("SQLite Command " + CREATE_WEBCOMICS_TABLE);
         db.execSQL(CREATE_WEBCOMICS_TABLE);
 		
@@ -53,7 +56,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 	}
 	
 	// Adding new contact
-    void addComic(Comic comic) {
+    public void addComic(Comic comic) {
     	
     	if(!doesComicExist(comic))
     	{
@@ -74,7 +77,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 		    {
 		    	values.put(KEY_UPDATED, "false");
 		    }
-		    values.put(KEY_SURL, comic.getUrl());     
+		    values.put(KEY_SURL, comic.getUrl()); 
+		    values.put(KEY_SINCE, comic.getUpdatedSince());
+		    values.put(KEY_IMAGE, comic.getBitmapBytes());
 		    Log.i("addComic", "Values variable set");
 		        
 		        // Inserting Row
@@ -123,7 +128,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 	    }
         
         values.put(KEY_SURL, comic.getUrl());
-        //values.put(KEY_IMAGE, comic.getBitmapByte());
+        values.put(KEY_SINCE, comic.getUpdatedSince());
+        values.put(KEY_IMAGE, comic.getBitmapBytes());
  
         // updating row
         int value = db.update(TABLE_WEBCOMICS, values, KEY_ID + " = ?",
@@ -139,7 +145,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 	        SQLiteDatabase db = this.getReadableDatabase();
 	     
 	        Cursor cursor = db.query(TABLE_WEBCOMICS, new String[] { KEY_ID,
-	                KEY_NAME, KEY_URL, KEY_UPDATED, KEY_SURL }, KEY_NAME + "=?",
+	                KEY_NAME, KEY_URL, KEY_UPDATED, KEY_SURL, KEY_SINCE, KEY_IMAGE }, KEY_NAME + "=?",
 	                new String[] { name }, null, null, null, null);
 	        if (cursor != null && cursor.getCount() != 0)
 	        {
@@ -147,7 +153,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 	            
 	            
 		        Comic comic = new Comic(Integer.parseInt(cursor.getString(0)),
-		        	cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+		        	cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+		        	cursor.getString(5), cursor.getBlob(6));
 		        cursor.close();
 		        db.close();
 		        return comic;
@@ -165,21 +172,32 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     
     public Comic getComic(Integer position)
     {
+    	//position++;
     	if(getComicsCount() != 0)
     	{
 	    	SQLiteDatabase db = this.getReadableDatabase();
 	    	Cursor cursor = db.query(TABLE_WEBCOMICS, new String[] { KEY_ID,
-	    			KEY_NAME, KEY_URL, KEY_UPDATED, KEY_SURL }, KEY_ID + "=?",
+	    			KEY_NAME, KEY_URL, KEY_UPDATED, KEY_SURL, KEY_SINCE, KEY_IMAGE }, KEY_ID + "=?",
 	    			new String[] {position.toString()}, null, null, null, null);
-	    	if(cursor != null)
-	    		cursor.moveToFirst();
-	    	
-	    	Comic comic = new Comic(Integer.parseInt(cursor.getString(0)),
-	    			cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
-	    	//return comic;
-	    	cursor.close();
-	    	db.close();
-	    	return comic;
+	    	if (cursor != null && cursor.getCount() != 0)
+	        {
+	            cursor.moveToFirst();
+	            
+	            
+		        Comic comic = new Comic(Integer.parseInt(cursor.getString(0)),
+		        	cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+		        	cursor.getString(5), cursor.getBlob(6));
+		        cursor.close();
+		        db.close();
+		        return comic;
+	            
+	        }
+	    	else
+	        {
+	        	//Log.i("getComic", "Comic does not exist in database");
+	        	db.close();
+	        	return null;
+	        }
     	}
     	return null;
     }
@@ -201,7 +219,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 Comic.setImageUrl(cursor.getString(2));
                 Comic.setUpdated(cursor.getString(3));
                 Comic.setUrl(cursor.getString(4));
-                //Comic.setBitmap(cursor.getBlob(5));
+                Comic.setUpdatedSince(cursor.getString(5));
+                Comic.setComicBitmap(cursor.getBlob(6));
                 // Adding Comic to list
                 ComicList.add(Comic);
             } while (cursor.moveToNext());
@@ -211,6 +230,28 @@ public class DataBaseHandler extends SQLiteOpenHelper {
  
         // return Comic list
         return ComicList;
+    }
+    
+    public ArrayList<String> getAllComicNames()
+    {
+    	ArrayList<String> ComicNames = new ArrayList<String>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_WEBCOMICS;
+ 
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+ 
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst() && cursor != null) {
+            do {
+            	if(!cursor.isNull(1)) ComicNames.add(cursor.getString(1));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+ 
+        // return Comic list
+        return ComicNames;
     }
     
  // Getting contacts Count
