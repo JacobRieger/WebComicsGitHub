@@ -260,7 +260,6 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             //imageView.setOnClickListener(this);
             //This is the comic that will be shown in the position given
             //Comic Current = Comics.get(args.getInt(ARG_SECTION_NUMBER));
-            
             DataBaseHandler db = new DataBaseHandler(getActivity());
             Log.d("DataBase", Integer.toString(db.getComicsCount()));
             ArrayList<Comic> comics = db.getAllComics();

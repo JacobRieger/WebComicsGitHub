@@ -1,10 +1,13 @@
 package code.webcomicviewer;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +32,16 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front__page);
+        
+        AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, UpdaterReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        Calendar time = Calendar.getInstance();
+        time.setTimeInMillis(System.currentTimeMillis());
+        time.add(Calendar.SECOND, 1);
+        alarmMgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+        		10000, 10000, pendingIntent);
+        //alarmMgr.set(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
         
         Button viewComics = (Button) findViewById(R.id.viewComics);
         Button updateComics = (Button) findViewById(R.id.updateAll);

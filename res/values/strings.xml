@@ -27,5 +27,7 @@
     <string name="title_activity_edit__comic">Edit_Comic</string>
     <string name="title_activity_comic_updater">ComicUpdater</string>
     <string name="title_activity_comic__gallery">Comic_Gallery</string>
+    <string name="title_comic_detail">Comic Detail</string>
+    <string name="title_comic_list">Comics</string>
 
 </resources>
