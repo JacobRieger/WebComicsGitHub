@@ -33,16 +33,6 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front__page);
         
-        AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, UpdaterReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        Calendar time = Calendar.getInstance();
-        time.setTimeInMillis(System.currentTimeMillis());
-        time.add(Calendar.SECOND, 1);
-        alarmMgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-        		10000, 10000, pendingIntent);
-        //alarmMgr.set(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
-        
         Button viewComics = (Button) findViewById(R.id.viewComics);
         Button updateComics = (Button) findViewById(R.id.updateAll);
         Button addComic = (Button) findViewById(R.id.AddNewComicFront);

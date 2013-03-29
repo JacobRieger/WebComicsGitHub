@@ -245,7 +245,7 @@ public class Comic {
 		
 		Log.d("Comic", "Updated called in " + this.getName());
 		setNewImageurl(RetrieveImgStrings());
-		retrieveImageBitmap();
+		//retrieveImageBitmap();
 		
 	}
 	
@@ -336,6 +336,7 @@ public class Comic {
 				// Otherwise we'd set the string to "Unset" if it hadn't changed
 				imageUrl = newImageurl;
 				this.setUpdated(true);
+				retrieveImageBitmap();
 			}
 		} else {
 			// This is set when the imageurl that is saved is still currently on
@@ -410,7 +411,7 @@ public class Comic {
 				URLConnection conn = testurl.openConnection();
 				int cLength = conn.getContentLength();
 				Log.d("Length Checking", New + " " + cLength);
-				if (cLength > 10000) {
+				if (cLength > 6000) {
 					// Log.d("Length Checking", New + " " + cLength);
 					ImgStrings.add(New);
 				}

@@ -196,9 +196,10 @@ public class View_Comics extends FragmentActivity implements OnLongClickListener
 	public boolean onLongClick(View view) {
 		Log.d("OnLongClick", view.toString());
 		DataBaseHandler db = new DataBaseHandler(this);
+		
 		if (view.getClass() == ImageView.class) {
 			//Our current comic
-			Comic Selected = db.getComic(mViewPager.getCurrentItem());
+			Comic Selected = db.getComic(mViewPager.getCurrentItem() + 1);
 			//We pass extras to know which comic to view
 			Intent intent = new Intent(this, View_Comic.class);
 			intent.putExtra("ImageUrl", Selected.getImageUrl());
@@ -206,6 +207,7 @@ public class View_Comics extends FragmentActivity implements OnLongClickListener
 			intent.putExtra("Url", Selected.getUrl());
 			startActivity(intent);
 		}
+		//Log.d("ViewComics - LongClick", String.valueOf(mViewPager.getCurrentItem()));
 		return false;
 	}
 }
