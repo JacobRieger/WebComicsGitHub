@@ -347,110 +347,6 @@ public class Comic {
 
 	}
 
-	public List<String> RetrieveImgStrings() {
-		// Connects to the url and retrieves all the img urls from the site
-		// and returns them in strings
-		Log.d("RetrieveImgStrings", "Called");
-		try {
-			List<String> ImgStrings = new ArrayList<String>();
-			// Connecting to the site
-			// Long timeout given, as was terminating too quickly
-			// Not sure about consequences of that
-			HttpConnection c = (HttpConnection) Jsoup.connect(url).timeout(1000000);
-			c.followRedirects(true);
-		
-			// Get the html
-			Document page = c.get();
-			Elements meta = page.select("html head meta");
-		    if (meta.attr("http-equiv").contains("REFRESH"))
-		    {
-		        page = Jsoup.connect(meta.attr("content").split("=")[1]).get();
-		        System.out.println(page.baseUri());
-		    }
-			// System.out.println(page.html());
-			// Now we have the html we need to select the elements we want
-			Elements imgs = page.select("img");
-			
-			for (Element e : page.select("img")) {
-				String attr = e.attr("style");
-				if(attr.indexOf("http://") > 0)
-				{
-					String img = attr.substring( attr.indexOf("http://"), attr.indexOf(")"));
-					ImgStrings.add(img);
-				}
-			}
-			// We are going to iterate through these elements
-			Iterator<Element> iterator = imgs.iterator();
-			// Extracted string url's from the elements go into ImgStrings
-
-			while (iterator.hasNext()) {
-				// Here we iterate through the elements and extract
-				// the url from the src of the element
-				Element temp = iterator.next();
-				//System.out.println(temp.toString());
-				String extracted = temp.attr("src");
-				//System.out.println(extracted);
-				if (extracted.startsWith("/") || !extracted.startsWith("http")) {
-					// This was necessary for DrMcNinja, as the full url
-					// was not posted, I suspect it's true for other sites
-					// as well
-					if(!extracted.startsWith("/"))
-					{
-						extracted = "/".concat(extracted);
-					}
-					extracted = url.concat(extracted);
-				}
-				if (!extracted.startsWith("http")) {
-					// Saves us from the malformed URL exception
-					extracted = "http://".concat(extracted);
-				}
-
-				String New = extracted;
-
-				URL testurl = new URL(extracted);
-				URLConnection conn = testurl.openConnection();
-				int cLength = conn.getContentLength();
-				Log.d("Length Checking", New + " " + cLength);
-				if (cLength > 6000) {
-					// Log.d("Length Checking", New + " " + cLength);
-					ImgStrings.add(New);
-				}
-				else if(cLength == -1)
-				{
-					ImgStrings.add(New);
-				}
-				else
-				{
-					//System.out.println("Rejected " + New + " for " + cLength);
-				}
-			}
-
-			// Return all the img tagged src strings in the html
-			if (ImgStrings.size() == 0) {
-				System.out.println(this.getName() + " "
-						+ "Zero images returned");
-			}
-			return ImgStrings;
-		} catch (MalformedURLException e) {
-			System.out.println("Malformed URL : " + this.url);
-			// e.printStackTrace();
-			List<String> empty = new ArrayList<String>();
-			empty.add("Unset");
-			return empty;
-		} catch (ConnectException e) {
-			System.out.println("Could not connect to : " + this.url);
-			List<String> empty = new ArrayList<String>();
-			empty.add("Unset");
-			return empty;
-		} catch (IOException e) {
-			System.out.println("General IO Exception Caught");
-			e.printStackTrace();
-			List<String> empty = new ArrayList<String>();
-			empty.add("Unset");
-			return empty;
-		}
-	}
-	
 	public void findImageUrl()
 	{
 		List<String> ImageUrls = new ArrayList<String>();
@@ -528,6 +424,115 @@ public class Comic {
 				System.out.println("findImageUrl "+ current);
 				e.printStackTrace();
 			}
+		}
+	}
+
+	public List<String> RetrieveImgStrings() {
+		// Connects to the url and retrieves all the img urls from the site
+		// and returns them in strings
+		Log.d("RetrieveImgStrings", "Called");
+		try {
+			List<String> ImgStrings = new ArrayList<String>();
+			// Connecting to the site
+			// Long timeout given, as was terminating too quickly
+			// Not sure about consequences of that
+			HttpConnection c = (HttpConnection) Jsoup.connect(url).timeout(1000000);
+			c.followRedirects(true);
+		
+			// Get the html
+			Document page = c.get();
+			Elements meta = page.select("html head meta");
+		    if (meta.attr("http-equiv").contains("REFRESH"))
+		    {
+		        page = Jsoup.connect(meta.attr("content").split("=")[1]).get();
+		        System.out.println(page.baseUri());
+		    }
+			// System.out.println(page.html());
+			// Now we have the html we need to select the elements we want
+			Elements imgs = page.select("img");
+			
+			for (Element e : page.select("img")) {
+				String attr = e.attr("style");
+				if(attr.indexOf("http://") > 0)
+				{
+					String img = attr.substring( attr.indexOf("http://"), attr.indexOf(")"));
+					
+					ImgStrings.add(img);
+				}
+				
+			}
+			// We are going to iterate through these elements
+			Iterator<Element> iterator = imgs.iterator();
+			// Extracted string url's from the elements go into ImgStrings
+
+			while (iterator.hasNext()) {
+				// Here we iterate through the elements and extract
+				// the url from the src of the element
+				Element temp = iterator.next();
+				//System.out.println(temp.toString());
+				String extracted = temp.attr("src");
+				//System.out.println(extracted);
+				if (extracted.startsWith("/") || !extracted.startsWith("http")) {
+					// This was necessary for DrMcNinja, as the full url
+					// was not posted, I suspect it's true for other sites
+					// as well
+					if(!extracted.startsWith("/"))
+					{
+						extracted = "/".concat(extracted);
+					}
+					extracted = url.concat(extracted);
+				}
+				if (!extracted.startsWith("http")) {
+					// Saves us from the malformed URL exception
+					extracted = "http://".concat(extracted);
+				}
+				extracted = extracted.replaceAll(" " , "%20");
+
+				String New = extracted;
+				//THIS IS UNRELIABLE
+				//SERVERS LIE AND MESS IT UP
+				/*URL testurl = new URL(extracted);
+				URLConnection conn = testurl.openConnection();
+				int cLength = conn.getContentLength();
+				Log.d("Length Checking", New + " " + cLength);
+				if (cLength > 6000) {
+					// Log.d("Length Checking", New + " " + cLength);
+					ImgStrings.add(New);
+				}
+				else if(cLength == -1)
+				{
+					ImgStrings.add(New);
+				}
+				else
+				{
+					//System.out.println("Rejected " + New + " for " + cLength);
+				}*/
+				ImgStrings.add(New);
+			}
+
+			// Return all the img tagged src strings in the html
+			if (ImgStrings.size() == 0) {
+				System.out.println(this.getName() + " "
+						+ "Zero images returned");
+			}
+			return ImgStrings;
+		} catch (MalformedURLException e) {
+			System.out.println("Malformed URL : " + this.url);
+			// e.printStackTrace();
+			List<String> empty = new ArrayList<String>();
+			empty.add("Unset");
+			return empty;
+		} catch (ConnectException e) {
+			System.out.println("Could not connect to : " + this.url);
+			List<String> empty = new ArrayList<String>();
+			empty.add("Unset");
+			return empty;
+		} catch (IOException e) {
+			System.out.println("General IO Exception Caught");
+			e.printStackTrace();
+			List<String> empty = new ArrayList<String>();
+			empty.add("Unset");
+			return empty;
 		}
 	}
 	

@@ -21,6 +21,7 @@ public class Edit_Comic extends Activity implements OnClickListener {
         setContentView(R.layout.activity_edit__comic);
         
         DataBaseHandler db = new DataBaseHandler(this);
+        
         Button Save = (Button) findViewById(R.id.button1);
         Save.setOnClickListener(this);
         

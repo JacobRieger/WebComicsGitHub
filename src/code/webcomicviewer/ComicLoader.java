@@ -4,24 +4,49 @@ import java.lang.ref.WeakReference;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 class ComicLoader extends AsyncTask<String, Void, Bitmap> {
+	private String title;
     private final WeakReference<ImageView> imageViewReference;
+    private final WeakReference<TextView>  textViewReference;
     private DataBaseHandler db;
+    private boolean scaled = false;
 
     public ComicLoader(ImageView imageView, Context context) {
         // Use a WeakReference to ensure the ImageView can be garbage collected
         imageViewReference = new WeakReference<ImageView>(imageView);
+        textViewReference = null;
+        
         db = new DataBaseHandler(context);
     }
+    
+    public ComicLoader(ImageView imageView, Context context, boolean scale) {
+        // Use a WeakReference to ensure the ImageView can be garbage collected
+        imageViewReference = new WeakReference<ImageView>(imageView);
+        textViewReference = null;
+        scaled = scale;
+        
+        db = new DataBaseHandler(context);
+    }
+    
 
     // Decode image in background.
     @Override
     protected Bitmap doInBackground(String... params) {
        
+    	if(scaled)
+    	{
+    		Comic current = db.getComic(params[0]);
+    		byte[] bytes = current.getBitmapBytes();
+    		
+    		return Bitmap.createBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length),
+            		0, 0, 75, 75);
+    	}
         return db.getComic(params[0]).getComicBitmap();
     }
 

@@ -1,6 +1,5 @@
 package code.webcomicviewer;
 
-import java.io.UnsupportedEncodingException;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,21 +30,27 @@ public class Add_Comic extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.activity_add__comic);  
+        
         //Our two buttons to check and add comics
         Button checkComic = (Button) findViewById(R.id.checkComic);
         Button addComic = (Button) findViewById(R.id.addComic);
+        
         //Set our onclicklisteners
+        //addComic.setOnClickListener(this);
         checkComic.setOnClickListener(this);
-        addComic.setOnClickListener(this);
+        
         //Add comic should be invisible until the comics been verified
+        //Does not currently work
         addComic.setVisibility(View.VISIBLE);
         
         Bundle extras = getIntent().getExtras();
         if(extras != null)
-        {
+        {//I believe this is no longer needed, will test when i can
+        	
         	//This loads the data when adding from bookmarks
         	EditText cName = (EditText) findViewById(R.id.ComicName);
         	EditText cUrl = (EditText) findViewById(R.id.Comic_Url);
+        	
         	//Sets the values from bookmark into the text fields
         	cName.setText(extras.getString("Name"));
         	cUrl.setText(extras.getString("Url"));
@@ -53,16 +58,22 @@ public class Add_Comic extends Activity implements OnClickListener {
         
         
         if (Bookmarks == null) {
+        	//This loads our bookmarks
+        	
 			Bookmarks = new BookmarkList();
+			
+			//How to load bookmarks from the phone
 			Cursor cursor = getContentResolver().query(Browser.BOOKMARKS_URI,
 					null, null, null, null);
 			cursor.moveToFirst();
+			//We want the title and the urls of the bookmarks
 			int titleIdx = cursor.getColumnIndex(Browser.BookmarkColumns.TITLE);
 			int urlIdx = cursor.getColumnIndex(Browser.BookmarkColumns.URL);
 			int bookmark = cursor
 					.getColumnIndex(Browser.BookmarkColumns.BOOKMARK);
+			
 			while (cursor.isAfterLast() == false) {
-
+				//Loads all our bookmarks that we can
 				if (cursor.getInt(bookmark) > 0) {
 					Log.d("Adding Bookmark", cursor.getString(titleIdx));
 					Bookmarks.add(new Bookmark(cursor.getString(titleIdx),
@@ -76,8 +87,8 @@ public class Add_Comic extends Activity implements OnClickListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_add__comic, menu);
-        
-
+  
+        //This generates our bookmark submenu items
         MenuItem BookMark = (MenuItem) menu.findItem(R.id.AddAdd);
         SubMenu BookMarkSub = BookMark.getSubMenu();
         
@@ -93,14 +104,17 @@ public class Add_Comic extends Activity implements OnClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+    	//If our item is a bookmark, we load up it's data into the entry fields
     	if(item.getGroupId() == 32)
     	{
-    		
+    		//These are the text entry fields
     		EditText cName = (EditText) findViewById(R.id.ComicName);
         	EditText cUrl = (EditText) findViewById(R.id.Comic_Url);
         	
+        	//Find our bookmark 
         	Bookmark current = Bookmarks.find(item.getTitle().toString());
         	
+        	//Load the bookmark data into the fields
         	cName.setText(current.getName());
         	cUrl.setText(current.getUrl());
     		return true;
@@ -111,6 +125,8 @@ public class Add_Comic extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View view) {
+		
+		
 		EditText cName = (EditText) findViewById(R.id.ComicName);
 		EditText cUrl = (EditText) findViewById(R.id.Comic_Url);
 		String Name = cName.getText().toString();
@@ -118,7 +134,7 @@ public class Add_Comic extends Activity implements OnClickListener {
 		
 		switch(view.getId()){
 		case R.id.checkComic:
-			
+			//Extracts the comic from the website
 			Comic Check = new Comic(Name, Url, "unset");
 			Log.d("CheckComic", Name + " " + Url);
 			comicDownloader CD = new comicDownloader(Check, this);
@@ -146,6 +162,8 @@ public class Add_Comic extends Activity implements OnClickListener {
 		if(true)
 		{
 			Log.d("validateURL", "URL matches regex");
+			Button addComic = (Button) findViewById(R.id.addComic);
+			addComic.setOnClickListener(this);
 			return true;
 		}
 		else return false;
@@ -167,7 +185,7 @@ public class Add_Comic extends Activity implements OnClickListener {
 		{
 			pd = new ProgressDialog(context, ProgressDialog.STYLE_SPINNER);
 			pd.show();
-			pd.setMessage("Checking Comic");
+			pd.setMessage("Extracting Comic");
 			pd.setCancelable(false);
 		}
 

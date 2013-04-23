@@ -9,7 +9,7 @@
     </uses-permission>
 
     <uses-sdk
-        android:minSdkVersion="16"
+        android:minSdkVersion="3"
         android:targetSdkVersion="16" />
     
     
@@ -55,22 +55,6 @@
         <activity
             android:name=".ComicUpdater"
             android:label="@string/title_activity_comic_updater" >
-        </activity>
-        <activity
-            android:name=".ComicListActivity"
-            android:label="@string/title_comic_list" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ComicDetailActivity"
-            android:label="@string/title_comic_detail" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ComicListActivity" />
         </activity>
     </application>
 

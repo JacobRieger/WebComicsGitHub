@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
@@ -168,6 +169,50 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 	        }
     	}
     	return null;
+    }
+    
+    public byte[] getComicBitmapBytes(Integer position)
+    {
+    	if(getComicsCount() != 0)
+    	{
+    		SQLiteDatabase db = this.getReadableDatabase();
+    		Cursor cursor = db.query(TABLE_WEBCOMICS, new String[] {KEY_IMAGE}, KEY_ID + "=?",
+    				new String[] {position.toString()}, null, null, null, null);
+    		if(cursor != null && cursor.getCount() != 0)
+    		{
+    			System.out.println(cursor.getColumnCount());
+    			cursor.moveToFirst();
+    			byte[] result = cursor.getBlob(0);
+    			cursor.close();
+    			db.close();
+    			return  result;
+    		}
+    	}
+    	return null;
+    }
+    
+    public String getComicName(Integer position)
+    {
+    	if(getComicsCount() != 0)
+    	{
+    		SQLiteDatabase db = this.getReadableDatabase();
+    		Cursor cursor = db.query(TABLE_WEBCOMICS, new String[] {KEY_NAME}, KEY_ID + "=?",
+    				new String[] {position.toString()}, null,null,null,null);
+    		
+    		if(cursor != null && cursor.getCount() != 0)
+    		{
+    			//System.out.println(cursor.getColumnCount());
+    			cursor.moveToFirst();
+    			String result = cursor.getString(0);
+    			cursor.close();
+    			db.close();
+    			return  result;
+    		}
+    	}
+    	return null;
+    	
+    	
+    	
     }
     
     public Comic getComic(Integer position)

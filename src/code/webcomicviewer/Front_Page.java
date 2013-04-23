@@ -26,35 +26,47 @@ import android.widget.TextView;
 public class Front_Page extends Activity implements OnClickListener, OnItemClickListener,
 		OnItemLongClickListener {
 
-	//protected ArrayList<Comic> Comics;
+	//protected ArrayList<Comic> Comics; //Too much memory to load all
 	protected ArrayList<String> ComicNames;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front__page);
         
+        //All buttons (View Comics, Update All, Add New)
         Button viewComics = (Button) findViewById(R.id.viewComics);
         Button updateComics = (Button) findViewById(R.id.updateAll);
         Button addComic = (Button) findViewById(R.id.AddNewComicFront);
+        
+        //List of comics
         ListView comicList = (ListView) findViewById(R.id.listView1);
         
+        //Set Click Listeners
         comicList.setOnItemClickListener(this);
         comicList.setOnItemLongClickListener(this);
         viewComics.setOnClickListener(this);
         updateComics.setOnClickListener(this);
         addComic.setOnClickListener(this);
         
+        //Our database of comics
         DataBaseHandler db = new DataBaseHandler(this);
+        
+        //Loading all the comics cost too much memory
+        //So we only load the names for display purposes
         ComicNames = db.getAllComicNames();
+        
+        //Builds our data set to hand over to the adapter
         String[] comicNames = new String[ComicNames.size()];
         for(int i = 0; i < ComicNames.size(); i++)
         {
         	comicNames[i] = ComicNames.get(i);
         }
         
+        //Our simple adapter to display only names
         ArrayAdapter<String> comicAdapter = new ArrayAdapter<String>(this,
         		android.R.layout.simple_list_item_1, comicNames);
         
+        //comicList.setAdapter(new ComicListAdapter(this, this));
         comicList.setAdapter(comicAdapter);
     }
    
@@ -74,12 +86,12 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
 				startActivity(view);
 				break;
 			case R.id.AddNewComicFront:
-				Log.d("Add", "Add Comic Pushed");
+				Log.d("Front_Page", "Add Comic launched");
 	        	Intent intent = new Intent(this, Add_Comic.class);
 	        	startActivity(intent);
 	        	break;
 			case R.id.updateAll:
-				Log.d("Updateall", "Update all pushed");
+				Log.d("Front_Page", "Update all launced");
 				ComicUpdater updater = new ComicUpdater(this);
 				updater.execute();
 				break;
@@ -90,10 +102,10 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		
+		//This is our onItemClick for our comic list
+		//Launches the comic viewer sending the name for loading
 		Intent intent = new Intent(this, View_Comic.class);
 		intent.putExtra("Name", ComicNames.get(position));
-		//intent.putExtra("ImageUrl", Comics.get(position).getImageUrl());
-		//intent.putExtra("Url", Comics.get(position).getUrl());
 		startActivity(intent);
 		
 	}
@@ -101,6 +113,8 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		//This is if you long click onto an item to show two options
+		//Edit Comic || Remove
 		
 		TextView textview = (TextView) view;
 		final String name = textview.getText().toString();
