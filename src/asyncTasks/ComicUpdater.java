@@ -1,12 +1,17 @@
-package code.webcomicviewer;
+package asyncTasks;
 
 import java.util.ArrayList;
+
+
+import comicCode.Comic;
+import dataCode.DataBaseHandler;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 public class ComicUpdater extends AsyncTask<Void, Void, Void> {
 
@@ -60,8 +65,15 @@ public class ComicUpdater extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected void onPostExecute(Void result)
 	{
-		pdialog.dismiss();
-		
+		try
+		{
+			pdialog.dismiss();
+		}
+		catch(Exception e)
+		{
+			Toast alert = Toast.makeText(context, "Comic Updates Complete", Toast.LENGTH_LONG);
+			alert.show();
+		}
 	}
 
 }

@@ -1,4 +1,8 @@
-package code.webcomicviewer;
+package activityCode;
+
+import code.webcomicviewer.R;
+import comicCode.Comic;
+import dataCode.DataBaseHandler;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -22,7 +26,7 @@ public class Edit_Comic extends Activity implements OnClickListener {
         
         DataBaseHandler db = new DataBaseHandler(this);
         
-        Button Save = (Button) findViewById(R.id.button1);
+        Button Save = (Button) findViewById(R.id.AddNewComicWebView);
         Save.setOnClickListener(this);
         
         Bundle extras = getIntent().getExtras();
@@ -32,7 +36,7 @@ public class Edit_Comic extends Activity implements OnClickListener {
         name = editable.getName();
         
         EditText Name = (EditText) findViewById(R.id.editText2);
-        EditText Iurl = (EditText) findViewById(R.id.editText1);
+        EditText Iurl = (EditText) findViewById(R.id.AddComicWebEditName);
         
         Name.setText(editable.getName());
         Iurl.setText(editable.getImageUrl());
@@ -49,10 +53,10 @@ public class Edit_Comic extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		
 		DataBaseHandler db = new DataBaseHandler(this);
-		if(v.getId() == R.id.button1)
+		if(v.getId() == R.id.AddNewComicWebView)
 		{
 			EditText Name = (EditText) findViewById(R.id.editText2);
-			EditText Iurl = (EditText) findViewById(R.id.editText1);
+			EditText Iurl = (EditText) findViewById(R.id.AddComicWebEditName);
 			
 			Comic old = db.getComic(name);
 			old.setName(Name.getText().toString());

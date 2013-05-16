@@ -1,6 +1,8 @@
-package code.webcomicviewer;
+package asyncTasks;
 
-import java.util.ArrayList;
+
+import comicCode.Comic;
+import dataCode.DataBaseHandler;
 
 import android.app.ProgressDialog;
 import android.content.Context;

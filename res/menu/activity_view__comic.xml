@@ -5,4 +5,5 @@
         android:showAsAction="never" />
     <item android:id="@+id/ViewUpdate" android:title="Update"></item>
     <item android:id="@+id/ViewBrowser" android:title="Go to Site"></item>
+    <item android:id="@+id/ViewAltText" android:title="@string/ViewAltText"></item>
 </menu>

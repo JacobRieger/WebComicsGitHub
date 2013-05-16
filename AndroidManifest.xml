@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="code.webcomicviewer"
     android:versionCode="1"
@@ -9,39 +10,30 @@
     </uses-permission>
 
     <uses-sdk
-        android:minSdkVersion="3"
+        android:minSdkVersion="14"
         android:targetSdkVersion="16" />
-    
-    
 
     <application
         android:icon="@drawable/launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.Holo" >
         <activity
-            android:name=".View_Comics"
-            android:label="View Comics"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:name="activityCode.View_Comics"
+            android:label="View Comics" >
             <intent-filter>
             </intent-filter>
         </activity>
         <activity
-            android:name=".Add_Comic"
-            android:label="@string/title_activity_add__comic"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black" >
+            android:name="activityCode.Add_Comic"
+            android:label="@string/title_activity_add__comic" >
         </activity>
         <activity
-            android:name=".View_Comic"
-            android:label="@string/title_activity_view__comic"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:name="activityCode.View_Comic"
+            android:label="@string/title_activity_view__comic" >
         </activity>
         <activity
-            android:name=".Front_Page"
-            android:label="@string/title_activity_front__page"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black" >
+            android:name="activityCode.Front_Page"
+            android:label="@string/title_activity_front__page" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,12 +41,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Edit_Comic"
+            android:name="activityCode.Edit_Comic"
             android:label="@string/title_activity_edit__comic" >
         </activity>
         <activity
-            android:name=".ComicUpdater"
+            android:name="asyncTasks.ComicUpdater"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_activity_comic_updater" >
+        </activity>
+        <activity
+            android:name="activityCode.Add_Comic_Webview"
+            android:label="@string/title_activity_add__comic__webview"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+            android:name="code.webcomicviewer.ComicListActivity"
+            android:label="@string/title_comic_list" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="code.webcomicviewer.ComicDetailActivity"
+            android:label="@string/title_comic_detail"
+            android:parentActivityName=".ComicListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ComicListActivity" />
         </activity>
     </application>
 

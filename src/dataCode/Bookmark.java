@@ -1,4 +1,4 @@
-package code.webcomicviewer;
+package dataCode;
 
 public class Bookmark {
 

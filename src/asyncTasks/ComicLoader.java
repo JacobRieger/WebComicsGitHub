@@ -1,26 +1,28 @@
-package code.webcomicviewer;
+package asyncTasks;
 
 import java.lang.ref.WeakReference;
+
+
+import comicCode.Comic;
+import dataCode.DataBaseHandler;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-class ComicLoader extends AsyncTask<String, Void, Bitmap> {
-	private String title;
+
+public class ComicLoader extends AsyncTask<String, Void, Bitmap> {
+
     private final WeakReference<ImageView> imageViewReference;
-    private final WeakReference<TextView>  textViewReference;
     private DataBaseHandler db;
     private boolean scaled = false;
 
     public ComicLoader(ImageView imageView, Context context) {
         // Use a WeakReference to ensure the ImageView can be garbage collected
         imageViewReference = new WeakReference<ImageView>(imageView);
-        textViewReference = null;
+       
         
         db = new DataBaseHandler(context);
     }
@@ -28,7 +30,7 @@ class ComicLoader extends AsyncTask<String, Void, Bitmap> {
     public ComicLoader(ImageView imageView, Context context, boolean scale) {
         // Use a WeakReference to ensure the ImageView can be garbage collected
         imageViewReference = new WeakReference<ImageView>(imageView);
-        textViewReference = null;
+        
         scaled = scale;
         
         db = new DataBaseHandler(context);

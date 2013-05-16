@@ -1,16 +1,18 @@
-package code.webcomicviewer;
+package activityCode;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+
+import code.webcomicviewer.R;
+import dataCode.DataBaseHandler;
+//import dataCode.ComicListAdapter;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+//import android.graphics.Color;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import asyncTasks.ComicUpdater;
 
 public class Front_Page extends Activity implements OnClickListener, OnItemClickListener,
 		OnItemLongClickListener {
@@ -34,9 +37,10 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
         setContentView(R.layout.activity_front__page);
         
         //All buttons (View Comics, Update All, Add New)
-        Button viewComics = (Button) findViewById(R.id.viewComics);
+        Button viewComics   = (Button) findViewById(R.id.viewComics);
         Button updateComics = (Button) findViewById(R.id.updateAll);
-        Button addComic = (Button) findViewById(R.id.AddNewComicFront);
+        Button addComic     = (Button) findViewById(R.id.AddNewComicFront);
+        Button addComicWV   = (Button) findViewById(R.id.AddNewComicWebView);
         
         //List of comics
         ListView comicList = (ListView) findViewById(R.id.listView1);
@@ -47,6 +51,7 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
         viewComics.setOnClickListener(this);
         updateComics.setOnClickListener(this);
         addComic.setOnClickListener(this);
+        addComicWV.setOnClickListener(this);
         
         //Our database of comics
         DataBaseHandler db = new DataBaseHandler(this);
@@ -63,11 +68,18 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
         }
         
         //Our simple adapter to display only names
-        ArrayAdapter<String> comicAdapter = new ArrayAdapter<String>(this,
+       // @SuppressWarnings("unused")
+		ArrayAdapter<String> comicAdapter = new ArrayAdapter<String>(this,
         		android.R.layout.simple_list_item_1, comicNames);
         
-        //comicList.setAdapter(new ComicListAdapter(this, this));
+        //comicList.setAdapter(new ComicListAdapter(this,this));
         comicList.setAdapter(comicAdapter);
+        //Log.d("Front Page", comicList.getAdapter().getView(0, null, null));
+        //TextView text = (TextView) comicList.getAdapter().getView(0,null,null);
+        //text.setTextColor(Color.GREEN);
+       
+   
+        
     }
    
 
@@ -91,10 +103,15 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
 	        	startActivity(intent);
 	        	break;
 			case R.id.updateAll:
-				Log.d("Front_Page", "Update all launced");
+				Log.d("Front_Page", "Update all launched");
 				ComicUpdater updater = new ComicUpdater(this);
 				updater.execute();
 				break;
+			case R.id.AddNewComicWebView:
+				Log.d("Front_Page", "Add comic WebView launched");
+				Intent intent2 = new Intent(this,Add_Comic_Webview.class);
+				startActivity(intent2);
+				
 		}
 		
 	}
@@ -137,7 +154,7 @@ public class Front_Page extends Activity implements OnClickListener, OnItemClick
             public void onClick(DialogInterface dialog, int which) {
             	DataBaseHandler db = new DataBaseHandler(context);
             	db.deleteComic(db.getComic(name));
-            	Intent intent = getIntent();
+            	Intent intent = new Intent(context, Front_Page.class);
             	intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             	startActivity(intent);
             } 

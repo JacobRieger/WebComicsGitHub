@@ -12,7 +12,7 @@
         android:ems="10" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/AddComicWebEditName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -24,10 +24,10 @@
     </EditText>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/AddComicWebTextUrl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText1"
+        android:layout_above="@+id/AddComicWebEditName"
         android:layout_alignParentLeft="true"
         android:text="Name" />
 
@@ -35,8 +35,8 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editText1"
-        android:layout_alignBottom="@+id/editText1"
+        android:layout_alignBaseline="@+id/AddComicWebEditName"
+        android:layout_alignBottom="@+id/AddComicWebEditName"
         android:layout_alignParentLeft="true"
         android:text="ImageUrl" />
 
@@ -49,12 +49,12 @@
         android:text="Edit Comic" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/AddNewComicWebView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/editText1"
+        android:layout_below="@+id/AddComicWebEditName"
         android:layout_marginTop="18dp"
         android:text="Save" />
 

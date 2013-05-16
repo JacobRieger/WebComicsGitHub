@@ -1,5 +1,11 @@
-package code.webcomicviewer;
+package activityCode;
 
+
+import code.webcomicviewer.R;
+import comicCode.Comic;
+import dataCode.Bookmark;
+import dataCode.BookmarkList;
+import dataCode.DataBaseHandler;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,21 +47,8 @@ public class Add_Comic extends Activity implements OnClickListener {
         
         //Add comic should be invisible until the comics been verified
         //Does not currently work
-        addComic.setVisibility(View.VISIBLE);
-        
-        Bundle extras = getIntent().getExtras();
-        if(extras != null)
-        {//I believe this is no longer needed, will test when i can
-        	
-        	//This loads the data when adding from bookmarks
-        	EditText cName = (EditText) findViewById(R.id.ComicName);
-        	EditText cUrl = (EditText) findViewById(R.id.Comic_Url);
-        	
-        	//Sets the values from bookmark into the text fields
-        	cName.setText(extras.getString("Name"));
-        	cUrl.setText(extras.getString("Url"));
-        }
-        
+        addComic.setVisibility(View.INVISIBLE);
+    
         
         if (Bookmarks == null) {
         	//This loads our bookmarks
@@ -109,14 +102,14 @@ public class Add_Comic extends Activity implements OnClickListener {
     	{
     		//These are the text entry fields
     		EditText cName = (EditText) findViewById(R.id.ComicName);
-        	EditText cUrl = (EditText) findViewById(R.id.Comic_Url);
+        	EditText cUrl  = (EditText) findViewById(R.id.Comic_Url);
         	
         	//Find our bookmark 
         	Bookmark current = Bookmarks.find(item.getTitle().toString());
         	
         	//Load the bookmark data into the fields
         	cName.setText(current.getName());
-        	cUrl.setText(current.getUrl());
+        	cUrl.setText (current.getUrl());
     		return true;
     	}
     	
@@ -128,23 +121,32 @@ public class Add_Comic extends Activity implements OnClickListener {
 		
 		
 		EditText cName = (EditText) findViewById(R.id.ComicName);
-		EditText cUrl = (EditText) findViewById(R.id.Comic_Url);
-		String Name = cName.getText().toString();
-		String Url = cUrl.getText().toString();
+		EditText cUrl  = (EditText) findViewById(R.id.Comic_Url);
+		
+		String Name    = cName.getText().toString();
+		String Url     = cUrl.getText().toString();
 		
 		switch(view.getId()){
+		
 		case R.id.checkComic:
 			//Extracts the comic from the website
 			Comic Check = new Comic(Name, Url, "unset");
 			Log.d("CheckComic", Name + " " + Url);
+			
 			comicDownloader CD = new comicDownloader(Check, this);
 			CD.execute();
+			
+			Button addComic = (Button) findViewById(R.id.addComic);
+			
+			addComic.setOnClickListener(this);
+			addComic.setVisibility(View.VISIBLE);
 			break;
 			
 		case R.id.addComic:
 			DataBaseHandler db = new DataBaseHandler(this);
 			//Comic NewComic = new Comic(Name, Url, ImageUrl);
 			AddedComic.setUpdatedSince("0");
+			AddedComic.setUpdated(true);
 			db.addComic(AddedComic);
 			Intent intent = new Intent(this, Front_Page.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -157,16 +159,20 @@ public class Add_Comic extends Activity implements OnClickListener {
 	
 	public boolean validateURL(String mImageUrl)
 	{
+		//TODO
+		//Had problems with regex, some good urls were being blocked
+		/*
 		String regex = "^(https?|ftp|file)://.+$";
 		Log.d("validateUrl", mImageUrl);
 		if(true)
 		{
 			Log.d("validateURL", "URL matches regex");
-			Button addComic = (Button) findViewById(R.id.addComic);
-			addComic.setOnClickListener(this);
+			
 			return true;
 		}
 		else return false;
+		*/
+		return true;
 	}
 	
 	private class comicDownloader extends AsyncTask<Void, Void, Boolean>

@@ -1,8 +1,13 @@
-package code.webcomicviewer;
+package activityCode;
 
 import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 
 import java.lang.ref.WeakReference;
+
+import code.webcomicviewer.R;
+
+import comicCode.Comic;
+import dataCode.DataBaseHandler;
 
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -16,11 +21,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class View_Comic extends Activity {
 	String ImageUrl;
 	String Name;
 	String Url;
+	Comic  viewed;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,13 +40,13 @@ public class View_Comic extends Activity {
         
         Bundle extras = getIntent().getExtras();
         Name = extras.getString("Name");
-        Comic viewed = db.getComic(Name);
+        viewed = db.getComic(Name);
         
         ImageUrl = viewed.getImageUrl();
         Url      = viewed.getUrl();
         
         
-        textview.setText(Name);
+        textview.setText("");
         
         imageView.setImageBitmap(viewed.getComicBitmap());
         
@@ -80,6 +87,10 @@ public class View_Comic extends Activity {
     		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Url));
     		startActivity(browserIntent);
     		break;
+    	
+    	case R.id.ViewAltText:
+    		Toast.makeText(this, viewed.getAltText(), Toast.LENGTH_LONG).show();
+    		
     	}
     	return true;
     }

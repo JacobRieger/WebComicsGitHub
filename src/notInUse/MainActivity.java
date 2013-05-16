@@ -1,9 +1,18 @@
-package code.webcomicviewer;
+package notInUse;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import code.webcomicviewer.R;
+
+
+import comicCode.Comic;
+import dataCode.Bookmark;
+import dataCode.BookmarkList;
+import dataCode.DataBaseHandler;
+
+import activityCode.View_Comic;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -280,7 +289,8 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             return imageView;
         }
              
-        private class imageDownloader extends AsyncTask<Integer, Void, Bitmap>
+        @SuppressWarnings("unused")
+		private class imageDownloader extends AsyncTask<Integer, Void, Bitmap>
         {
         	//Our Reference to the imageView
         	private final WeakReference<ImageView> imageViewReference;
@@ -288,7 +298,8 @@ public class MainActivity extends FragmentActivity implements OnLongClickListene
             private Comic Current;
             private Context ourContext;
         	
-        	public imageDownloader(ImageView imageView, Comic current, Context context)
+        	
+			public imageDownloader(ImageView imageView, Comic current, Context context)
         	{
         		//Basic constructor that sets our variables
         		imageViewReference = new WeakReference<ImageView>(imageView);

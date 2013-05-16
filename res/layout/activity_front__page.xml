@@ -22,15 +22,6 @@
         android:layout_below="@+id/viewComics"
         android:text="@string/UpdateAll" />
 
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/AddNewComicFront" >
-
-    </ListView>
-
     <Button
         android:id="@+id/AddNewComicFront"
         android:layout_width="wrap_content"
@@ -39,5 +30,23 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/updateAll"
         android:text="Add New Comic" />
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/AddNewComicWebView" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/AddNewComicWebView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/AddNewComicFront"
+        android:text="Add New Comic (Manual)" />
 
 </RelativeLayout>

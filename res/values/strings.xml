@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Web Comics</string>
@@ -29,5 +30,12 @@
     <string name="title_activity_comic__gallery">Comic_Gallery</string>
     <string name="title_comic_detail">Comic Detail</string>
     <string name="title_comic_list">Comics</string>
+    <string name="title_activity_add__comic__webview">Add_Comic_Webview</string>
+    <string name="action_settings">Settings</string>
+    <string name="Url">Url</string>
+    <string name="ImageUrl">Image Url</string>
+    <string name="AddComic">Add Comic</string>
+    <string name="ComicName">Comic Name</string>
+    <string name="ViewAltText">View Alt Text</string>
 
 </resources>

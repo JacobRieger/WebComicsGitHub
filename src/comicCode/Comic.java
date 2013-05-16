@@ -1,4 +1,4 @@
-package code.webcomicviewer;
+package comicCode;
 
 
 import java.io.ByteArrayOutputStream;
@@ -19,6 +19,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import dataCode.Image;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
@@ -27,23 +29,26 @@ import android.util.Log;
 
 public class Comic {
 	
-	private int id;
-	private String Name;
-	private String imageUrl;
-	private Bitmap comicBitmap;
-	private String url;
-	private boolean isUpdated;
-	private String updatedSince;
-
+	private int      id;            //ID for the database
+	private String   Name;          //Name of the comic
+	private String   url;           //Url of the comic
+	private String   updatedSince;  //Server variable that may or may not be present
+	private Image    comicImg;      //Container for ImageUrl and AltText
+	private Bitmap   comicBitmap;   //Bitmap of the image
+	private boolean  isUpdated;     //Whether or not the comic has been confirmed still on the site
+	//--------------------------------------------------------------------------------//
+	
 	public Comic(String name) {
 		Name = name;
-		imageUrl = "www.testurl.com";
+		//imageUrl = "www.testurl.com";
+		comicImg = new Image("www.fake.com", "None");
 		isUpdated = true;
 	}
 
 	public Comic(String name, String URL, String ImageUrl) {
 		Name = name;
-		imageUrl = ImageUrl;
+		//imageUrl = ImageUrl
+		comicImg = new Image(ImageUrl, "None");
 		url = URL;
 		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
 		isUpdated = true;
@@ -52,14 +57,15 @@ public class Comic {
 	public Comic(int ID, String name, String URL, String ImageUrl) {
 		id = ID;
 		Name = name;
-		imageUrl = ImageUrl;
+		//imageUrl = ImageUrl;
+		comicImg = new Image(ImageUrl, "None");
 		url = URL;
 		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
 		isUpdated = true;
 	}
 	
 	public Comic(int ID, String name, String ImageUrl, String updated, String URL) {
-		if(updated == "true")
+		if(updated.equals("true"))
 		{
 			isUpdated = true;
 		}
@@ -69,14 +75,14 @@ public class Comic {
 		}
 		id = ID;
 		Name = name;
-		imageUrl = ImageUrl;
+		comicImg = new Image(ImageUrl, "None");
 		url = URL;
 		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
 	}
 	
 	public Comic(int ID, String name, String ImageUrl, String updated, String URL,
-			String UpdatedSince, byte[] bitmapbytes) {
-		if(updated == "true")
+			String UpdatedSince, byte[] bitmapbytes, String alttext) {
+		if(updated.equals("true"))
 		{
 			isUpdated = true;
 		}
@@ -86,10 +92,11 @@ public class Comic {
 		}
 		id = ID;
 		Name = name;
-		imageUrl = ImageUrl;
+		comicImg = new Image(ImageUrl, alttext);
 		url = URL;
+		
 		//comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
-		Log.d("BitmapFactory", "About to create Bitmap TESTING");
+		Log.d("Comic Constructor", "About to create Bitmap TESTING");
 		
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -106,41 +113,40 @@ public class Comic {
 	
 	public Comic()
 	{
-		
+		comicImg = new Image("Unset", "Unset");
 	}
-
-	public int getId()
+	//--------------------------------------------------------------------------------//
+	public int      getId()
 	{
 		return id;
 	}
-	public void setId(int newId)
+	public void     setId(int newId)
 	{
 		id = newId;
 	}
-	public String getName() {
+	
+	public String   getName() {
 		return Name;
 	}
-
-	public void setName(String name) {
+	public void     setName(String name) {
 		Name = name;
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
+	public String   getImageUrl() {
+		return comicImg.getImageUrl();
+	}
+	public void     setImageUrl(String imageUrl) {
+		this.comicImg.setImageUrl(imageUrl);
 	}
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
-	public Bitmap getComicBitmap() {
+	public Bitmap   getComicBitmap() {
 		return comicBitmap;
 	}
+	public void     setComicBitmap(Bitmap comicBitmap) {
 
-	public void setComicBitmap(Bitmap comicBitmap) {
 		this.comicBitmap = comicBitmap;
 	}
-	public void setComicBitmap(byte[] bitmapbytes)
+	public void     setComicBitmap(byte[] bitmapbytes)
 	{
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -153,30 +159,29 @@ public class Comic {
 		comicBitmap = BitmapFactory.decodeByteArray(
 				bitmapbytes, 0, bitmapbytes.length, options);
 	}
-		
-
-	public boolean isUpdated() {
+	
+	public boolean  isUpdated() {
 		return isUpdated;
 	}
-	public String getUrl()
-	{
-		return url;
-	}
-	public void setUrl(String URL)
-	{
-		url = URL;
-	}
-
-	public void setUpdated(boolean set) {
+	public void     setUpdated(boolean set) {
 		isUpdated = set;
 	}
-	public void setUpdated(String set)
+	public void     setUpdated(String set)
 	{
-		if(set == "true") isUpdated = true;
+		if(set.equals("true")) isUpdated = true;
 		else isUpdated = false;
 	}
 	
-	public byte[] getBitmapBytes() {
+	public String   getUrl()
+	{
+		return url;
+	}
+	public void     setUrl(String URL)
+	{
+		url = URL;
+	}
+	
+	public byte[]   getBitmapBytes() {
 		// This is for inputing bitmaps into a bundle to pass between functions
 		// Bitmap bitmap = BitmapFactory.decodeFile("/path/images/image.jpg");
 		ByteArrayOutputStream blob = new ByteArrayOutputStream();
@@ -185,19 +190,31 @@ public class Comic {
 		return bitmapdata;
 	}
 
-	public String getUpdatedSince()
+	public String   getUpdatedSince()
 	{
 		return String.valueOf(updatedSince);
 	}
-	public void setUpdatedSince(String since)
+	public void     setUpdatedSince(String since)
 	{
 		updatedSince = since;
 	}
+	
+	public String   getAltText()
+	{
+		return comicImg.getAltText();
+	}
+	public void     setAltText(String alt)
+	{
+		comicImg.setAltText(alt);
+	}
+	//--------------------------------------------------------------------------------//
 	public void retrieveImageBitmap() {
+		
+		boolean DEBUG = true;
+		
 		try {
-			// Log.e("src",src);
 			// Opens a URL connection
-			URL url = new URL(imageUrl);
+			URL url = new URL(comicImg.getImageUrl());
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			
 			connection.setDoInput(true);
@@ -207,10 +224,14 @@ public class Comic {
 			// We know it's an image url so we decode it into a bitmap
 			Bitmap myBitmap = BitmapFactory.decodeStream(input);
 			//This is for when the bitmap is too big (aka SMBC)
+			//TODO Change 4096
 			//Tailored only for GSIII, 4096 is equal to GL max size, should find way to 
 			//get this
 			if (myBitmap.getHeight() > 4096 || myBitmap.getWidth() > 4096) {
 				System.out.println("Scaling image");
+				
+				if(DEBUG)Log.d("retrieveImageBitmap", "Scaling image");
+				
 				int origWidth = myBitmap.getWidth();
 				int origHeight = myBitmap.getHeight();
 				int newHeight = 4096;
@@ -228,7 +249,7 @@ public class Comic {
 						(int) (origWidth * scaleWidth), (int) (origHeight * scaleHeight), false);
 			}
 			
-			Log.e("Bitmap", "returned in retrieveImageBitmap");
+			if(DEBUG)Log.e("Comic", "Returned in retrieveImageBitmap");
 			comicBitmap = myBitmap;
 		} catch (IOException e) {
 			
@@ -241,16 +262,16 @@ public class Comic {
 		}
 	}
 
-	public void Update() {
+	public void     Update() {
 		
-		Log.d("Comic", "Updated called in " + this.getName());
-		setNewImageurl(RetrieveImgStrings());
-		//retrieveImageBitmap();
-		
+		if(true)Log.d("Comic", "Updated called in " + this.getName());
+		setNewImageurl(RetrieveImgs());
 	}
 	
-	public boolean modified()
+	public boolean  modified()
 	{
+		boolean DEBUG = false;
+		
 		long oldDate;
 		long newDate;
 		if(updatedSince != null)
@@ -261,8 +282,6 @@ public class Comic {
 		{
 			oldDate = 0;
 		}
-		
-		System.out.println(oldDate);
 		try
 		{
 			URLConnection connection = new URL(url).openConnection();
@@ -274,23 +293,27 @@ public class Comic {
 			newDate = 0;
 		}
 		
-		if(newDate > oldDate || newDate ==0)
+		if(newDate > oldDate || newDate == 0)
 		{
 			oldDate = newDate;
 			updatedSince = String.valueOf(oldDate);
 			return true;
 		}
+		
+		if(DEBUG) Log.d("modified", "Old date was " + oldDate
+						+ " New date is " + newDate );
 		return false;
-	
 	}
 
-	public double Similarity(String newString) {
+	public double   Similarity(String newString) {
 		double count = 0;
 
-		for (int i = 0; i < imageUrl.length(); i++) {
-			if (imageUrl.charAt(i) == newString.charAt(i)) {
+		for (int i = 0; i < comicImg.getImageUrl().length(); i++) {
+			
+			if (comicImg.getImageUrl().charAt(i) == newString.charAt(i)) {
 				count++;
-			} else {
+			} 
+			else {
 				return count;
 			}
 		}
@@ -298,22 +321,30 @@ public class Comic {
 		return 0;
 	}
 
-	public void setNewImageurl(List<String> imageURLs) {
+	public void     setNewImageurl(List<Image> images) {
 
 		// Checks the list given against the saved Imageurl and sets the one
 		// most similar to that former.
 		// This is our similarity variable
 		// System.out.println("SetNewImageurl called");
 		
+		List<String> imageURLs = new ArrayList<String>();
+		for(int i = 0; i < images.size(); i++)
+		{
+			imageURLs.add(images.get(i).getImageUrl());
+		}
+		
+		
 		double greatest = 0.0;
 		// Base string
-		String newImageurl = imageUrl;
+		String newImageurl = comicImg.getImageUrl();
+		String alttext     = comicImg.getAltText();
 		// Flag allows us to check if string was changed
 		boolean flag = false;
 		// This is checking to see if the image has changed since last time we
 		// updated
 
-		if (!imageURLs.contains(imageUrl)) {
+		if (!imageURLs.contains(comicImg.getImageUrl())) {
 			for (int i = 0; i < imageURLs.size(); i++) {
 				// Checking the similarity rating of the new strings to our
 				// saved string
@@ -326,6 +357,7 @@ public class Comic {
 					flag = true;
 					// Most common string is set for update
 					newImageurl = imageURLs.get(i);
+					alttext     = images.get(i).getAltText();
 					// Sets the new bar
 					greatest = temp;
 				}
@@ -334,7 +366,8 @@ public class Comic {
 			if (flag) {
 				// As long as the loop found a new string this is called
 				// Otherwise we'd set the string to "Unset" if it hadn't changed
-				imageUrl = newImageurl;
+				comicImg.setImageUrl(newImageurl);
+				comicImg.setAltText(alttext);
 				this.setUpdated(true);
 				retrieveImageBitmap();
 			}
@@ -347,11 +380,12 @@ public class Comic {
 
 	}
 
-	public void findImageUrl()
+	@SuppressWarnings("static-access")
+	public void     findImageUrl()
 	{
-		List<String> ImageUrls = new ArrayList<String>();
-		ImageUrls = RetrieveImgStrings();
-		String current;
+		List<Image> Images = new ArrayList<Image>();
+		Images = RetrieveImgs();
+		Image current;
 		int height;
 		int width;
 		float AR;
@@ -360,14 +394,14 @@ public class Comic {
 		String max = "unset";
 		float maxRating = 0;
 		
-		for(int i = 0; i < ImageUrls.size(); i++)
+		for(int i = 0; i < Images.size(); i++)
 		{
 			height = 0; width = 0; AR = 0; area = 0; rating = 0;
-			current = ImageUrls.get(i);
+			current = Images.get(i);
 			//Log.d("ImageUrl", current);
 			try {
 				//Now we get the sizes
-				URL oururl = new URL(current);
+				URL oururl = new URL(current.getImageUrl());
 		        HttpURLConnection connection = (HttpURLConnection) oururl.openConnection();
 		        connection.setDoInput(true);
 		        connection.setFollowRedirects(true);
@@ -396,11 +430,11 @@ public class Comic {
 						rating = rating * (float) 1.5;
 					}
 					if (AR < .2 || AR > 3.25) {
-						Log.d("AR deduction" , current);
+						Log.d("AR deduction" , current.getImageUrl());
 						rating = rating - (float)0.25;
 					}
 					if (max == "unset") {
-						max = current;
+						max = current.getImageUrl();
 					} 
 					Log.d("Area", Integer.toString(area));
 					Log.d("AR", Float.toString(AR));
@@ -408,31 +442,32 @@ public class Comic {
 					
 					if (rating > maxRating) {
 						Log.d("Rating", "Max set to " + current);
-						max = current;
+						max = current.getImageUrl();
 						maxRating = rating;
-						imageUrl = max;
+						comicImg.setImageUrl(max);
+						comicImg.setAltText(current.getAltText());
 					}
 					
 				}
 				
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
+				
 				System.out.println("findImageUrl "+ current);
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				System.out.println("findImageUrl "+ current);
 				e.printStackTrace();
 			}
 		}
 	}
 
-	public List<String> RetrieveImgStrings() {
+	public List<Image> RetrieveImgs() {
 		// Connects to the url and retrieves all the img urls from the site
 		// and returns them in strings
 		Log.d("RetrieveImgStrings", "Called");
 		try {
-			List<String> ImgStrings = new ArrayList<String>();
+			List<Image> Images = new ArrayList<Image>();
 			// Connecting to the site
 			// Long timeout given, as was terminating too quickly
 			// Not sure about consequences of that
@@ -451,13 +486,19 @@ public class Comic {
 			// Now we have the html we need to select the elements we want
 			Elements imgs = page.select("img");
 			
-			for (Element e : page.select("img")) {
+			for (Element e : imgs) {
+				
 				String attr = e.attr("style");
+				//System.out.println(e.attr("alt"))
+				
+				
 				if(attr.indexOf("http://") > 0)
 				{
 					String img = attr.substring( attr.indexOf("http://"), attr.indexOf(")"));
+					String alt = e.attr("title");
+					System.out.println(alt);
 					
-					ImgStrings.add(img);
+					Images.add(new Image(img, alt));
 				}
 				
 			}
@@ -471,13 +512,16 @@ public class Comic {
 				Element temp = iterator.next();
 				//System.out.println(temp.toString());
 				String extracted = temp.attr("src");
-				//System.out.println(extracted);
+				String alt       = temp.attr("title");
+				System.out.println("Src = " + extracted + "alt = " + alt);
+				
 				if (extracted.startsWith("/") || !extracted.startsWith("http")) {
 					// This was necessary for DrMcNinja, as the full url
 					// was not posted, I suspect it's true for other sites
 					// as well
-					if(!extracted.startsWith("/"))
+					if(!extracted.startsWith("/") && !url.endsWith("/"))
 					{
+						
 						extracted = "/".concat(extracted);
 					}
 					extracted = url.concat(extracted);
@@ -491,6 +535,7 @@ public class Comic {
 				String New = extracted;
 				//THIS IS UNRELIABLE
 				//SERVERS LIE AND MESS IT UP
+				//LOOKING AT YOU XKCD
 				/*URL testurl = new URL(extracted);
 				URLConnection conn = testurl.openConnection();
 				int cLength = conn.getContentLength();
@@ -507,35 +552,34 @@ public class Comic {
 				{
 					//System.out.println("Rejected " + New + " for " + cLength);
 				}*/
-				ImgStrings.add(New);
+				Images.add(new Image(New, alt));
 			}
 
 			// Return all the img tagged src strings in the html
-			if (ImgStrings.size() == 0) {
+			if (Images.size() == 0) {
 				System.out.println(this.getName() + " "
 						+ "Zero images returned");
 			}
-			return ImgStrings;
+			return Images;
 		} catch (MalformedURLException e) {
 			System.out.println("Malformed URL : " + this.url);
 			// e.printStackTrace();
-			List<String> empty = new ArrayList<String>();
-			empty.add("Unset");
+			List<Image> empty = new ArrayList<Image>();
+			empty.add(new Image("Unset", "Unset"));
 			return empty;
 		} catch (ConnectException e) {
 			System.out.println("Could not connect to : " + this.url);
-			List<String> empty = new ArrayList<String>();
-			empty.add("Unset");
+			List<Image> empty = new ArrayList<Image>();
+			empty.add(new Image("Unset","Unset"));
 			return empty;
 		} catch (IOException e) {
 			System.out.println("General IO Exception Caught");
 			e.printStackTrace();
-			List<String> empty = new ArrayList<String>();
-			empty.add("Unset");
+			List<Image> empty = new ArrayList<Image>();
+			empty.add(new Image("Unset", "Unset"));
 			return empty;
 		}
 	}
-	
 	public static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
     // Raw height and width of image
@@ -557,6 +601,8 @@ public class Comic {
 
     return inSampleSize;
 	}
+	
+	
 	
 	
 

@@ -1,6 +1,7 @@
-package code.webcomicviewer;
+package dataCode;
 
 import java.util.ArrayList;
+
 
 public class BookmarkList {
 	

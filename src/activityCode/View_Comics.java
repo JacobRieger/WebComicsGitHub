@@ -1,16 +1,17 @@
-package code.webcomicviewer;
+package activityCode;
 
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
+import code.webcomicviewer.R;
+
+import comicCode.Comic;
+import dataCode.BookmarkList;
+import dataCode.DataBaseHandler;
+
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.Browser;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +27,8 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import asyncTasks.ComicLoader;
+import asyncTasks.SingleComicUpdater;
 
 public class View_Comics extends FragmentActivity implements OnLongClickListener {
 
@@ -76,12 +79,12 @@ public class View_Comics extends FragmentActivity implements OnLongClickListener
         getMenuInflater().inflate(R.menu.activity_view__comics, menu);
         //Adding two menu items that change at runtime
         //Allows to switch view
-        SubMenu GoTo = menu.addSubMenu("GoTo");    
+        SubMenu GoTo = menu.addSubMenu("Select Comic");    
         for(int i = 0; i < ComicNames.size(); i++)
         {
         	//Set the button names in the submenus
         	//Can't have them both be the same, still need to investigate
-        	GoTo.add("Skip to ".concat(ComicNames.get(i)));
+        	GoTo.add((ComicNames.get(i)));
         }
         
         
@@ -97,7 +100,7 @@ public class View_Comics extends FragmentActivity implements OnLongClickListener
     	
     	for(int i = 0; i < ComicNames.size(); i++)
     	{
-    		if(Title.equals("Skip to ".concat(ComicNames.get(i))))
+    		if(Title.equals((ComicNames.get(i))))
     		{
     			//Sets our view to the selected comic
     			mViewPager.setCurrentItem(i);
@@ -107,7 +110,7 @@ public class View_Comics extends FragmentActivity implements OnLongClickListener
         switch (item.getItemId()) {
         case R.id.Update:
         	//This returns the comic that were currently viewing's position
-        	int i = mViewPager.getCurrentItem();
+        	int i = mViewPager.getCurrentItem() + 1;
         	DataBaseHandler db = new DataBaseHandler(this);
         	//Async Task that updates the comic / imageView
         	
