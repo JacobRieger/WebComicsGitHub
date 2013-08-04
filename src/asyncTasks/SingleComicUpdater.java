@@ -4,8 +4,10 @@ package asyncTasks;
 import comicCode.Comic;
 import dataCode.DataBaseHandler;
 
+import activityCode.ComicListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
@@ -30,24 +32,15 @@ public class SingleComicUpdater extends AsyncTask<Void, Void, Void> {
 		pdialog = new ProgressDialog(context);
 		pdialog.setCancelable(false);
 		pdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		pdialog.setMessage("Updating Comic");
+		pdialog.setMessage("Saving Changes");
 		pdialog.show();
 	}
 	
 	@Override
 	protected Void doInBackground(Void... params) {
-		
-		
-		Comic current = comic;
-		if(current.modified())
-		{
-			current.Update();
-			db.updateComic(current);
-		}
-		else
-		{
-			
-		}
+	
+		db.updateComic(comic);
+		db.close();
 			
 		
 		return null;
@@ -57,6 +50,8 @@ public class SingleComicUpdater extends AsyncTask<Void, Void, Void> {
 	protected void onPostExecute(Void result)
 	{
 		pdialog.dismiss();
+		Intent intent = new Intent(context, ComicListActivity.class);
+		context.startActivity(intent);
 	}
 
 }

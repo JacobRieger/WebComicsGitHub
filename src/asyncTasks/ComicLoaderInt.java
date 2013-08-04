@@ -29,18 +29,19 @@ class ComicLoaderInt extends AsyncTask<Integer, Void, Bitmap> {
     @Override
     protected Bitmap doInBackground(Integer... params) {
        
-    	title = db.getComicName(params[0]);
+    	//title = db.getComicName(params[0]);
     	
-    	byte[] bitmapbytes = db.getComicBitmapBytes(params[0]);
+    	//byte[] bitmapbytes = db.getComicBitmapBytes(params[0]);
 		
-		Bitmap result = BitmapFactory.decodeByteArray(
-				bitmapbytes, 0, bitmapbytes.length, null);
+		//Bitmap result = BitmapFactory.decodeByteArray(
+			//	bitmapbytes, 0, bitmapbytes.length, null);
     	
-    	result = Bitmap.createBitmap(result, result.getWidth()/2,
-    			result.getHeight()/2, 75, 75);
+    	//result = Bitmap.createBitmap(result, result.getWidth()/2,
+    			//result.getHeight()/2, 75, 75);
 
     	
-        return result;
+        //return result;
+    	return null;
     }
 
     // Once complete, see if ImageView is still around and set bitmap.

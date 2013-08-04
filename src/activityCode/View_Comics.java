@@ -28,7 +28,6 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import asyncTasks.ComicLoader;
-import asyncTasks.SingleComicUpdater;
 
 public class View_Comics extends FragmentActivity implements OnLongClickListener {
 
@@ -77,15 +76,18 @@ public class View_Comics extends FragmentActivity implements OnLongClickListener
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_view__comics, menu);
-        //Adding two menu items that change at runtime
-        //Allows to switch view
-        SubMenu GoTo = menu.addSubMenu("Select Comic");    
+        
+        // SubMenu GoTo = menu.addSubMenu("Select Comic");
+        // MenuItem select = menu.findItem(R.id.selection);
+        SubMenu GoTo = menu.findItem(R.id.selection).getSubMenu();
         for(int i = 0; i < ComicNames.size(); i++)
         {
         	//Set the button names in the submenus
         	//Can't have them both be the same, still need to investigate
         	GoTo.add((ComicNames.get(i)));
+        	//select.getSubMenu().add(ComicNames.get(i));
         }
+        
         
         
         return super.onCreateOptionsMenu(menu);
@@ -93,7 +95,16 @@ public class View_Comics extends FragmentActivity implements OnLongClickListener
     }
     
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+    	
+    	
+    	return super.onPrepareOptionsMenu(menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) 
+    {
     	
     	//DataBaseHandler db = new DataBaseHandler(this);
     	String Title = item.getTitle().toString();
@@ -106,22 +117,9 @@ public class View_Comics extends FragmentActivity implements OnLongClickListener
     			mViewPager.setCurrentItem(i);
     		}
     	}
-    	
-        switch (item.getItemId()) {
-        case R.id.Update:
-        	//This returns the comic that were currently viewing's position
-        	int i = mViewPager.getCurrentItem() + 1;
-        	DataBaseHandler db = new DataBaseHandler(this);
-        	//Async Task that updates the comic / imageView
-        	
-        	SingleComicUpdater comicUpdater = new SingleComicUpdater(this, db.getComic(i));
-        	comicUpdater.execute();
-            return true;
-            
-          
-        default:
-            return super.onOptionsItemSelected(item);
-        }
+        
+        return super.onOptionsItemSelected(item);
+        
     }
  
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -202,7 +200,7 @@ public class View_Comics extends FragmentActivity implements OnLongClickListener
 		
 		if (view.getClass() == ImageView.class) {
 			//Our current comic
-			Comic Selected = db.getComic(mViewPager.getCurrentItem() + 1);
+			Comic Selected = db.getComic(mSectionsPagerAdapter.getPageTitle(mViewPager.getCurrentItem()).toString());
 			//We pass extras to know which comic to view
 			Intent intent = new Intent(this, View_Comic.class);
 			intent.putExtra("ImageUrl", Selected.getImageUrl());

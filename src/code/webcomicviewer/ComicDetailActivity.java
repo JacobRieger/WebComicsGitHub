@@ -1,10 +1,18 @@
 package code.webcomicviewer;
 
+import comicCode.Comic;
+
+import dataCode.DataBaseHandler;
+import activityCode.ComicListActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 /**
  * An activity representing a single Comic detail screen. This activity is only
@@ -16,10 +24,34 @@ import android.view.MenuItem;
  */
 public class ComicDetailActivity extends FragmentActivity {
 
+	String ImageUrl;
+	String Name;
+	String Url;
+	Comic  viewed;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		//setTheme(R.style.CustomTheme2); // Set the custom theme which has the action bar
+		
 		super.onCreate(savedInstanceState);
+		
+		getActionBar().setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.activity_comic_detail);
+		
+		//System.out.println(getTheme());
+		
+		
+		
+		
+		DataBaseHandler db = new DataBaseHandler(this);
+        Bundle extras = getIntent().getExtras();
+        Name = extras.getString(ComicDetailFragment.ARG_ITEM_ID);
+        Log.d("ComicDetailActivity","Getting comic named : " + Name);
+        viewed = db.getComic(Name);
+        Url  = viewed.getUrl();
+        
+        Log.d("ComicDetail Activity", "Comic name is " + Name);
 
 		// Show the Up button in the action bar.
 		//This was here originally, got null reference exception
@@ -33,7 +65,7 @@ public class ComicDetailActivity extends FragmentActivity {
 		// For more information, see the Fragments API guide at:
 		//
 		// http://developer.android.com/guide/components/fragments.html
-		//
+		
 		if (savedInstanceState == null) {
 			// Create the detail fragment and add it to the activity
 			// using a fragment transaction.
@@ -48,6 +80,12 @@ public class ComicDetailActivity extends FragmentActivity {
 					.add(R.id.comic_detail_container, fragment).commit();
 		}
 	}
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_view__comic, menu);
+        return true;
+    }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -63,6 +101,18 @@ public class ComicDetailActivity extends FragmentActivity {
 			NavUtils.navigateUpTo(this, new Intent(this,
 					ComicListActivity.class));
 			return true;
+			
+		case R.id.ViewAltText:
+    		Toast.makeText(this, viewed.getAltText(), Toast.LENGTH_LONG).show();
+    		break;
+    		
+    	case R.id.ViewBrowser:
+    		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Url));
+    		startActivity(browserIntent);
+    		break;
+    	
+    	
+    		
 		}
 		return super.onOptionsItemSelected(item);
 	}

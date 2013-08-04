@@ -4,19 +4,12 @@
     android:layout_height="match_parent" >
 
     <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="36dp"
-        android:ems="10" />
-
-    <EditText
         android:id="@+id/AddComicWebEditName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Comic Name (Should Not be Blank)"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/nameValueFragment"
         android:layout_marginTop="18dp"
         android:ems="10" >
 
@@ -24,15 +17,7 @@
     </EditText>
 
     <TextView
-        android:id="@+id/AddComicWebTextUrl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/AddComicWebEditName"
-        android:layout_alignParentLeft="true"
-        android:text="Name" />
-
-    <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/NameValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/AddComicWebEditName"
@@ -57,5 +42,21 @@
         android:layout_below="@+id/AddComicWebEditName"
         android:layout_marginTop="18dp"
         android:text="Save" />
+
+    <EditText
+        android:id="@+id/nameValueFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView3"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/AddComicWebTextUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Name" />
 
 </RelativeLayout>

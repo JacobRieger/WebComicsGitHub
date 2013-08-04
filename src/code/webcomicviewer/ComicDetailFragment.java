@@ -3,13 +3,13 @@ package code.webcomicviewer;
 import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 import comicCode.Comic;
 
+import activityCode.ComicListActivity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import dataCode.DataBaseHandler;
 
@@ -42,11 +42,14 @@ public class ComicDetailFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 
 		if (getArguments().containsKey(ARG_ITEM_ID)) {
+			Log.d("ComicDeatilFragment", "Loading new comic data");
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
 			DataBaseHandler db = new DataBaseHandler(getActivity());
+			Log.d("ComicDeatilFragment", getArguments().getString(ARG_ITEM_ID));
 			mItem = db.getComic(getArguments().getString(ARG_ITEM_ID));
+			
 			
 			//Original mItem setting
 			//mItem = DummyContent.ITEM_MAP.get(getArguments().getString(
@@ -63,7 +66,7 @@ public class ComicDetailFragment extends Fragment {
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
 			
-			System.out.println("mItem is not null");
+			//System.out.println("mItem is not null");
 			
 			//((TextView) rootView.findViewById(R.id.comic_detail))
 				//	.setText(mItem.getName());

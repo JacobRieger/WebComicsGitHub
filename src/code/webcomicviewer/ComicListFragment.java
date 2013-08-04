@@ -4,17 +4,37 @@ import java.util.ArrayList;
 
 import comicCode.Comic;
 
-
+import activityCode.ComicListActivity;
+import activityCode.Edit_Comic;
+import activityCode.Front_Page;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import asyncTasks.DataBaseUpdater;
+
 
 import dataCode.ComicListAdapter;
 import dataCode.DataBaseHandler;
+
+
 
 /**
  * A list fragment representing a list of Comics. This fragment also supports
@@ -25,7 +45,7 @@ import dataCode.DataBaseHandler;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class ComicListFragment extends ListFragment {
+public class ComicListFragment extends ListFragment implements OnItemLongClickListener {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -54,6 +74,7 @@ public class ComicListFragment extends ListFragment {
 		 * Callback for when an item has been selected.
 		 */
 		public void onItemSelected(String id);
+		public void onItemEditSelected(String id);
 	}
 
 	/**
@@ -64,6 +85,12 @@ public class ComicListFragment extends ListFragment {
 		@Override
 		public void onItemSelected(String id) {
 		}
+
+		@Override
+		public void onItemEditSelected(String id) {
+			
+			
+		}
 	};
 
 	/**
@@ -72,6 +99,8 @@ public class ComicListFragment extends ListFragment {
 	 */
 	public ComicListFragment() {
 	}
+	
+	private String[] comicNames;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,7 +116,7 @@ public class ComicListFragment extends ListFragment {
         ArrayList<String> ComicNames = db.getAllComicNames();
         
         //Builds our data set to hand over to the adapter
-        String[] comicNames = new String[ComicNames.size()];
+        comicNames = new String[ComicNames.size()];
         for(int i = 0; i < ComicNames.size(); i++)
         {
         	comicNames[i] = ComicNames.get(i);
@@ -95,20 +124,56 @@ public class ComicListFragment extends ListFragment {
         
         
         //Our simple adapter to display only names
+		//@SuppressWarnings("unused")
 		ArrayAdapter<String> comicAdapter = new ArrayAdapter<String>(getActivity(),
         		android.R.layout.simple_list_item_1, comicNames);
 		
-		Activity activity = getActivity();
-		ComicListAdapter cla = new ComicListAdapter(activity,activity);
+		//final Activity activity = getActivity();
+		//ComicListAdapter cla = new ComicListAdapter(activity,activity);
         
-        //setListAdapter(comicAdapter);
-        setListAdapter(cla);
+        setListAdapter(comicAdapter);
+        //setListAdapter(cla);
+		 
+		/**
+		setListAdapter(new SimpleCursorAdapter(getActivity(),
+                android.R.layout.simple_list_item_1, null, new String[] {
+                        Comic2.COL_NAME, Comic2.COL_URL,
+                        Comic2.COL_SINCE, Comic2.COL_IMAGE,
+                        Comic2.COL_ALT, Comic2.COL_UPDATE, Comic2.COL_BITMAP}, new int[] { 
+															android.R.layout.simple_list_item_1 }, 0));
+		
+        // Load the content
+        getLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {
+            @Override
+            public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            	
+            	Loader<Cursor> result = new CursorLoader(getActivity(),
+                        ComicContentProvider.URI_COMICS, Comic2.FIELDS, Comic2.COL_NAME, null,
+                        null);
+            	System.out.println(result.dataToString(data)));
+            	
+                return result;
+            }
+
+            @Override
+            public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+                ((SimpleCursorAdapter) getListAdapter()).swapCursor(c);
+            }
+
+            @Override
+            public void onLoaderReset(Loader<Cursor> arg0) {
+                ((SimpleCursorAdapter) getListAdapter()).swapCursor(null);
+            }
+        });
+        **/
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
+	      getListView().setOnItemLongClickListener(this);
+	      
 		// Restore the previously serialized activated item position.
 		if (savedInstanceState != null
 				&& savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
@@ -147,12 +212,30 @@ public class ComicListFragment extends ListFragment {
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
 		//mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		Log.d("onListItemCLick", String.valueOf(position));
+		TextView tv = (TextView) view;
+		tv.setTextColor(Color.GRAY);
 		
-		Comic current = db.getComic(position+1);
-		current.setUpdated(false);
-		db.updateComic(current);
+		DataBaseUpdater DBU = new DataBaseUpdater(getActivity());
+		DBU.execute(position+1);
 		
-		mCallbacks.onItemSelected(db.getComicName(position+1));
+		//DatabaseHandler2 db = new DatabaseHandler2(getActivity());
+		
+		
+		
+		//if(name != null)
+		//{
+			//Log.d("onlistItemClick", "Comic clicked is " + name);
+		//	mCallbacks.onItemSelected(name);
+		//}
+		//e/lse
+		//{
+			//Log.d("onlistItemClick", "name is null");
+			//mCallbacks.onItemSelected(name);
+		//}
+		
+		mCallbacks.onItemSelected((String)getListView().getItemAtPosition(position));
+		db.close();
 	}
 
 	@Override
@@ -184,5 +267,48 @@ public class ComicListFragment extends ListFragment {
 		}
 
 		mActivatedPosition = position;
+	}
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
+			final long id) {
+		//This is if you long click onto an item to show two options
+		//Edit Comic || Remove
+		
+		TextView textview = (TextView) view;
+		final String name = textview.getText().toString();
+		Log.d("onItemLongClick", "Comic name = " + name);
+		final Context context = view.getContext();
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(name);
+		
+		builder.setPositiveButton("Edit Comic", new DialogInterface.OnClickListener() {                     
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	//Intent intent = new Intent(context, Edit_Comic.class);
+				//intent.putExtra("Comic", name);
+				//startActivity(intent);
+            	mCallbacks.onItemEditSelected((String)getListView().getItemAtPosition(position));
+            } 
+        });
+		
+		builder.setNegativeButton("Remove", new DialogInterface.OnClickListener() {                     
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	DataBaseHandler db = new DataBaseHandler(context);
+            	db.deleteComic(db.getComic(name));
+            	Intent intent = new Intent(context, ComicListActivity.class);
+            	intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    			intent.putExtra("Removed", position+1);
+            	startActivity(intent);
+            } 
+        });
+		
+		builder.show();
+		
+		return false;
 	}
 }

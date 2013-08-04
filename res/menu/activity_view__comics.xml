@@ -6,8 +6,18 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"/>
     
-    <item android:id="@+id/Update"
-        android:title="Update"
-        android:orderInCategory="100"
-        android:showAsAction="never" />
+    <item 
+        android:id="@+id/selection" 
+        android:title="@string/selectComic"
+        android:showAsAction="ifRoom|withText">
+        
+        <menu>
+            
+        </menu>
+        
+        
+        
+    </item>
+    
+   
 </menu>

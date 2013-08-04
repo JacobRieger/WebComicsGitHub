@@ -14,6 +14,7 @@
         android:targetSdkVersion="16" />
 
     <application
+        android:allowBackup="true"
         android:icon="@drawable/launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo" >
@@ -34,11 +35,6 @@
         <activity
             android:name="activityCode.Front_Page"
             android:label="@string/title_activity_front__page" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="activityCode.Edit_Comic"
@@ -55,7 +51,7 @@
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name="code.webcomicviewer.ComicListActivity"
+            android:name="activityCode.ComicListActivity"
             android:label="@string/title_comic_list" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -66,11 +62,36 @@
         <activity
             android:name="code.webcomicviewer.ComicDetailActivity"
             android:label="@string/title_comic_detail"
-            android:parentActivityName=".ComicListActivity" >
+            android:parentActivityName="activityCode.ComicListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ComicListActivity" />
         </activity>
+
+        <provider
+            android:name="code.webcomicviewer.ComicContentProvider"
+            android:authorities="dataCode"
+            android:enabled="true"
+            android:exported="false" >
+        </provider>
+
+        <activity
+            android:name="code.webcomicviewer.ComicEditActivity"
+            android:label="@string/title_activity_comic_edit" >
+        </activity>
+
+        <service
+            android:name="code.webcomicviewer.IntentServiceUpdater"
+            android:exported="false" >
+        </service>
+
+        <receiver
+            android:name="code.webcomicviewer.UpdateReceiver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
+    </application>
+    <application>
     </application>
 
 </manifest>

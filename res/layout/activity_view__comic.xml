@@ -10,12 +10,4 @@
         android:layout_height="fill_parent"
         android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/TitleName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/Placeholder" />
-
 </RelativeLayout>

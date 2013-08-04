@@ -36,6 +36,27 @@
     <string name="ImageUrl">Image Url</string>
     <string name="AddComic">Add Comic</string>
     <string name="ComicName">Comic Name</string>
-    <string name="ViewAltText">View Alt Text</string>
+    <string name="ViewAltText">Alt Text</string>
+    <string name="Viewcomics">View All</string>
+    <string name="AltText">Alt Text</string>
+    <string name="VisitSite">Visit Site</string>
+    <string name="inline_preferences">Inline Preferences</string>
+    <string name="title_checkbox_preference">title_checkbox_preference</string>
+    <string name="summary_checkbox_preference">summary_checkbox_preference</string>
+    <string name="dialog_based_preferences">dialog_based_preferences</string>
+
+    <string-array name="entries_list_preference">
+        <item>List Item 1</item>
+    </string-array>
+    <string-array name="entryvalues_list_preference">
+        <item>List Entry Value 1</item>
+    </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="SaveChanges">Save Changes</string>
+    <string name="selectComic">Selection</string>
+    <string name="title_activity_comic_edit">ComicEditActivity</string>
+    <string name="LastUpdated">Last Updated</string>
+    <string name="Updated">Updated</string>
 
 </resources>

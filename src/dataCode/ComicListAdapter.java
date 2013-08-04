@@ -2,7 +2,7 @@ package dataCode;
 
 import java.util.List;
 
-import code.webcomicviewer.R;
+import comicCode.Comic;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import asyncTasks.ComicNameLoader;
+
 
 public class ComicListAdapter extends BaseAdapter {
      
@@ -49,15 +49,15 @@ public class ComicListAdapter extends BaseAdapter {
         
     	
     	vi = inflater.inflate(android.R.layout.simple_list_item_1, null);
-    	db       = new DataBaseHandler(_context);
-    	
+    	//db       = new DataBaseHandler(_context);
+    	//Comic Current = db.getComic(position+1);
         //String comicName   = names.get(position+1);
         TextView text      = (TextView) vi.findViewById(android.R.id.text1);
         text.setText(names.get(position));
         //ComicNameLoader nameLoader = new ComicNameLoader(text, _context);
         //nameLoader.execute(position+1);
-        
-        if(db.getComicUpdated(position+1))
+        /**
+        if(Current.isUpdated())
         {
         	text.setTextColor(Color.WHITE);
         }
@@ -65,7 +65,7 @@ public class ComicListAdapter extends BaseAdapter {
         {
         	text.setTextColor(Color.GRAY);
         }
-        
+        **/
         return vi;
     }
 }

@@ -40,12 +40,15 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		
 		String CREATE_WEBCOMICS_TABLE = "CREATE TABLE " + TABLE_WEBCOMICS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_URL + " TEXT," + KEY_UPDATED + " TEXT, " + KEY_SURL + " TEXT," 
                 + KEY_SINCE + " TEXT," + KEY_ALT + " TEXT," + KEY_IMAGE + " BLOB" + ")";
 		System.out.println("SQLite Command " + CREATE_WEBCOMICS_TABLE);
         db.execSQL(CREATE_WEBCOMICS_TABLE);
+		
+		//db.execSQL(Comic2.CREATE_TABLE);
 		
 
 	}
@@ -99,12 +102,21 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.close();
     }
     
+    public void deleteComic(long id)
+    {
+    	SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_WEBCOMICS, KEY_ID + " = ?",
+                new String[] { String.valueOf(id) });
+        db.close();
+    }
+    
     public boolean doesComicExist(Comic comic)
     {
     	Log.d("doesComicExist", "Checking " + comic.getName());
     	
     	if (comic.getName() !=null) {
 			if (this.getComic(comic.getName()) != null) {
+				Log.d("doesComicExist", "getComic(name) returned non null when trying to add comic");
 				return true;
 			} else {
 				Log.d("doesComicExist", comic.getName()
@@ -179,7 +191,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     	}
     	return null;
     }
-    
+    /**
     public byte[]  getComicBitmapBytes(Integer position)
     {
     	if(getComicsCount() != 0)
@@ -198,9 +210,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     		}
     	}
     	return null;
-    }
+    }**/
     
-    public String  getComicName(Integer position)
+    /**public String  getComicName(Integer position)
     {
     	if(getComicsCount() != 0)
     	{
@@ -222,9 +234,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     	}
     	
     	return null;
-    }
+    }**/
     
-    public boolean getComicUpdated(Integer position)
+    /**public boolean getComicUpdated(Integer position)
     {
     	if(getComicsCount() != 0)
     	{
@@ -255,8 +267,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     	}
     	Log.d("DataBaseHandler", "Returned Default. SHOULD NOT BE SEEN");
     	return false;
-    }
-    
+    }**/
+    /**
     public Comic   getComic(Integer position)
     {
     	//position++;
@@ -281,13 +293,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 	        }
 	    	else
 	        {
-	        	Log.i("getComic", "Comic does not exist in database");
+	        	Log.i("getComic", "No Comic at Position " + position);
 	        	db.close();
 	        	return null;
 	        }
     	}
     	return null;
-    }
+    }**/
     
     public ArrayList<Comic>  getAllComics() {
         ArrayList<Comic> ComicList = new ArrayList<Comic>();

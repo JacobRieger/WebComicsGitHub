@@ -43,6 +43,7 @@ public class Comic {
 		//imageUrl = "www.testurl.com";
 		comicImg = new Image("www.fake.com", "None");
 		isUpdated = true;
+		updatedSince = "0";
 	}
 
 	public Comic(String name, String URL, String ImageUrl) {
@@ -52,6 +53,7 @@ public class Comic {
 		url = URL;
 		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
 		isUpdated = true;
+		updatedSince = "0";
 	}
 	
 	public Comic(int ID, String name, String URL, String ImageUrl) {
@@ -62,6 +64,7 @@ public class Comic {
 		url = URL;
 		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
 		isUpdated = true;
+		updatedSince = "0";
 	}
 	
 	public Comic(int ID, String name, String ImageUrl, String updated, String URL) {
@@ -78,6 +81,7 @@ public class Comic {
 		comicImg = new Image(ImageUrl, "None");
 		url = URL;
 		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
+		updatedSince = "0";
 	}
 	
 	public Comic(int ID, String name, String ImageUrl, String updated, String URL,
@@ -113,7 +117,10 @@ public class Comic {
 	
 	public Comic()
 	{
-		comicImg = new Image("Unset", "Unset");
+		comicImg     = new Image("Unset", "Unset");
+		comicBitmap  = Bitmap.createBitmap(10, 10, Bitmap.Config.ALPHA_8);
+		updatedSince = "0";
+		if(comicBitmap == null) System.out.println("Wtf your comic bitmap is Null in constructor");
 	}
 	//--------------------------------------------------------------------------------//
 	public int      getId()
@@ -140,6 +147,7 @@ public class Comic {
 	}
 
 	public Bitmap   getComicBitmap() {
+		
 		return comicBitmap;
 	}
 	public void     setComicBitmap(Bitmap comicBitmap) {
@@ -187,6 +195,13 @@ public class Comic {
 		ByteArrayOutputStream blob = new ByteArrayOutputStream();
 		comicBitmap.compress(CompressFormat.PNG, 0 /* ignored for PNG */, blob);
 		byte[] bitmapdata = blob.toByteArray();
+		
+		if(bitmapdata == null)
+		{
+			Log.d("getBitmapBytes", "Returned default bitmap bytes");
+			Bitmap Default = Bitmap.createBitmap(10, 10, Bitmap.Config.ALPHA_8);
+			Default.compress(CompressFormat.PNG,  0, blob);
+		}
 		return bitmapdata;
 	}
 
@@ -194,15 +209,15 @@ public class Comic {
 	{
 		return String.valueOf(updatedSince);
 	}
-	public void     setUpdatedSince(String since)
-	{
-		updatedSince = since;
-	}
-	
 	public String   getAltText()
 	{
 		return comicImg.getAltText();
 	}
+	public void     setUpdatedSince(String since)
+	{
+		updatedSince = since;
+	}
+
 	public void     setAltText(String alt)
 	{
 		comicImg.setAltText(alt);
@@ -366,6 +381,7 @@ public class Comic {
 			if (flag) {
 				// As long as the loop found a new string this is called
 				// Otherwise we'd set the string to "Unset" if it hadn't changed
+				Log.d("Comic.SetNewImageurl", "New ImageUrl is " + newImageurl);
 				comicImg.setImageUrl(newImageurl);
 				comicImg.setAltText(alttext);
 				this.setUpdated(true);

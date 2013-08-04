@@ -2,25 +2,17 @@ package activityCode;
 
 import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 
-import java.lang.ref.WeakReference;
-
 import code.webcomicviewer.R;
 
 import comicCode.Comic;
 import dataCode.DataBaseHandler;
 
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class View_Comic extends Activity {
@@ -35,18 +27,18 @@ public class View_Comic extends Activity {
         setContentView(R.layout.activity_view__comic);
         
         ImageViewTouch imageView = (ImageViewTouch) findViewById(R.id.ImageView01);
-        TextView textview = (TextView) findViewById(R.id.TitleName);
+        
         DataBaseHandler db = new DataBaseHandler(this);
         
         Bundle extras = getIntent().getExtras();
         Name = extras.getString("Name");
         viewed = db.getComic(Name);
-        
+        //
         ImageUrl = viewed.getImageUrl();
         Url      = viewed.getUrl();
         
         
-        textview.setText("");
+        
         
         imageView.setImageBitmap(viewed.getComicBitmap());
         
@@ -69,7 +61,7 @@ public class View_Comic extends Activity {
     	//This reloads the image
     	switch(item.getItemId())
     	{
-    	
+    	/**
     	case R.id.Reload:
 	    	ImageViewTouch imageView = (ImageViewTouch) findViewById(R.id.ImageView01);
 	    	imageView.setImageResource(R.drawable.loading);
@@ -82,6 +74,7 @@ public class View_Comic extends Activity {
     		ComicUpdater update = new ComicUpdater(this);
     		update.execute();
     		break;
+    		**/
     		
     	case R.id.ViewBrowser:
     		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Url));
@@ -94,7 +87,7 @@ public class View_Comic extends Activity {
     	}
     	return true;
     }
-    
+    /**
     private class imageDownloader extends AsyncTask<Integer, Void, Bitmap>
     {
     	//Our Reference to the imageView
@@ -178,4 +171,5 @@ public class View_Comic extends Activity {
 		}
     	
     }
+**/
 }

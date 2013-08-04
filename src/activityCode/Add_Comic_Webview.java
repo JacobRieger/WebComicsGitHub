@@ -142,10 +142,11 @@ public class Add_Comic_Webview extends Activity implements OnClickListener {
 					
 					String comicname = name.getText().toString();
 					if(comicname.equals("")) comicname = comicName;
+					
 					newComic.setName        (comicname);
 					newComic.setImageUrl    (cotl.getImageUrl());
 					newComic.setUrl         (edittext.getText().toString());
-					newComic.setUpdated     (false);
+					newComic.setUpdated     (true);
 					newComic.setUpdatedSince("0");
 					
 					Log.d("Add Comic WebView", "Comic name is : " + newComic.getName());
@@ -159,6 +160,7 @@ public class Add_Comic_Webview extends Activity implements OnClickListener {
 					Toast toast = Toast.makeText(this, "Incorrect Selection", Toast.LENGTH_SHORT);
 					toast.show();
 				}
+				break;
 		}
 		
 	}

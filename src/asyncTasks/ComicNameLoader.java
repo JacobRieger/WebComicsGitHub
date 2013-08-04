@@ -11,7 +11,7 @@ public class ComicNameLoader extends AsyncTask<Integer, Void, Void> {
 	private TextView textView;
 	private Context  context;
 	
-	public ComicNameLoader(TextView textview, Context conText)
+	public ComicNameLoader(TextView textview, Context conText, boolean blah)
 	{
 		textView  = textview;
 		context   = conText;
@@ -20,8 +20,8 @@ public class ComicNameLoader extends AsyncTask<Integer, Void, Void> {
 	@Override
 	protected Void doInBackground(Integer... position) {
 		
-		DataBaseHandler db = new DataBaseHandler(context);
-        comicName = db.getComicName(position[0]);
+		//DataBaseHandler db = new DataBaseHandler(context);
+       // comicName = db.getComicName(position[0]);
 		return null;
 	}
 	

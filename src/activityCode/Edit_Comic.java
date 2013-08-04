@@ -35,7 +35,7 @@ public class Edit_Comic extends Activity implements OnClickListener {
         Comic editable = db.getComic(comicName);
         name = editable.getName();
         
-        EditText Name = (EditText) findViewById(R.id.editText2);
+        EditText Name = (EditText) findViewById(R.id.nameValueFragment);
         EditText Iurl = (EditText) findViewById(R.id.AddComicWebEditName);
         
         Name.setText(editable.getName());
@@ -55,7 +55,7 @@ public class Edit_Comic extends Activity implements OnClickListener {
 		DataBaseHandler db = new DataBaseHandler(this);
 		if(v.getId() == R.id.AddNewComicWebView)
 		{
-			EditText Name = (EditText) findViewById(R.id.editText2);
+			EditText Name = (EditText) findViewById(R.id.nameValueFragment);
 			EditText Iurl = (EditText) findViewById(R.id.AddComicWebEditName);
 			
 			Comic old = db.getComic(name);

@@ -4,6 +4,7 @@ package asyncTasks;
 import comicCode.Comic;
 import dataCode.DataBaseHandler;
 
+import activityCode.ComicListActivity;
 import activityCode.Front_Page;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,7 +21,6 @@ public class SingleComicRetriever extends AsyncTask<Void,Void,Void>{
 	{
 		ourComic = comic;
 		context = appContext;
-		
 	}
 	
 	@Override
@@ -40,7 +40,7 @@ public class SingleComicRetriever extends AsyncTask<Void,Void,Void>{
 		DataBaseHandler db = new DataBaseHandler(context);
 		
 		ourComic.retrieveImageBitmap();
-		
+		ourComic.setUpdated(true);
 		
 		db.addComic(ourComic);
 		
@@ -53,7 +53,7 @@ public class SingleComicRetriever extends AsyncTask<Void,Void,Void>{
 	{
 		pdialog.dismiss();
 		
-		Intent intent = new Intent(context, Front_Page.class);
+		Intent intent = new Intent(context, ComicListActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);

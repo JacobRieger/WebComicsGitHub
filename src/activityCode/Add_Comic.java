@@ -148,7 +148,7 @@ public class Add_Comic extends Activity implements OnClickListener {
 			AddedComic.setUpdatedSince("0");
 			AddedComic.setUpdated(true);
 			db.addComic(AddedComic);
-			Intent intent = new Intent(this, Front_Page.class);
+			Intent intent = new Intent(this, ComicListActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
