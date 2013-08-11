@@ -47,7 +47,7 @@ public class Comic2 {
 	private String   Name;          //Name of the comic
 	private String   url;           //Url of the comic
 	private String   updatedSince;  //Server variable that may or may not be present
-	private Image    comicImg;      //Container for ImageUrl and AltText
+	private HtmlImageTag comicImg;      //Container for ImageUrl and AltText
 	private Bitmap   comicBitmap;   //Bitmap of the image
 	private boolean  isUpdated;     //Whether or not the comic has been confirmed still on the site
 	//--------------------------------------------------------------------------------//
@@ -70,7 +70,7 @@ public class Comic2 {
 		Name         = "Default";
 		url          = "Default";
 		updatedSince = "0";
-		comicImg     = new Image(Name, Name);
+		comicImg     = new HtmlImageTag(Name, Name);
 		comicBitmap  = null;
 		isUpdated    = false;
 	}
@@ -89,7 +89,7 @@ public class Comic2 {
 		}
 		id = ID;
 		Name = name;
-		comicImg = new Image(ImageUrl, alttext);
+		comicImg = new HtmlImageTag(ImageUrl, alttext);
 		url = URL;
 		
 		//comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
@@ -113,7 +113,7 @@ public class Comic2 {
 		this.url  = cursor.getString(2);
 		this.updatedSince = cursor.getString(3);
 		
-		this.comicImg = new Image(cursor.getString(4), cursor.getString(5));
+		this.comicImg = new HtmlImageTag(cursor.getString(4), cursor.getString(5));
 		
 		if(cursor.getString(6).equals("True"))
 		{
@@ -407,7 +407,7 @@ public void retrieveImageBitmap() {
 	}
 	
 	
-	public void     setNewImageurl(List<Image> images) {
+	public void     setNewImageurl(List<HtmlImageTag> htmlImageTags) {
 
 		// Checks the list given against the saved Imageurl and sets the one
 		// most similar to that former.
@@ -415,9 +415,9 @@ public void retrieveImageBitmap() {
 		// System.out.println("SetNewImageurl called");
 		
 		List<String> imageURLs = new ArrayList<String>();
-		for(int i = 0; i < images.size(); i++)
+		for(int i = 0; i < htmlImageTags.size(); i++)
 		{
-			imageURLs.add(images.get(i).getImageUrl());
+			imageURLs.add(htmlImageTags.get(i).getImageUrl());
 		}
 		
 		
@@ -443,7 +443,7 @@ public void retrieveImageBitmap() {
 					flag = true;
 					// Most common string is set for update
 					newImageurl = imageURLs.get(i);
-					alttext     = images.get(i).getAltText();
+					alttext     = htmlImageTags.get(i).getAltText();
 					// Sets the new bar
 					greatest = temp;
 				}
@@ -470,9 +470,9 @@ public void retrieveImageBitmap() {
 	@SuppressWarnings("static-access")
 	public void     findImageUrl()
 	{
-		List<Image> Images = new ArrayList<Image>();
-		Images = RetrieveImgs();
-		Image current;
+		List<HtmlImageTag> htmlImageTags = new ArrayList<HtmlImageTag>();
+		htmlImageTags = RetrieveImgs();
+		HtmlImageTag current;
 		int height;
 		int width;
 		float AR;
@@ -481,10 +481,10 @@ public void retrieveImageBitmap() {
 		String max = "unset";
 		float maxRating = 0;
 		
-		for(int i = 0; i < Images.size(); i++)
+		for(int i = 0; i < htmlImageTags.size(); i++)
 		{
 			height = 0; width = 0; AR = 0; area = 0; rating = 0;
-			current = Images.get(i);
+			current = htmlImageTags.get(i);
 			//Log.d("ImageUrl", current);
 			try {
 				//Now we get the sizes
@@ -550,12 +550,12 @@ public void retrieveImageBitmap() {
 	}
 	
 	
-	public List<Image> RetrieveImgs() {
+	public List<HtmlImageTag> RetrieveImgs() {
 		// Connects to the url and retrieves all the img urls from the site
 		// and returns them in strings
 		Log.d("RetrieveImgStrings", "Called");
 		try {
-			List<Image> Images = new ArrayList<Image>();
+			List<HtmlImageTag> htmlImageTags = new ArrayList<HtmlImageTag>();
 			// Connecting to the site
 			// Long timeout given, as was terminating too quickly
 			// Not sure about consequences of that
@@ -586,7 +586,7 @@ public void retrieveImageBitmap() {
 					String alt = e.attr("title");
 					System.out.println(alt);
 					
-					Images.add(new Image(img, alt));
+					htmlImageTags.add(new HtmlImageTag(img, alt));
 				}
 				
 			}
@@ -640,31 +640,31 @@ public void retrieveImageBitmap() {
 				{
 					//System.out.println("Rejected " + New + " for " + cLength);
 				}*/
-				Images.add(new Image(New, alt));
+				htmlImageTags.add(new HtmlImageTag(New, alt));
 			}
 
 			// Return all the img tagged src strings in the html
-			if (Images.size() == 0) {
+			if (htmlImageTags.size() == 0) {
 				System.out.println(this.getName() + " "
 						+ "Zero images returned");
 			}
-			return Images;
+			return htmlImageTags;
 		} catch (MalformedURLException e) {
 			System.out.println("Malformed URL : " + this.url);
 			// e.printStackTrace();
-			List<Image> empty = new ArrayList<Image>();
-			empty.add(new Image("Unset", "Unset"));
+			List<HtmlImageTag> empty = new ArrayList<HtmlImageTag>();
+			empty.add(new HtmlImageTag("Unset", "Unset"));
 			return empty;
 		} catch (ConnectException e) {
 			System.out.println("Could not connect to : " + this.url);
-			List<Image> empty = new ArrayList<Image>();
-			empty.add(new Image("Unset","Unset"));
+			List<HtmlImageTag> empty = new ArrayList<HtmlImageTag>();
+			empty.add(new HtmlImageTag("Unset","Unset"));
 			return empty;
 		} catch (IOException e) {
 			System.out.println("General IO Exception Caught");
 			e.printStackTrace();
-			List<Image> empty = new ArrayList<Image>();
-			empty.add(new Image("Unset", "Unset"));
+			List<HtmlImageTag> empty = new ArrayList<HtmlImageTag>();
+			empty.add(new HtmlImageTag("Unset", "Unset"));
 			return empty;
 		}
 	}

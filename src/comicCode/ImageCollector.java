@@ -12,29 +12,28 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import dataCode.Image;
+import dataCode.HtmlImageTag;
 
 /**
  * Created by Jacob on 8/10/13.
  */
-public class ImageRetriever {
+public class ImageCollector {
 
     private Comic comic;
 
-    public ImageRetriever(Comic comicPassed)
+    public ImageCollector(Comic comicPassed)
     {
         comic = comicPassed;
     }
 
-    public List<Image> RetrieveImgs() {
+    public List<HtmlImageTag> RetrieveImgs() {
         // Connects to the url and retrieves all the img urls from the site
         // and returns them in strings
         Log.d("RetrieveImgStrings", "Called");
         try {
-            List<Image> Images = new ArrayList<Image>();
+            List<HtmlImageTag> htmlImageTags = new ArrayList<HtmlImageTag>();
             // Connecting to the site
             // Long timeout given, as was terminating too quickly
             // Not sure about consequences of that
@@ -65,7 +64,7 @@ public class ImageRetriever {
                     String alt = e.attr("title");
                     System.out.println(alt);
 
-                    Images.add(new Image(img, alt));
+                    htmlImageTags.add(new HtmlImageTag(img, alt));
                 }
 
             }
@@ -116,31 +115,31 @@ public class ImageRetriever {
 				{
 					//System.out.println("Rejected " + New + " for " + cLength);
 				}*/
-                Images.add(new Image(New, alt));
+                htmlImageTags.add(new HtmlImageTag(New, alt));
             }
 
             // Return all the img tagged src strings in the html
-            if (Images.size() == 0) {
+            if (htmlImageTags.size() == 0) {
                 System.out.println(comic.getName() + " "
                         + "Zero images returned");
             }
-            return Images;
+            return htmlImageTags;
         } catch (MalformedURLException e) {
             System.out.println("Malformed URL : " + comic.getUrl());
             // e.printStackTrace();
-            List<Image> empty = new ArrayList<Image>();
-            empty.add(new Image("Unset", "Unset"));
+            List<HtmlImageTag> empty = new ArrayList<HtmlImageTag>();
+            empty.add(new HtmlImageTag("Unset", "Unset"));
             return empty;
         } catch (ConnectException e) {
             System.out.println("Could not connect to : " + comic.getUrl());
-            List<Image> empty = new ArrayList<Image>();
-            empty.add(new Image("Unset","Unset"));
+            List<HtmlImageTag> empty = new ArrayList<HtmlImageTag>();
+            empty.add(new HtmlImageTag("Unset","Unset"));
             return empty;
         } catch (IOException e) {
             System.out.println("General IO Exception Caught");
             e.printStackTrace();
-            List<Image> empty = new ArrayList<Image>();
-            empty.add(new Image("Unset", "Unset"));
+            List<HtmlImageTag> empty = new ArrayList<HtmlImageTag>();
+            empty.add(new HtmlImageTag("Unset", "Unset"));
             return empty;
         }
     }

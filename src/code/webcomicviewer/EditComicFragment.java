@@ -56,7 +56,7 @@ public class EditComicFragment extends Fragment {
 			mItem = db.getComic(getArguments().getString(ARG_ITEM_ID));
 			
 			
-			//String[] comicData = new String[] {"Name", "URL", "Image URL", "Alt Text"};
+			//String[] comicData = new String[] {"Name", "URL", "HtmlImageTag URL", "Alt Text"};
 			
 			//ArrayAdapter<String> comicAdapter = new ArrayAdapter<String>(getActivity(),
 	        		//android.R.layout.simple_list_item_1, comicData);

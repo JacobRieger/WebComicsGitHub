@@ -1,11 +1,11 @@
 package dataCode;
 
-public class Image {
+public class HtmlImageTag {
 
 	private String imageUrl;
 	private String altText;
 	
-	public Image(String image, String alt)
+	public HtmlImageTag(String image, String alt)
 	{
 		imageUrl = image;
 		altText  = alt;

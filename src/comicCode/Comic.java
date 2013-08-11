@@ -4,22 +4,14 @@ package comicCode;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-import org.jsoup.helper.HttpConnection;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import dataCode.Image;
+import dataCode.HtmlImageTag;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,7 +25,7 @@ public class Comic {
 	private String   Name;          //Name of the comic
 	private String   url;           //Url of the comic
 	private String   updatedSince;  //Server variable that may or may not be present
-	private Image    comicImg;      //Container for ImageUrl and AltText
+	private HtmlImageTag comicImg;      //Container for ImageUrl and AltText
 	private Bitmap   comicBitmap;   //Bitmap of the image
 	private boolean  isUpdated;     //Whether or not the comic has been confirmed still on the site
 	//--------------------------------------------------------------------------------//
@@ -41,7 +33,7 @@ public class Comic {
 	public Comic(String name) {
 		Name = name;
 		//imageUrl = "www.testurl.com";
-		comicImg = new Image("www.fake.com", "None");
+		comicImg = new HtmlImageTag("www.fake.com", "None");
 		isUpdated = true;
 		updatedSince = "0";
 	}
@@ -49,7 +41,7 @@ public class Comic {
 	public Comic(String name, String URL, String ImageUrl) {
 		Name = name;
 		//imageUrl = ImageUrl
-		comicImg = new Image(ImageUrl, "None");
+		comicImg = new HtmlImageTag(ImageUrl, "None");
 		url = URL;
 		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
 		isUpdated = true;
@@ -60,7 +52,7 @@ public class Comic {
 		id = ID;
 		Name = name;
 		//imageUrl = ImageUrl;
-		comicImg = new Image(ImageUrl, "None");
+		comicImg = new HtmlImageTag(ImageUrl, "None");
 		url = URL;
 		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
 		isUpdated = true;
@@ -78,7 +70,7 @@ public class Comic {
 		}
 		id = ID;
 		Name = name;
-		comicImg = new Image(ImageUrl, "None");
+		comicImg = new HtmlImageTag(ImageUrl, "None");
 		url = URL;
 		comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
 		updatedSince = "0";
@@ -96,7 +88,7 @@ public class Comic {
 		}
 		id = ID;
 		Name = name;
-		comicImg = new Image(ImageUrl, alttext);
+		comicImg = new HtmlImageTag(ImageUrl, alttext);
 		url = URL;
 		
 		//comicBitmap = Bitmap.createBitmap(1, 1, Config.ALPHA_8);
@@ -117,7 +109,7 @@ public class Comic {
 	
 	public Comic()
 	{
-		comicImg     = new Image("Unset", "Unset");
+		comicImg     = new HtmlImageTag("Unset", "Unset");
 		comicBitmap  = Bitmap.createBitmap(10, 10, Bitmap.Config.ALPHA_8);
 		updatedSince = "0";
 		if(comicBitmap == null) System.out.println("Wtf your comic bitmap is Null in constructor");
@@ -281,8 +273,8 @@ public class Comic {
 		
 		if(true)Log.d("Comic", "Updated called in " + this.getName());
 
-        ImageRetriever imageRetriever = new ImageRetriever(this);
-        List<Image> images = imageRetriever.RetrieveImgs();
+        ImageCollector imageCollector = new ImageCollector(this);
+        List<HtmlImageTag> htmlImageTags = imageCollector.RetrieveImgs();
 
 
 
@@ -342,7 +334,7 @@ public class Comic {
 		return 0;
 	}
 
-	public void     setNewImageurl(List<Image> images) {
+	public void     setNewImageurl(List<HtmlImageTag> htmlImageTags) {
 
 		// Checks the list given against the saved Imageurl and sets the one
 		// most similar to that former.
@@ -350,9 +342,9 @@ public class Comic {
 		// System.out.println("SetNewImageurl called");
 		
 		List<String> imageURLs = new ArrayList<String>();
-		for(int i = 0; i < images.size(); i++)
+		for(int i = 0; i < htmlImageTags.size(); i++)
 		{
-			imageURLs.add(images.get(i).getImageUrl());
+			imageURLs.add(htmlImageTags.get(i).getImageUrl());
 		}
 		
 		
@@ -378,7 +370,7 @@ public class Comic {
 					flag = true;
 					// Most common string is set for update
 					newImageurl = imageURLs.get(i);
-					alttext     = images.get(i).getAltText();
+					alttext     = htmlImageTags.get(i).getAltText();
 					// Sets the new bar
 					greatest = temp;
 				}
@@ -405,9 +397,9 @@ public class Comic {
 	@SuppressWarnings("static-access")
 	public void     findImageUrl()
 	{
-        ImageRetriever imageRetriever = new ImageRetriever(this);
-		List<Image> Images = imageRetriever.RetrieveImgs();
-		Image current;
+        ImageCollector imageCollector = new ImageCollector(this);
+		List<HtmlImageTag> htmlImageTags = imageCollector.RetrieveImgs();
+		HtmlImageTag current;
 		int height;
 		int width;
 		float AR;
@@ -416,10 +408,10 @@ public class Comic {
 		String max = "unset";
 		float maxRating = 0;
 		
-		for(int i = 0; i < Images.size(); i++)
+		for(int i = 0; i < htmlImageTags.size(); i++)
 		{
 			height = 0; width = 0; AR = 0; area = 0; rating = 0;
-			current = Images.get(i);
+			current = htmlImageTags.get(i);
 			//Log.d("ImageUrl", current);
 			try {
 				//Now we get the sizes
