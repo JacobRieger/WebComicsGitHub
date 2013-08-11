@@ -29,14 +29,6 @@ public class Comic {
 	private Bitmap   comicBitmap;   //Bitmap of the image
 	private boolean  isUpdated;     //Whether or not the comic has been confirmed still on the site
 	//--------------------------------------------------------------------------------//
-	
-	public Comic(String name) {
-		Name = name;
-		//imageUrl = "www.testurl.com";
-		comicImg = new HtmlImageTag("www.fake.com", "None");
-		isUpdated = true;
-		updatedSince = "0";
-	}
 
 	public Comic(String name, String URL, String ImageUrl) {
 		Name = name;
