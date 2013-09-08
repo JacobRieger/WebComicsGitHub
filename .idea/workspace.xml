@@ -11,6 +11,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="Commander">
+    <leftPanel />
+    <rightPanel />
+    <splitter proportion="0.5" />
+  </component>
   <component name="CompilerWorkspaceConfiguration">
     <option name="USE_COMPILE_SERVER" value="false" />
   </component>
@@ -21,7 +26,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -58,6 +62,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -70,17 +75,130 @@
       <file leaf-file-name="Add_Comic.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/activityCode/Add_Comic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="8" selection-start="1540" selection-end="1540" vertical-scroll-proportion="0.0" vertical-offset="850" max-vertical-offset="4097">
-              <folding />
+            <state line="78" column="0" selection-start="2427" selection-end="2427" vertical-scroll-proportion="0.0" vertical-offset="3667" max-vertical-offset="5886">
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ComicListActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/activityCode/ComicListActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="13" selection-start="1644" selection-end="1644" vertical-scroll-proportion="0.0" vertical-offset="2106" max-vertical-offset="7641">
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Comic.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/comicCode/Comic.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="0" selection-start="528" selection-end="528" vertical-scroll-proportion="0.0" vertical-offset="368" max-vertical-offset="4860">
+              <folding>
+                <element signature="method#Comic#0;class#Comic#0" expanded="false" />
+                <element signature="method#Comic#1;class#Comic#0" expanded="false" />
+                <element signature="method#Comic#2;class#Comic#0" expanded="false" />
+                <element signature="method#Comic#3;class#Comic#0" expanded="false" />
+                <element signature="method#Comic#4;class#Comic#0" expanded="false" />
+                <element signature="method#getId#0;class#Comic#0" expanded="false" />
+                <element signature="method#setId#0;class#Comic#0" expanded="false" />
+                <element signature="method#getName#0;class#Comic#0" expanded="false" />
+                <element signature="method#setName#0;class#Comic#0" expanded="false" />
+                <element signature="method#getImageUrl#0;class#Comic#0" expanded="false" />
+                <element signature="method#setImageUrl#0;class#Comic#0" expanded="false" />
+                <element signature="method#getComicBitmap#0;class#Comic#0" expanded="false" />
+                <element signature="method#setComicBitmap#0;class#Comic#0" expanded="false" />
+                <element signature="method#setComicBitmap#1;class#Comic#0" expanded="false" />
+                <element signature="method#isUpdated#0;class#Comic#0" expanded="false" />
+                <element signature="method#setUpdated#0;class#Comic#0" expanded="false" />
+                <element signature="method#setUpdated#1;class#Comic#0" expanded="false" />
+                <element signature="method#getUrl#0;class#Comic#0" expanded="false" />
+                <element signature="method#setUrl#0;class#Comic#0" expanded="false" />
+                <element signature="method#getBitmapBytes#0;class#Comic#0" expanded="false" />
+                <element signature="method#getUpdatedSince#0;class#Comic#0" expanded="false" />
+                <element signature="method#getAltText#0;class#Comic#0" expanded="false" />
+                <element signature="method#setUpdatedSince#0;class#Comic#0" expanded="false" />
+                <element signature="method#setAltText#0;class#Comic#0" expanded="false" />
+                <element signature="method#retrieveImageBitmap#0;class#Comic#0" expanded="false" />
+                <element signature="method#modified#0;class#Comic#0" expanded="false" />
+                <element signature="method#Similarity#0;class#Comic#0" expanded="false" />
+                <element signature="method#findImageUrl#0;class#Comic#0" expanded="false" />
+                <element signature="method#calculateInSampleSize#0;class#Comic#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Comic.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/comicCode/Comic.java">
+        <entry file="file://$PROJECT_DIR$/src/com/webcomic/models/Comic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="31" selection-start="1328" selection-end="1328" vertical-scroll-proportion="0.020190023" vertical-offset="255" max-vertical-offset="10319">
-              <folding />
+            <state line="30" column="5" selection-start="572" selection-end="572" vertical-scroll-proportion="0.3847981" vertical-offset="162" max-vertical-offset="1080">
+              <folding>
+                <element signature="docComment;class#Comic#0" expanded="false" />
+                <element signature="method#getId#0;class#Comic#0" expanded="false" />
+                <element signature="method#setId#0;class#Comic#0" expanded="false" />
+                <element signature="method#getName#0;class#Comic#0" expanded="false" />
+                <element signature="method#setName#0;class#Comic#0" expanded="false" />
+                <element signature="method#getWebsite#0;class#Comic#0" expanded="false" />
+                <element signature="method#setWebsite#0;class#Comic#0" expanded="false" />
+                <element signature="method#getLastUpdated#0;class#Comic#0" expanded="false" />
+                <element signature="method#setLastUpdated#0;class#Comic#0" expanded="false" />
+                <element signature="method#getContent#0;class#Comic#0" expanded="false" />
+                <element signature="method#setContent#0;class#Comic#0" expanded="false" />
+                <element signature="method#getHasBeenViewed#0;class#Comic#0" expanded="false" />
+                <element signature="method#setHasBeenViewed#0;class#Comic#0" expanded="false" />
+                <element signature="method#Comic#0;class#Comic#0" expanded="false" />
+                <element signature="method#Comic#1;class#Comic#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataBaseService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/webcomic/services/DataBaseService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="94" column="33" selection-start="3220" selection-end="3220" vertical-scroll-proportion="0.0" vertical-offset="2101" max-vertical-offset="10800">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#10182#10189#0" expanded="true" />
+                <element signature="e#11350#11358#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Content.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/webcomic/models/Content.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="28" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="918">
+              <folding>
+                <element signature="method#getImageUrl#0;class#Content#0" expanded="false" />
+                <element signature="method#setImageUrl#0;class#Content#0" expanded="false" />
+                <element signature="method#getAltText#0;class#Content#0" expanded="false" />
+                <element signature="method#setAltText#0;class#Content#0" expanded="false" />
+                <element signature="method#getImage#0;class#Content#0" expanded="false" />
+                <element signature="method#setImage#0;class#Content#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Front_Page.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/activityCode/Front_Page.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="26" selection-start="1612" selection-end="1621" vertical-scroll-proportion="0.0" vertical-offset="1458" max-vertical-offset="3861">
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#2641#2649#0" expanded="false" />
+                <element signature="e#4780#5087#0" expanded="false" />
+                <element signature="e#5075#5076#0" expanded="false" />
+                <element signature="e#5131#5588#0" expanded="false" />
+                <element signature="e#5576#5577#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -99,6 +217,27 @@
     <option name="myDateState">
       <MyDateState />
     </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/src/comicCode/ImageRetriever.java" />
+        <option value="$PROJECT_DIR$/src/dataCode/Image.java" />
+        <option value="$PROJECT_DIR$/src/code/webcomicviewer/EditComicFragment.java" />
+        <option value="$PROJECT_DIR$/src/dataCode/HtmlImageTag.java" />
+        <option value="$PROJECT_DIR$/src/comicCode/ComicBuilder.java" />
+        <option value="$PROJECT_DIR$/src/comicCode/ImageCollector.java" />
+        <option value="$PROJECT_DIR$/src/comicCode/ComicSiteParser.java" />
+        <option value="$PROJECT_DIR$/src/comicCode/Comic.java" />
+        <option value="$PROJECT_DIR$/src/com/webcomic/services/dataBaseService.java" />
+        <option value="$PROJECT_DIR$/src/com/webcomic/models/Content.java" />
+        <option value="$PROJECT_DIR$/src/com/webcomic/services/DataBaseService.java" />
+        <option value="$PROJECT_DIR$/src/com/webcomic/models/Comic.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState />
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
@@ -132,6 +271,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -167,6 +308,24 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="notInUse" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebComics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebComicsGitHub" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -182,7 +341,51 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="comicCode" />
+              <option name="myItemId" value="dataCode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebComics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebComicsGitHub" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webcomic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebComics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebComicsGitHub" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webcomic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -222,27 +425,69 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebComics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebComicsGitHub" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="project.structure.proportion" value="0.0" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.lastSelected" value="vcs.Git" />
+    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/ormlite-core-4.46-sources.jar!/" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Jacob\Documents\WebComicsGitHub\libs" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
   </component>
   <component name="RunManager" selected="Android Application.WebComicsGitHub">
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -389,21 +634,47 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24418604" sideWeight="0.6705069" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24418604" sideWeight="0.6705069" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.249694" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32949308" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32949308" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32949308" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24418604" sideWeight="0.6705069" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32949308" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.249694" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -468,39 +739,272 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/activityCode/Add_Comic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="8" selection-start="1540" selection-end="1540" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4097">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/comicCode/Comic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="31" selection-start="1328" selection-end="1328" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="10319">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/activityCode/Add_Comic.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state line="42" column="8" selection-start="1239" selection-end="1239" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="3706">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/code/webcomicviewer/EditComicFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="65" selection-start="1818" selection-end="1818" vertical-scroll-proportion="0.3327338" vertical-offset="580" max-vertical-offset="1819" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataCode/HtmlImageTag.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="5" selection-start="443" selection-end="443" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/comicCode/ComicBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="31" selection-start="120" selection-end="120" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/comicCode/ComicSiteParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="116" column="39" selection-start="3785" selection-end="3785" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="609">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4563">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/activityCode/Front_Page.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="26" selection-start="1612" selection-end="1621" vertical-scroll-proportion="0.0" vertical-offset="1458" max-vertical-offset="3861">
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2641#2649#0" expanded="false" />
+            <element signature="e#4780#5087#0" expanded="false" />
+            <element signature="e#5075#5076#0" expanded="false" />
+            <element signature="e#5131#5588#0" expanded="false" />
+            <element signature="e#5576#5577#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/java/lang/Object.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="13" selection-start="152" selection-end="152" vertical-scroll-proportion="0.1628468" vertical-offset="0" max-vertical-offset="945">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/activityCode/Add_Comic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="8" selection-start="1540" selection-end="1540" vertical-scroll-proportion="0.0" vertical-offset="1530" max-vertical-offset="3706">
-          <folding />
+        <state line="78" column="0" selection-start="2427" selection-end="2427" vertical-scroll-proportion="0.0" vertical-offset="3667" max-vertical-offset="5886">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/activityCode/ComicListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="13" selection-start="1644" selection-end="1644" vertical-scroll-proportion="0.0" vertical-offset="2106" max-vertical-offset="7641">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/comicCode/Comic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="31" selection-start="1328" selection-end="1328" vertical-scroll-proportion="0.020190023" vertical-offset="255" max-vertical-offset="10319">
+        <state line="22" column="0" selection-start="528" selection-end="528" vertical-scroll-proportion="0.0" vertical-offset="368" max-vertical-offset="4860">
+          <folding>
+            <element signature="method#Comic#0;class#Comic#0" expanded="false" />
+            <element signature="method#Comic#1;class#Comic#0" expanded="false" />
+            <element signature="method#Comic#2;class#Comic#0" expanded="false" />
+            <element signature="method#Comic#3;class#Comic#0" expanded="false" />
+            <element signature="method#Comic#4;class#Comic#0" expanded="false" />
+            <element signature="method#getId#0;class#Comic#0" expanded="false" />
+            <element signature="method#setId#0;class#Comic#0" expanded="false" />
+            <element signature="method#getName#0;class#Comic#0" expanded="false" />
+            <element signature="method#setName#0;class#Comic#0" expanded="false" />
+            <element signature="method#getImageUrl#0;class#Comic#0" expanded="false" />
+            <element signature="method#setImageUrl#0;class#Comic#0" expanded="false" />
+            <element signature="method#getComicBitmap#0;class#Comic#0" expanded="false" />
+            <element signature="method#setComicBitmap#0;class#Comic#0" expanded="false" />
+            <element signature="method#setComicBitmap#1;class#Comic#0" expanded="false" />
+            <element signature="method#isUpdated#0;class#Comic#0" expanded="false" />
+            <element signature="method#setUpdated#0;class#Comic#0" expanded="false" />
+            <element signature="method#setUpdated#1;class#Comic#0" expanded="false" />
+            <element signature="method#getUrl#0;class#Comic#0" expanded="false" />
+            <element signature="method#setUrl#0;class#Comic#0" expanded="false" />
+            <element signature="method#getBitmapBytes#0;class#Comic#0" expanded="false" />
+            <element signature="method#getUpdatedSince#0;class#Comic#0" expanded="false" />
+            <element signature="method#getAltText#0;class#Comic#0" expanded="false" />
+            <element signature="method#setUpdatedSince#0;class#Comic#0" expanded="false" />
+            <element signature="method#setAltText#0;class#Comic#0" expanded="false" />
+            <element signature="method#retrieveImageBitmap#0;class#Comic#0" expanded="false" />
+            <element signature="method#modified#0;class#Comic#0" expanded="false" />
+            <element signature="method#Similarity#0;class#Comic#0" expanded="false" />
+            <element signature="method#findImageUrl#0;class#Comic#0" expanded="false" />
+            <element signature="method#calculateInSampleSize#0;class#Comic#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataCode/DataBaseHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="23" selection-start="0" selection-end="11486" vertical-scroll-proportion="0.06513872" vertical-offset="0" max-vertical-offset="9909">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/android/database/sqlite/SQLiteOpenHelper.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="61" selection-start="929" selection-end="929" vertical-scroll-proportion="0.38118213" vertical-offset="116" max-vertical-offset="945">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/webcomic/models/Content.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="28" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="918">
+          <folding>
+            <element signature="method#getImageUrl#0;class#Content#0" expanded="false" />
+            <element signature="method#setImageUrl#0;class#Content#0" expanded="false" />
+            <element signature="method#getAltText#0;class#Content#0" expanded="false" />
+            <element signature="method#setAltText#0;class#Content#0" expanded="false" />
+            <element signature="method#getImage#0;class#Content#0" expanded="false" />
+            <element signature="method#setImage#0;class#Content#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/webcomic/services/DataBaseService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="94" column="33" selection-start="3220" selection-end="3220" vertical-scroll-proportion="0.0" vertical-offset="2101" max-vertical-offset="10800">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#10182#10189#0" expanded="true" />
+            <element signature="e#11350#11358#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/webcomic/models/Comic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="5" selection-start="572" selection-end="572" vertical-scroll-proportion="0.3847981" vertical-offset="162" max-vertical-offset="1080">
+          <folding>
+            <element signature="docComment;class#Comic#0" expanded="false" />
+            <element signature="method#getId#0;class#Comic#0" expanded="false" />
+            <element signature="method#setId#0;class#Comic#0" expanded="false" />
+            <element signature="method#getName#0;class#Comic#0" expanded="false" />
+            <element signature="method#setName#0;class#Comic#0" expanded="false" />
+            <element signature="method#getWebsite#0;class#Comic#0" expanded="false" />
+            <element signature="method#setWebsite#0;class#Comic#0" expanded="false" />
+            <element signature="method#getLastUpdated#0;class#Comic#0" expanded="false" />
+            <element signature="method#setLastUpdated#0;class#Comic#0" expanded="false" />
+            <element signature="method#getContent#0;class#Comic#0" expanded="false" />
+            <element signature="method#setContent#0;class#Comic#0" expanded="false" />
+            <element signature="method#getHasBeenViewed#0;class#Comic#0" expanded="false" />
+            <element signature="method#setHasBeenViewed#0;class#Comic#0" expanded="false" />
+            <element signature="method#Comic#0;class#Comic#0" expanded="false" />
+            <element signature="method#Comic#1;class#Comic#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Android</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>WebComicsGitHub</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>libs</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
 

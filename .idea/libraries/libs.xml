@@ -4,8 +4,13 @@
       <root url="jar://$PROJECT_DIR$/libs/jsoup-1.7.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/libs/imageviewtouch.jar!/" />
       <root url="jar://$PROJECT_DIR$/libs/android-support-v4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/ormlite-android-4.46.jar!/" />
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/libs/ormlite-android-4.46-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/libs/ormlite-core-4.46-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
