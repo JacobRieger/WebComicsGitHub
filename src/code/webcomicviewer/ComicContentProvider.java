@@ -1,11 +1,12 @@
 package code.webcomicviewer;
 
-import dataCode.Comic2;
-import dataCode.DatabaseHandler2;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+
+import dataCode.Comic2;
+import dataCode.DatabaseHandler2;
 
 public class ComicContentProvider extends ContentProvider {
 	

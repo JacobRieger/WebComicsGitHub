@@ -1,37 +1,25 @@
 package code.webcomicviewer;
 
-import java.util.ArrayList;
-
-import comicCode.Comic;
-
-import activityCode.ComicListActivity;
-import activityCode.Edit_Comic;
-import activityCode.Front_Page;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import activityCode.ComicListActivity;
 import asyncTasks.DataBaseUpdater;
-
-
-import dataCode.ComicListAdapter;
 import dataCode.DataBaseHandler;
 
 

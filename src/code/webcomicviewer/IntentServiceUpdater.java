@@ -1,11 +1,5 @@
 package code.webcomicviewer;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import comicCode.Comic;
-
-import dataCode.DataBaseHandler;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -15,6 +9,12 @@ import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import comicCode.Comic;
+import dataCode.DataBaseHandler;
 
 /**
  * 

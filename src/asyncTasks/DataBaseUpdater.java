@@ -1,10 +1,9 @@
 package asyncTasks;
 
-import comicCode.Comic;
-
-import dataCode.DataBaseHandler;
 import android.content.Context;
 import android.os.AsyncTask;
+
+import dataCode.DataBaseHandler;
 
 public class DataBaseUpdater extends AsyncTask<Integer, Void, Void> {
 

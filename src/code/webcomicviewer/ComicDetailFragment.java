@@ -1,9 +1,5 @@
 package code.webcomicviewer;
 
-import it.sephiroth.android.library.imagezoom.ImageViewTouch;
-import comicCode.Comic;
-
-import activityCode.ComicListActivity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,7 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import activityCode.ComicListActivity;
+import comicCode.Comic;
 import dataCode.DataBaseHandler;
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 
 /**
  * A fragment representing a single Comic detail screen. This fragment is either

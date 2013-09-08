@@ -1,17 +1,16 @@
 package asyncTasks;
 
-import java.util.ArrayList;
-
-
-import comicCode.Comic;
-import dataCode.DataBaseHandler;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import comicCode.Comic;
+import dataCode.DataBaseHandler;
 
 public class ComicUpdater extends AsyncTask<Void, Void, Void> {
 

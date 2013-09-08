@@ -1,6 +1,5 @@
 package dataCode;
 
-import code.webcomicviewer.ComicContentProvider;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.util.Log;
+
+import code.webcomicviewer.ComicContentProvider;
 
 public class DatabaseHandler2 extends SQLiteOpenHelper {
 	

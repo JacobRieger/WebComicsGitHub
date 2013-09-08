@@ -23,7 +23,4 @@ public class HtmlImageTag {
 	public void setAltText(String altText) {
 		this.altText = altText;
 	}
-	
-	
-
 }

@@ -1,18 +1,11 @@
 package activityCode;
 
-import java.util.ArrayList;
-
-import code.webcomicviewer.R;
-import dataCode.DataBaseHandler;
-//import dataCode.ComicListAdapter;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-//import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -24,7 +17,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
 import asyncTasks.ComicUpdater;
+import code.webcomicviewer.R;
+import dataCode.DataBaseHandler;
+
+//import dataCode.ComicListAdapter;
+//import android.graphics.Color;
 
 public class Front_Page extends Activity implements OnClickListener, OnItemClickListener,
 		OnItemLongClickListener {

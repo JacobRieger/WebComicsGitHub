@@ -1,21 +1,15 @@
 package activityCode;
 
 
-import code.webcomicviewer.R;
-import comicCode.Comic;
-import dataCode.Bookmark;
-import dataCode.BookmarkList;
-import dataCode.DataBaseHandler;
-
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.provider.Browser;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.provider.Browser;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +19,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import code.webcomicviewer.R;
+import comicCode.Comic;
+import dataCode.Bookmark;
+import dataCode.BookmarkList;
+import dataCode.DataBaseHandler;
 
 public class Add_Comic extends Activity implements OnClickListener {
 

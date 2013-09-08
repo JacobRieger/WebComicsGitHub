@@ -1,16 +1,7 @@
 package activityCode;
 
-import code.webcomicviewer.BookmarkLoader;
-import code.webcomicviewer.CustomOnEditorActionListener;
-import code.webcomicviewer.CustomOnTouchListener;
-import code.webcomicviewer.R;
-import comicCode.Comic;
-import dataCode.Bookmark;
-import dataCode.BookmarkList;
-import dataCode.DataBaseHandler;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +15,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import asyncTasks.SingleComicRetriever;
+import code.webcomicviewer.BookmarkLoader;
+import code.webcomicviewer.CustomOnEditorActionListener;
+import code.webcomicviewer.CustomOnTouchListener;
+import code.webcomicviewer.R;
+import comicCode.Comic;
+import dataCode.Bookmark;
+import dataCode.BookmarkList;
+import dataCode.DataBaseHandler;
 
 public class Add_Comic_Webview extends Activity implements OnClickListener {
 

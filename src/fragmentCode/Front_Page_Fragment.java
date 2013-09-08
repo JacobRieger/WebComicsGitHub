@@ -1,12 +1,6 @@
 package fragmentCode;
 
 
-import code.webcomicviewer.R;
-
-
-import activityCode.Add_Comic;
-import activityCode.Add_Comic_Webview;
-import activityCode.View_Comics;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,7 +12,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import activityCode.Add_Comic;
+import activityCode.Add_Comic_Webview;
+import activityCode.View_Comics;
 import asyncTasks.ComicUpdater;
+import code.webcomicviewer.R;
 
 public class Front_Page_Fragment extends Fragment implements OnClickListener {
 

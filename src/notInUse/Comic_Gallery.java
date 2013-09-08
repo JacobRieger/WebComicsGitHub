@@ -1,13 +1,13 @@
 package notInUse;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+
 import java.util.ArrayList;
 
 import code.webcomicviewer.R;
 import dataCode.DataBaseHandler;
-
-import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
 
 public class Comic_Gallery extends Activity {
 

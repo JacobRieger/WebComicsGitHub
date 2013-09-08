@@ -1,13 +1,13 @@
 package asyncTasks;
 
-import java.util.ArrayList;
-
-import comicCode.Comic;
-
-import dataCode.DataBaseHandler;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+
+import java.util.ArrayList;
+
+import comicCode.Comic;
+import dataCode.DataBaseHandler;
 
 public class ComicsInitializer extends AsyncTask<Void, Void, Void> {
 

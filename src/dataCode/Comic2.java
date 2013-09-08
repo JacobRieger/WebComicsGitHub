@@ -1,5 +1,18 @@
 package dataCode;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
+import org.jsoup.Jsoup;
+import org.jsoup.helper.HttpConnection;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,19 +24,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.jsoup.Jsoup;
-import org.jsoup.helper.HttpConnection;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Bitmap.CompressFormat;
-import android.util.Log;
 
 public class Comic2 {
     

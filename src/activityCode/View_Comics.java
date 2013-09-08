@@ -1,14 +1,6 @@
 package activityCode;
 
 
-import java.util.ArrayList;
-
-import code.webcomicviewer.R;
-
-import comicCode.Comic;
-import dataCode.BookmarkList;
-import dataCode.DataBaseHandler;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,7 +19,14 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import java.util.ArrayList;
+
 import asyncTasks.ComicLoader;
+import code.webcomicviewer.R;
+import comicCode.Comic;
+import dataCode.BookmarkList;
+import dataCode.DataBaseHandler;
 
 public class View_Comics extends FragmentActivity implements OnLongClickListener {
 

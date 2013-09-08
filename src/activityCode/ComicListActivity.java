@@ -1,16 +1,5 @@
 package activityCode;
 
-import java.util.ArrayList;
-
-import code.webcomicviewer.ComicDetailActivity;
-import code.webcomicviewer.ComicDetailFragment;
-import code.webcomicviewer.ComicEditActivity;
-import code.webcomicviewer.ComicListFragment;
-import code.webcomicviewer.EditComicFragment;
-import code.webcomicviewer.IntentServiceUpdater;
-import code.webcomicviewer.R;
-import code.webcomicviewer.UpdateReceiver;
-import dataCode.DataBaseHandler;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -25,7 +14,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+
 import asyncTasks.ComicsInitializer;
+import code.webcomicviewer.ComicDetailActivity;
+import code.webcomicviewer.ComicDetailFragment;
+import code.webcomicviewer.ComicEditActivity;
+import code.webcomicviewer.ComicListFragment;
+import code.webcomicviewer.EditComicFragment;
+import code.webcomicviewer.IntentServiceUpdater;
+import code.webcomicviewer.R;
+import code.webcomicviewer.UpdateReceiver;
+import dataCode.DataBaseHandler;
 
 /**
  * An activity representing a list of Comics. This activity has different

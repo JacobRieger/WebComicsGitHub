@@ -1,19 +1,17 @@
 package activityCode;
 
-import it.sephiroth.android.library.imagezoom.ImageViewTouch;
-
-import code.webcomicviewer.R;
-
-import comicCode.Comic;
-import dataCode.DataBaseHandler;
-
-import android.net.Uri;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import code.webcomicviewer.R;
+import comicCode.Comic;
+import dataCode.DataBaseHandler;
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 
 public class View_Comic extends Activity {
 	String ImageUrl;

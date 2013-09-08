@@ -1,12 +1,13 @@
 package code.webcomicviewer;
 
 
-import dataCode.Bookmark;
-import dataCode.BookmarkList;
 import android.app.Activity;
 import android.database.Cursor;
 import android.provider.Browser;
 import android.util.Log;
+
+import dataCode.Bookmark;
+import dataCode.BookmarkList;
 
 public class BookmarkLoader {
 

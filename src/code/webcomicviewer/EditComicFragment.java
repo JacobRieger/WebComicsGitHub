@@ -1,10 +1,5 @@
 package code.webcomicviewer;
 
-import java.util.Date;
-
-import comicCode.Comic;
-
-import dataCode.DataBaseHandler;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,7 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.Date;
+
 import asyncTasks.SingleComicUpdater;
+import comicCode.Comic;
+import dataCode.DataBaseHandler;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that

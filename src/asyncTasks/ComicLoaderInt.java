@@ -1,15 +1,15 @@
 package asyncTasks;
 
-import java.lang.ref.WeakReference;
-
-import dataCode.DataBaseHandler;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.lang.ref.WeakReference;
+
+import dataCode.DataBaseHandler;
 
 class ComicLoaderInt extends AsyncTask<Integer, Void, Bitmap> {
 	private String title;

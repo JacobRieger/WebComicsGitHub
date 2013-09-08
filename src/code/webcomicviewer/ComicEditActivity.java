@@ -1,9 +1,5 @@
 package code.webcomicviewer;
 
-import comicCode.Comic;
-
-import dataCode.DataBaseHandler;
-import activityCode.ComicListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -11,6 +7,10 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import activityCode.ComicListActivity;
+import comicCode.Comic;
+import dataCode.DataBaseHandler;
 
 /**
  * An activity representing a single Comic detail screen. This activity is only
