@@ -1,6 +1,12 @@
 package comicCode;
 
 
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,14 +19,8 @@ import java.util.List;
 
 import dataCode.HtmlImageTag;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.Bitmap.Config;
-import android.util.Log;
-
 public class Comic {
-	
+
 	private int      id;            //ID for the database
 	private String   Name;          //Name of the comic
 	private String   url;           //Url of the comic
@@ -265,12 +265,12 @@ public class Comic {
 		
 		if(true)Log.d("Comic", "Updated called in " + this.getName());
 
-        ImageCollector imageCollector = new ImageCollector(this);
-        List<HtmlImageTag> htmlImageTags = imageCollector.RetrieveImgs();
+        ComicSiteParser comicSiteParser = new ComicSiteParser(this);
+        List<HtmlImageTag> htmlImageTags = comicSiteParser.GetComicHtmlImageTags();
 
 
 
-		//setNewImageurl(RetrieveImgs());
+		//setNewImageurl(GetComicHtmlImageTags());
 	}
 	
 	public boolean  modified()
@@ -389,8 +389,8 @@ public class Comic {
 	@SuppressWarnings("static-access")
 	public void     findImageUrl()
 	{
-        ImageCollector imageCollector = new ImageCollector(this);
-		List<HtmlImageTag> htmlImageTags = imageCollector.RetrieveImgs();
+        ComicSiteParser comicSiteParser = new ComicSiteParser(this);
+		List<HtmlImageTag> htmlImageTags = comicSiteParser.GetComicHtmlImageTags();
 		HtmlImageTag current;
 		int height;
 		int width;
